@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== VARIABEL WARNA BATAK ===== */
+        :root {
+            --merah-batak: #B22222;
+            --merah-tua: #8B1A1A;
+            --hitam-batak: #2C2C2C;
+            --emas-batak: #D4AF37;
+            --putih: #F5F5F5;
+        }
+
+        /* ===== HEADER KONTAK ===== */
+        .page-header-kontak {
+            position: relative;
+            min-height: 50vh;
+            background: linear-gradient(135deg, var(--hitam-batak), var(--merah-tua));
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 120px 0 60px;
+            border-bottom: 8px solid var(--emas-batak);
+        }
+
+        .header-title-kontak {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--emas-batak);
+            text-shadow: 6px 6px 0 var(--merah-tua), 10px 10px 0 var(--hitam-batak);
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+
+        .header-subtitle-kontak {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.5rem;
+            text-shadow: 3px 3px 0 var(--hitam-batak);
+            max-width: 600px;
+        }
+
+        /* ===== INFO KONTAK CARD ===== */
+        .info-card {
+            background: white;
+            border-radius: 40px 15px 40px 15px;
+            padding: 30px;
+            border: 3px solid var(--emas-batak);
+            height: 100%;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(178,34,34,0.2);
+        }
+
+        .info-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--merah-batak), var(--merah-tua));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 3px solid var(--emas-batak);
+        }
+
+        .info-icon i {
+            font-size: 2rem;
+            color: var(--emas-batak);
+        }
+
+        .info-card h3 {
+            color: var(--merah-batak);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .info-card p {
+            color: var(--hitam-batak);
+            margin-bottom: 5px;
+        }
+
+        .info-card .info-detail {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* ===== FORM KONTAK ===== */
+        .form-kontak {
+            background: white;
+            border-radius: 40px 15px 40px 15px;
+            padding: 40px;
+            border: 3px solid var(--emas-batak);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-kontak h2 {
+            color: var(--merah-batak);
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #eee;
+            border-radius: 50px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--merah-batak);
+            box-shadow: 0 0 0 0.2rem rgba(178,34,34,0.25);
+            outline: none;
+        }
+
+        textarea.form-control {
+            border-radius: 20px;
+            resize: none;
+        }
+
+        .btn-kirim {
+            background: var(--merah-batak);
+            color: white;
+            border: 2px solid var(--emas-batak);
+            border-radius: 50px;
+            padding: 12px 40px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-kirim:hover {
+            background: var(--merah-tua);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(178,34,34,0.3);
+        }
+
+        /* ===== MAP SECTION ===== */
+        .map-container {
+            border-radius: 40px 15px 40px 15px;
+            overflow: hidden;
+            border: 4px solid var(--emas-batak);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #ddd, #eee);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .map-placeholder i {
+            font-size: 5rem;
+            color: var(--emas-batak);
+            opacity: 0.5;
+        }
+
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        /* ===== FAQ SECTION ===== */
+        .faq-item {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--merah-batak);
+            border-right: 2px solid var(--emas-batak);
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 20px rgba(178,34,34,0.1);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .faq-question h5 {
+            color: var(--merah-batak);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .faq-question i {
+            color: var(--emas-batak);
+            transition: transform 0.3s;
+        }
+
+        .faq-answer {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--emas-batak);
+            color: #666;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-title-kontak {
+                font-size: 3rem;
+            }
+            
+            .form-kontak {
+                padding: 25px;
+            }
+            
+            .info-card {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-gem me-2 text-gold"></i>
+                <span class="brand-indo">Budaya Batak</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Budaya
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sejarah.html"><i class="fas fa-history me-2"></i>Sejarah Batak</a></li>
+                            <li><a class="dropdown-item" href="ulos.html"><i class="fas fa-tshirt me-2"></i>Filosofi Ulos</a></li>
+                            <li><a class="dropdown-item" href="rumah-adat.html"><i class="fas fa-home me-2"></i>Rumah Adat</a></li>
+                            <li><a class="dropdown-item" href="tortor.html"><i class="fas fa-shoe-prints me-2"></i>Tarian Tortor</a></li>
+                            <li><a class="dropdown-item" href="gondang.html"><i class="fas fa-drum me-2"></i>Musik Gondang</a></li>
+                            <li><a class="dropdown-item" href="kuliner.html"><i class="fas fa-utensils me-2"></i>Kuliner Khas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wisata.html">Wisata</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="galeri.html">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="artikel.html">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="event.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="kontak.html">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header-kontak">
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div style="width: 70px; height: 70px; background: var(--emas-batak); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-envelope fa-2x" style="color: var(--hitam-batak);"></i>
+                        </div>
+                        <span class="text-white" style="font-size: 2rem; font-weight: 300;">ᯂᯬᯉ᯲ᯖᯄ᯦᯲</span>
+                    </div>
+                    <h1 class="header-title-kontak">KONTAK KAMI</h1>
+                    <p class="header-subtitle-kontak">Hubungi kami untuk informasi lebih lanjut tentang budaya Batak</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Kontak Cards -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Alamat</h3>
+                        <p>Jl. Letjen Jamin Ginting No. 1</p>
+                        <p class="info-detail">Medan, Sumatera Utara 20154</p>
+                        <p class="info-detail">Indonesia</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3>Telepon</h3>
+                        <p>+62 61 1234 5678</p>
+                        <p class="info-detail">Senin - Jumat, 08:00 - 17:00</p>
+                        <p class="info-detail">Sabtu, 09:00 - 14:00</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email</h3>
+                        <p>info@budayabatak.com</p>
+                        <p class="info-detail">budaya@batak.org</p>
+                        <p class="info-detail">support@budayabatak.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Kontak & Map -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                    <div class="form-kontak">
+                        <h2>Kirim Pesan</h2>
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="Nama Lengkap" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" placeholder="Email" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="No. Telepon">
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-select">
+                                        <option selected disabled>Pilih Subjek</option>
+                                        <option>Informasi Budaya</option>
+                                        <option>Kerjasama</option>
+                                        <option>Kritik & Saran</option>
+                                        <option>Lainnya</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <textarea class="form-control" rows="5" placeholder="Pesan Anda" required></textarea>
+                            <button type="submit" class="btn-kirim mt-3">
+                                <i class="fas fa-paper-plane me-2"></i>Kirim Pesan
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="map-container">
+                        <div class="map-placeholder">
+                            <i class="fas fa-map"></i>
+                            <div class="map-overlay">
+                                <h5 class="text-gold mb-1">Google Maps</h5>
+                                <p class="mb-0 small">Jl. Letjen Jamin Ginting No. 1, Medan</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Info Tambahan -->
+                    <div class="row g-3 mt-4">
+                        <div class="col-6">
+                            <div class="bg-white p-3 rounded text-center" style="border: 2px solid var(--emas-batak);">
+                                <i class="fab fa-whatsapp fa-2x text-gold mb-2"></i>
+                                <h6>WhatsApp</h6>
+                                <small>+62 812 3456 7890</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="bg-white p-3 rounded text-center" style="border: 2px solid var(--emas-batak);">
+                                <i class="fab fa-instagram fa-2x text-gold mb-2"></i>
+                                <h6>Instagram</h6>
+                                <small>@budaya_batak</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-subtitle">Tanya Jawab</span>
+                <h2 class="section-title">Pertanyaan Umum</h2>
+                <div class="title-border"></div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="faq-item" data-aos="fade-up">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h5>Bagaimana cara mengunjungi situs-situs budaya Batak?</h5>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Anda dapat menghubungi kami untuk informasi tur budaya, atau mengunjungi langsung lokasi-lokasi seperti Danau Toba, Samosir, dan museum-museum Batak. Kami juga menyediakan paket wisata budaya dengan pemandu lokal.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h5>Apakah ada workshop tenun ulos untuk wisatawan?</h5>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Ya, beberapa desa wisata di Samosir dan sekitar Danau Toba menyediakan workshop menenun ulos bagi wisatawan yang ingin belajar langsung dari pengrajin lokal. Silakan hubungi kami untuk jadwal dan reservasi.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h5>Bagaimana cara mendapatkan informasi event terbaru?</h5>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Anda bisa mengunjungi halaman Event di website kami secara berkala, atau berlangganan newsletter untuk mendapatkan update langsung ke email Anda. Kami juga aktif di media sosial @budaya_batak.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h5>Apakah saya bisa berkontribusi dalam pelestarian budaya Batak?</h5>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Tentu! Anda bisa berkontribusi dengan menjadi volunteer di event-event budaya, mendukung pengrajin lokal, atau menyebarkan informasi tentang budaya Batak melalui media sosial. Silakan hubungi kami untuk informasi lebih lanjut.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-pattern"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>Budaya Batak</h4>
+                        <span>Warisan Leluhur</span>
+                    </div>
+                    <p class="mt-3">Melestarikan kekayaan budaya Batak untuk generasi mendatang. "Horas jala gabe ma di hita saluhutna".</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Budaya</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="sejarah.html"><i class="fas fa-chevron-right me-2"></i>Sejarah</a></li>
+                        <li><a href="ulos.html"><i class="fas fa-chevron-right me-2"></i>Ulos</a></li>
+                        <li><a href="rumah-adat.html"><i class="fas fa-chevron-right me-2"></i>Rumah Adat</a></li>
+                        <li><a href="tortor.html"><i class="fas fa-chevron-right me-2"></i>Tarian</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Jelajah</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="wisata.html"><i class="fas fa-chevron-right me-2"></i>Wisata</a></li>
+                        <li><a href="event.html"><i class="fas fa-chevron-right me-2"></i>Event</a></li>
+                        <li><a href="galeri.html"><i class="fas fa-chevron-right me-2"></i>Galeri</a></li>
+                        <li><a href="artikel.html"><i class="fas fa-chevron-right me-2"></i>Artikel</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5>Kontak</h5>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Medan, Sumatera Utara</p>
+                        <p><i class="fas fa-phone me-2"></i> +62 61 1234 5678</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@budayabatak.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2024 Budaya Batak. All rights reserved. Horas! 🏆</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Kebijakan Privasi</a>
+                        <a href="#">Syarat Layanan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="btn btn-primary back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+        
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Terima kasih! Pesan Anda telah terkirim. Horas!');
+            this.reset();
+        });
+
+        // FAQ Toggle
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            if (answer.style.display === 'none' || !answer.style.display) {
+                answer.style.display = 'block';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                answer.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Set initial FAQ answers to hidden
+        document.querySelectorAll('.faq-answer').forEach(answer => {
+            answer.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

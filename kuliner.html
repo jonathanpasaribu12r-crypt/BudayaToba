@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuliner Khas Batak - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== VARIABEL WARNA BATAK ===== */
+        :root {
+            --merah-batak: #B22222;
+            --merah-tua: #8B1A1A;
+            --hitam-batak: #2C2C2C;
+            --emas-batak: #D4AF37;
+            --coklat-makanan: #8B4513;
+            --orange-masakan: #D2691E;
+            --kuning-rempah: #FFD700;
+            --putih: #F5F5F5;
+        }
+
+        /* ===== HEADER KULINER ===== */
+        .page-header-kuliner {
+            position: relative;
+            min-height: 80vh;
+            background: linear-gradient(165deg, var(--hitam-batak) 0%, var(--coklat-makanan) 50%, var(--merah-tua) 100%);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 120px 0 80px;
+            border-bottom: 8px solid var(--emas-batak);
+        }
+
+        .header-kuliner-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(212,175,55,0.1) 0px, rgba(212,175,55,0.1) 8px, transparent 8px, transparent 24px),
+                repeating-linear-gradient(135deg, rgba(210,105,30,0.1) 0px, rgba(210,105,30,0.1) 12px, transparent 12px, transparent 30px),
+                radial-gradient(circle at 70% 30%, rgba(212,175,55,0.1) 0%, transparent 300px);
+            z-index: 1;
+        }
+
+        .header-rempah {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100px;
+            background: repeating-linear-gradient(45deg, var(--emas-batak) 0px, var(--emas-batak) 10px, transparent 10px, transparent 30px);
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .header-title-kuliner {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--emas-batak);
+            text-shadow: 6px 6px 0 var(--coklat-makanan), 10px 10px 0 var(--hitam-batak);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 3;
+            letter-spacing: 4px;
+            animation: foodFloat 3s infinite;
+        }
+
+        @keyframes foodFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .header-subtitle-kuliner {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 3;
+            text-shadow: 3px 3px 0 var(--hitam-batak);
+            max-width: 600px;
+        }
+
+        /* ===== KULINER SHOWCASE ===== */
+        .kuliner-showcase {
+            position: relative;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .kuliner-frame {
+            position: relative;
+            padding: 20px;
+            background: linear-gradient(145deg, var(--emas-batak), var(--orange-masakan), var(--merah-batak));
+            border-radius: 80px 20px 80px 20px;
+            box-shadow: 0 40px 70px rgba(0,0,0,0.4);
+            animation: foodRotate 6s infinite;
+        }
+
+        @keyframes foodRotate {
+            0%, 100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg); }
+        }
+
+        .kuliner-image {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(145deg, var(--coklat-makanan), var(--merah-tua));
+            border-radius: 70px 15px 70px 15px;
+            overflow: hidden;
+            border: 5px solid var(--emas-batak);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kuliner-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(212,175,55,0.15) 0px, rgba(212,175,55,0.15) 8px, transparent 8px, transparent 20px),
+                radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0px, transparent 200px);
+        }
+
+        .kuliner-icon {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+        }
+
+        .kuliner-icon i {
+            font-size: 6rem;
+            color: var(--emas-batak);
+            margin-bottom: 20px;
+            filter: drop-shadow(5px 5px 0 rgba(0,0,0,0.3));
+            animation: steam 2s infinite;
+        }
+
+        @keyframes steam {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.1); }
+        }
+
+        .kuliner-icon h3 {
+            color: white;
+            font-size: 2rem;
+            text-shadow: 3px 3px 0 var(--hitam-batak);
+        }
+
+        /* ===== KULINER CARD ===== */
+        .kuliner-card {
+            background: white;
+            border-radius: 40px 15px 40px 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            height: 100%;
+            border: 3px solid var(--emas-batak);
+            transition: all 0.4s;
+        }
+
+        .kuliner-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(210,105,30,0.3);
+            border-color: var(--orange-masakan);
+        }
+
+        .kuliner-card-header {
+            height: 200px;
+            background: linear-gradient(145deg, var(--coklat-makanan), var(--orange-masakan));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .kuliner-card-header i {
+            font-size: 5rem;
+            color: var(--emas-batak);
+            z-index: 2;
+            transition: all 0.3s;
+        }
+
+        .kuliner-card:hover .kuliner-card-header i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .kuliner-card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(45deg, rgba(212,175,55,0.15) 0px, rgba(212,175,55,0.15) 5px, transparent 5px, transparent 15px);
+        }
+
+        .kuliner-card-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+        }
+
+        .kuliner-card-body {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .kuliner-card-body h3 {
+            color: var(--merah-batak);
+            font-weight: 800;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .kuliner-card-body .kuliner-batak {
+            color: var(--emas-batak);
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .kuliner-card-body p {
+            color: var(--hitam-batak);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .kuliner-info {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed var(--emas-batak);
+        }
+
+        .kuliner-info span {
+            color: var(--coklat-makanan);
+            font-weight: 600;
+        }
+
+        .kuliner-info i {
+            color: var(--orange-masakan);
+            margin-right: 5px;
+        }
+
+        /* ===== VIDEO KULINER ===== */
+        .video-kuliner-wrapper {
+            position: relative;
+            padding: 25px;
+            background: linear-gradient(145deg, var(--emas-batak), var(--orange-masakan), var(--merah-batak));
+            border-radius: 70px 20px 70px 20px;
+            box-shadow: 0 40px 70px rgba(0,0,0,0.4);
+            border: 4px solid var(--emas-batak);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .video-kuliner-wrapper:hover {
+            transform: scale(1.02);
+            box-shadow: 0 50px 90px rgba(210,105,30,0.4);
+        }
+
+        .video-kuliner-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 50px 15px 50px 15px;
+            border: 4px solid var(--emas-batak);
+        }
+
+        .video-kuliner-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .kuliner-ornament {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: var(--merah-batak);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid var(--emas-batak);
+            color: white;
+            font-size: 1.5rem;
+            z-index: 10;
+        }
+
+        .kuliner-ornament-1 {
+            top: -20px;
+            right: -20px;
+            background: var(--orange-masakan);
+            animation: spin 4s infinite;
+        }
+
+        .kuliner-ornament-2 {
+            bottom: -20px;
+            left: -20px;
+            background: var(--coklat-makanan);
+            animation: spin 4s infinite 0.5s;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== RESEP CARD ===== */
+        .resep-card {
+            background: white;
+            border-radius: 30px 10px 30px 10px;
+            padding: 25px;
+            border: 3px solid var(--emas-batak);
+            height: 100%;
+            transition: all 0.3s;
+        }
+
+        .resep-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(210,105,30,0.2);
+        }
+
+        .resep-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--orange-masakan);
+            padding-bottom: 15px;
+        }
+
+        .resep-title i {
+            font-size: 2rem;
+            color: var(--orange-masakan);
+        }
+
+        .resep-title h4 {
+            margin: 0;
+            color: var(--merah-batak);
+            font-weight: 700;
+        }
+
+        .resep-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .resep-item i {
+            color: var(--emas-batak);
+            width: 25px;
+        }
+
+        .resep-item span {
+            color: var(--hitam-batak);
+        }
+
+        /* ===== GALERI MAKANAN ===== */
+        .makanan-gallery {
+            position: relative;
+            border-radius: 30px 10px 30px 10px;
+            overflow: hidden;
+            border: 4px solid var(--emas-batak);
+            height: 250px;
+            transition: all 0.3s;
+        }
+
+        .makanan-gallery:hover {
+            transform: scale(1.05);
+            border-color: var(--orange-masakan);
+        }
+
+        .makanan-gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .makanan-gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(139,69,19,0.9), transparent);
+            padding: 20px;
+            color: white;
+        }
+
+        .makanan-gallery-overlay h4 {
+            color: var(--emas-batak);
+            font-weight: 700;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-title-kuliner {
+                font-size: 3rem;
+            }
+            
+            .kuliner-showcase {
+                margin-top: 40px;
+            }
+            
+            .kuliner-info {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .kuliner-ornament {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-dharmachakra me-2" style="color: #D4AF37;"></i>
+                <span class="brand-indo">Budaya Batak</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                            Budaya
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sejarah.html"><i class="fas fa-history me-2"></i>Sejarah Batak</a></li>
+                            <li><a class="dropdown-item" href="ulos.html"><i class="fas fa-tshirt me-2"></i>Filosofi Ulos</a></li>
+                            <li><a class="dropdown-item" href="rumah-adat.html"><i class="fas fa-home me-2"></i>Rumah Adat</a></li>
+                            <li><a class="dropdown-item" href="tortor.html"><i class="fas fa-shoe-prints me-2"></i>Tarian Tortor</a></li>
+                            <li><a class="dropdown-item" href="gondang.html"><i class="fas fa-drum me-2"></i>Musik Gondang</a></li>
+                            <li><a class="dropdown-item active" href="kuliner.html"><i class="fas fa-utensils me-2"></i>Kuliner Khas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wisata.html">Wisata</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="galeri.html">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="artikel.html">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="event.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="kontak.html">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header-kuliner">
+        <div class="header-kuliner-pattern"></div>
+        <div class="header-rempah"></div>
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row align-items-center">
+                <div class="col-lg-7" data-aos="fade-right">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div style="width: 70px; height: 70px; background: var(--emas-batak); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-utensils fa-2x" style="color: var(--hitam-batak);"></i>
+                        </div>
+                        <span class="text-white" style="font-size: 2rem; font-weight: 300;">ᯔ᯲ᯂᯉ᯲</span>
+                    </div>
+                    <h1 class="header-title-kuliner">KULINER KHAS BATAK</h1>
+                    <p class="header-subtitle-kuliner">Nikmati cita rasa autentik dengan rempah khas dan filosofi dalam setiap hidangan</p>
+                    
+                    <div class="d-flex gap-4 mt-5">
+                        <div class="text-center">
+                            <h3 class="text-gold mb-0">50+</h3>
+                            <small class="text-white">Hidangan</small>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-gold mb-0">7</h3>
+                            <small class="text-white">Rempah Utama</small>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-gold mb-0">1000+</h3>
+                            <small class="text-white">Tahun Resep</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-5" data-aos="fade-left" data-aos-delay="200">
+                    <div class="kuliner-showcase">
+                        <div class="kuliner-frame">
+                            <div class="kuliner-image">
+                                <div class="kuliner-pattern"></div>
+                                <div class="kuliner-icon">
+                                    <i class="fas fa-utensils"></i>
+                                    <h3>KULINER</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Kuliner Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-subtitle">ᯘᯯ᯲ᯖᯬᯉᯬ᯲ • Dokumentasi</span>
+                <h2 class="section-title">Video Kuliner Batak</h2>
+                <p class="section-description">Saksikan proses pembuatan dan kelezatan kuliner khas Batak</p>
+                <div class="ulos-divider">
+                    <div class="ulos-divider-line"></div>
+                    <i class="fas fa-utensils ulos-divider-icon"></i>
+                    <div class="ulos-divider-line"></div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-12" data-aos="fade-up">
+                    <div class="video-kuliner-wrapper">
+                        <div class="kuliner-ornament kuliner-ornament-1">
+                            <i class="fas fa-pepper-hot"></i>
+                        </div>
+                        <div class="kuliner-ornament kuliner-ornament-2">
+                            <i class="fas fa-utensil-spoon"></i>
+                        </div>
+                        <div class="video-kuliner-container">
+                            <!-- YouTube Video - Kuliner Batak -->
+                            <iframe 
+                                src="https://www.youtube.com/embed/VIDEO_ID_KULINER?autoplay=0&mute=1&rel=0&modestbranding=1" 
+                                title="Kuliner Khas Batak"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pengertian Kuliner -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <span class="section-subtitle">ᯔ᯲ᯂᯉ᯲ • Makanan</span>
+                    <h2 class="section-title">Kuliner Khas Batak</h2>
+                    <div class="ulos-divider" style="justify-content: start;">
+                        <div class="ulos-divider-line" style="width: 80px;"></div>
+                    </div>
+                    
+                    <p class="lead mt-4" style="color: var(--orange-masakan); font-weight: 600;">Kuliner Batak terkenal dengan cita rasa yang kuat dan penggunaan rempah-rempah khas.</p>
+                    
+                    <p>Makanan khas Batak kaya akan bumbu dan rempah, dengan ciri khas penggunaan <strong class="text-gold">andaliman</strong> (merica Batak) yang memberikan sensasi pedas dan hangat yang unik. Setiap hidangan memiliki filosofi dan makna dalam adat Batak.</p>
+                    
+                    <p class="mt-3">Dari saksang yang kaya rempah hingga naniura yang unik, kuliner Batak menawarkan pengalaman rasa yang tak terlupakan dan menjadi bagian penting dalam setiap upacara adat.</p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <div class="stat-card text-center p-3" style="border: 2px solid var(--emas-batak);">
+                                <div class="stat-number" style="color: var(--orange-masakan);">50+</div>
+                                <div class="stat-label">Resep Tradisional</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-card text-center p-3" style="border: 2px solid var(--emas-batak);">
+                                <div class="stat-number" style="color: var(--orange-masakan);">7</div>
+                                <div class="stat-label">Rempah Khas</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img src="https://source.unsplash.com/600x400/?indonesian, food" alt="Kuliner Batak" class="img-fluid" style="border-radius: 50px 15px 50px 15px; border: 8px solid var(--emas-batak); box-shadow: 0 30px 50px rgba(0,0,0,0.3);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daftar Makanan Khas -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-subtitle">ᯔ᯲ᯂᯉ᯲ • Hidangan</span>
+                <h2 class="section-title">Makanan Khas Batak</h2>
+                <p class="section-description">Berbagai hidangan autentik dengan cita rasa khas Batak</p>
+                <div class="ulos-divider">
+                    <div class="ulos-divider-line"></div>
+                    <i class="fas fa-utensils ulos-divider-icon"></i>
+                    <div class="ulos-divider-line"></div>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Saksang -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                    <div class="kuliner-card">
+                        <div class="kuliner-card-header">
+                            <i class="fas fa-drumstick-bite"></i>
+                        </div>
+                        <div class="kuliner-card-body">
+                            <h3>Saksang</h3>
+                            <div class="kuliner-batak">"ᯘᯄ᯦᯲ᯘᯰ᯲"</div>
+                            <p>Hidangan daging babi atau anjing yang dimasak dengan rempah-rempah khas dan darah segar. Memiliki cita rasa gurih dan pedas yang kuat.</p>
+                            <div class="kuliner-info">
+                                <span><i class="fas fa-pepper-hot"></i> Andaliman</span>
+                                <span><i class="fas fa-drum"></i> Upacara Adat</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Naniura -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="kuliner-card">
+                        <div class="kuliner-card-header">
+                            <i class="fas fa-fish"></i>
+                        </div>
+                        <div class="kuliner-card-body">
+                            <h3>Naniura</h3>
+                            <div class="kuliner-batak">"ᯉᯉᯪᯥᯒ"</div>
+                            <p>Ikan mas mentah yang dimasak dengan asam jungga dan rempah. Disebut juga "sashimi-nya Batak" karena tidak dimasak dengan api.</p>
+                            <div class="kuliner-info">
+                                <span><i class="fas fa-lemon"></i> Asam Jungga</span>
+                                <span><i class="fas fa-fire"></i> Tanpa Api</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mie Gomak -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="kuliner-card">
+                        <div class="kuliner-card-header">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="kuliner-card-body">
+                            <h3>Mie Gomak</h3>
+                            <div class="kuliner-batak">"ᯔᯪᯀᯩ ᯎᯬᯔᯄ᯦᯲"</div>
+                            <p>Mie lidi dengan bumbu andaliman yang khas. Disajikan dengan parutan kelapa dan berbagai topping. Disebut juga spaghetti-nya Batak.</p>
+                            <div class="kuliner-info">
+                                <span><i class="fas fa-pepper-hot"></i> Andaliman</span>
+                                <span><i class="fas fa-coconut"></i> Kelapa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Arsik -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="kuliner-card">
+                        <div class="kuliner-card-header">
+                            <i class="fas fa-fish"></i>
+                        </div>
+                        <div class="kuliner-card-body">
+                            <h3>Arsik Ikan Mas</h3>
+                            <div class="kuliner-batak">"ᯀᯒ᯲ᯘᯪᯄ᯦᯲"</div>
+                            <p>Ikan mas yang dimasak dengan bumbu kuning khas Batak. Hidangan ini selalu hadir dalam upacara adat dan perayaan keluarga.</p>
+                            <div class="kuliner-info">
+                                <span><i class="fas fa-leaf"></i> Andaliman</span>
+                                <span><i class="fas fa-crown"></i> Adat</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Babi Panggang Karo -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="kuliner-card">
+                        <div class="kuliner-card-header">
+                            <i class="fas fa-drumstick-bite"></i>
+                        </div>
+                        <div class="kuliner-card-body">
+                            <h3>Babi Panggang Karo</h3>
+                            <div class="kuliner-batak">"BPK"</div>
+                            <p>Daging babi yang dipanggang dengan bumbu khas Karo. Disajikan dengan kuah darah (tuak) dan sambal andaliman.</p>
+                            <div class="kuliner-info">
+                                <span><i class="fas fa-pepper-hot"></i> Andaliman</span>
+                                <span><i class="fas fa-fire"></i> Panggang</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Itak Gurgur -->
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="kuliner-card">
+                        <div class="kuliner-card-header">
+                            <i class="fas fa-cookie"></i>
+                        </div>
+                        <div class="kuliner-card-body">
+                            <h3>Itak Gurgur</h3>
+                            <div class="kuliner-batak">"ᯤᯖᯄ᯦᯲ ᯎᯒᯮ᯲ᯎᯒᯮ᯲"</div>
+                            <p>Kue tradisional dari beras ketan yang disangrai dan dicampur dengan gula aren. Biasanya disajikan dalam upacara adat.</p>
+                            <div class="kuliner-info">
+                                <span><i class="fas fa-candy-cane"></i> Manis</span>
+                                <span><i class="fas fa-pray"></i> Sesajen</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resep Tradisional -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <span class="section-subtitle">ᯒᯩᯘᯩᯇᯩ᯲ • Resep</span>
+                    <h2 class="section-title">Resep Tradisional</h2>
+                    <div class="ulos-divider" style="justify-content: start;">
+                        <div class="ulos-divider-line" style="width: 80px;"></div>
+                    </div>
+                    
+                    <p class="mt-3">Berikut adalah resep sederhana untuk membuat hidangan khas Batak di rumah.</p>
+                    
+                    <div class="resep-card mt-4">
+                        <div class="resep-title">
+                            <i class="fas fa-utensils"></i>
+                            <h4>Resep Saksang</h4>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>500g daging babi, potong dadu</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>100ml darah segar (opsional)</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>10 siung bawang merah</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>5 siung bawang putih</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>2 sdm andaliman, haluskan</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>3 cm jahe, lengkuas, kunyit</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>2 batang serai, 4 lembar daun jeruk</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Kelapa sangrai, garam secukupnya</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                    <div class="resep-card mt-4 mt-lg-0">
+                        <div class="resep-title">
+                            <i class="fas fa-utensils"></i>
+                            <h4>Resep Arsik Ikan Mas</h4>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>1 ekor ikan mas, bersihkan</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>10 buah cabai merah</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>8 siung bawang merah</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>4 siung bawang putih</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>2 sdm andaliman</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>3 cm kunyit, 3 cm jahe</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>2 batang serai, 4 lembar daun jeruk</span>
+                        </div>
+                        <div class="resep-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Asam jungga, garam, kemangi</span>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <p class="text-muted">* Resep lengkap dapat dilihat di artikel kuliner</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri Makanan -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-subtitle">ᯎᯞᯩᯒᯪ • Galeri</span>
+                <h2 class="section-title">Galeri Kuliner Batak</h2>
+                <div class="ulos-divider">
+                    <div class="ulos-divider-line"></div>
+                    <i class="fas fa-camera ulos-divider-icon"></i>
+                    <div class="ulos-divider-line"></div>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="makanan-gallery">
+                        <img src="https://source.unsplash.com/600x400/?pork, food" alt="Saksang">
+                        <div class="makanan-gallery-overlay">
+                            <h4>Saksang</h4>
+                            <p>Hidangan daging dengan rempah khas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="makanan-gallery">
+                        <img src="https://source.unsplash.com/601x400/?fish, dish" alt="Naniura">
+                        <div class="makanan-gallery-overlay">
+                            <h4>Naniura</h4>
+                            <p>Sashimi khas Batak</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="makanan-gallery">
+                        <img src="https://source.unsplash.com/602x400/?noodles, indonesian" alt="Mie Gomak">
+                        <div class="makanan-gallery-overlay">
+                            <h4>Mie Gomak</h4>
+                            <p>Spaghetti-nya Batak</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="makanan-gallery">
+                        <img src="https://source.unsplash.com/603x400/?grill, pork" alt="BPK">
+                        <div class="makanan-gallery-overlay">
+                            <h4>Babi Panggang Karo</h4>
+                            <p>Panggang khas Karo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="makanan-gallery">
+                        <img src="https://source.unsplash.com/604x400/?traditional, cake" alt="Itak">
+                        <div class="makanan-gallery-overlay">
+                            <h4>Itak Gurgur</h4>
+                            <p>Kue tradisional</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="makanan-gallery">
+                        <img src="https://source.unsplash.com/605x400/?spices, food" alt="Rempah">
+                        <div class="makanan-gallery-overlay">
+                            <h4>Andaliman</h4>
+                            <p>Merica khas Batak</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-pattern"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>Budaya Batak</h4>
+                        <span>Warisan Leluhur</span>
+                    </div>
+                    <p class="mt-3">Melestarikan kekayaan budaya Batak untuk generasi mendatang. "Horas jala gabe ma di hita saluhutna".</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Budaya</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="sejarah.html"><i class="fas fa-chevron-right me-2"></i>Sejarah</a></li>
+                        <li><a href="ulos.html"><i class="fas fa-chevron-right me-2"></i>Ulos</a></li>
+                        <li><a href="rumah-adat.html"><i class="fas fa-chevron-right me-2"></i>Rumah Adat</a></li>
+                        <li><a href="tortor.html"><i class="fas fa-chevron-right me-2"></i>Tarian</a></li>
+                        <li><a href="gondang.html"><i class="fas fa-chevron-right me-2"></i>Musik</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Jelajah</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="wisata.html"><i class="fas fa-chevron-right me-2"></i>Wisata</a></li>
+                        <li><a href="event.html"><i class="fas fa-chevron-right me-2"></i>Event</a></li>
+                        <li><a href="galeri.html"><i class="fas fa-chevron-right me-2"></i>Galeri</a></li>
+                        <li><a href="artikel.html"><i class="fas fa-chevron-right me-2"></i>Artikel</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5>Kontak</h5>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Medan, Sumatera Utara</p>
+                        <p><i class="fas fa-phone me-2"></i> +62 61 1234 5678</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@budayabatak.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2024 Budaya Batak. All rights reserved. Horas! 🏆</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Kebijakan Privasi</a>
+                        <a href="#">Syarat Layanan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="btn btn-primary back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+        
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

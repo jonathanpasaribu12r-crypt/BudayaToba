@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: linear-gradient(135deg, #2C2C2C, #8B1A1A);
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            transition: all 0.3s;
+            z-index: 1000;
+            border-right: 4px solid #D4AF37;
+        }
+
+        .sidebar-logo {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #D4AF37;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-logo img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-logo h3 {
+            color: #D4AF37;
+            font-weight: 700;
+        }
+
+        .sidebar-logo p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 15px 5px 15px 5px;
+            transition: all 0.3s;
+            gap: 10px;
+        }
+
+        .sidebar-menu li a i {
+            width: 30px;
+            text-align: center;
+            color: #D4AF37;
+        }
+
+        .sidebar-menu li a:hover {
+            background: rgba(212,175,55,0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu li.active a {
+            background: #D4AF37;
+            color: #2C2C2C;
+            font-weight: 600;
+        }
+
+        .sidebar-menu li.active a i {
+            color: #2C2C2C;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            margin-left: 280px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        /* ===== TOP NAVBAR ===== */
+        .top-navbar {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 20px 5px 20px 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #D4AF37;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: #B22222;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #D4AF37;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: #B22222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #D4AF37;
+        }
+
+        .user-avatar i {
+            color: #D4AF37;
+            font-size: 1.5rem;
+        }
+
+        .user-details h6 {
+            margin: 0;
+            color: #2C2C2C;
+            font-weight: 600;
+        }
+
+        .user-details small {
+            color: #666;
+        }
+
+        .logout-btn {
+            background: #B22222;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 2px solid #D4AF37;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #8B1A1A;
+            transform: translateY(-2px);
+        }
+
+        /* ===== PAGE HEADER ===== */
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h2 {
+            color: #B22222;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            color: #666;
+        }
+
+        /* ===== SETTINGS CARD ===== */
+        .settings-card {
+            background: white;
+            border-radius: 30px 10px 30px 10px;
+            padding: 25px;
+            border: 3px solid #D4AF37;
+            margin-bottom: 25px;
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #D4AF37;
+        }
+
+        .settings-header i {
+            font-size: 2rem;
+            color: #D4AF37;
+            background: #B22222;
+            padding: 15px;
+            border-radius: 50%;
+        }
+
+        .settings-header h4 {
+            color: #B22222;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .settings-header p {
+            color: #666;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2C2C2C;
+            margin-bottom: 5px;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #eee;
+            border-radius: 50px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #B22222;
+            box-shadow: 0 0 0 0.2rem rgba(178,34,34,0.25);
+            outline: none;
+        }
+
+        textarea.form-control {
+            border-radius: 20px;
+        }
+
+        .input-group-text {
+            background: #B22222;
+            color: white;
+            border: 2px solid #D4AF37;
+            border-radius: 50px 0 0 50px;
+        }
+
+        .input-group .form-control {
+            border-radius: 0 50px 50px 0;
+        }
+
+        .color-input {
+            width: 60px;
+            height: 60px;
+            padding: 5px;
+            border: 2px solid #D4AF37;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .logo-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #D4AF37;
+            overflow: hidden;
+            margin-bottom: 15px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-preview i {
+            font-size: 4rem;
+            color: #B22222;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #B22222;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .backup-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 15px 5px 15px 5px;
+            margin-bottom: 10px;
+            border: 2px solid #D4AF37;
+        }
+
+        .backup-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .backup-info i {
+            font-size: 1.5rem;
+            color: #B22222;
+        }
+
+        .backup-info h6 {
+            margin: 0;
+            color: #2C2C2C;
+        }
+
+        .backup-info small {
+            color: #666;
+        }
+
+        .btn-save {
+            background: #B22222;
+            color: white;
+            border: 2px solid #D4AF37;
+            padding: 12px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background: #8B1A1A;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(178,34,34,0.3);
+        }
+
+        .btn-outline-save {
+            background: transparent;
+            color: #B22222;
+            border: 2px solid #B22222;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-outline-save:hover {
+            background: #B22222;
+            color: white;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -280px;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .settings-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <img src="../../frontend/assets/images/logo-batak.png" alt="Logo" onerror="this.src='https://via.placeholder.com/80x80/B22222/FFFFFF?text=BATAK'">
+            <h3>Budaya Batak</h3>
+            <p>Admin Panel</p>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li>
+                <a href="dashboard.html">
+                    <i class="fas fa-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="articles.html">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Artikel</span>
+                </a>
+            </li>
+            <li>
+                <a href="gallery.html">
+                    <i class="fas fa-images"></i>
+                    <span>Galeri</span>
+                </a>
+            </li>
+            <li>
+                <a href="events.html">
+                    <i class="fas fa-calendar"></i>
+                    <span>Event</span>
+                </a>
+            </li>
+            <li>
+                <a href="wisata.html">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Wisata</span>
+                </a>
+            </li>
+            <li>
+                <a href="messages.html">
+                    <i class="fas fa-envelope"></i>
+                    <span>Pesan</span>
+                </a>
+            </li>
+            <li>
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="settings.html">
+                    <i class="fas fa-gear"></i>
+                    <span>Pengaturan</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <h6 id="userName">Admin</h6>
+                    <small>Administrator</small>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h2>Pengaturan Website</h2>
+            <p>Kelola pengaturan umum website Budaya Batak</p>
+        </div>
+
+        <!-- Settings Tabs -->
+        <ul class="nav nav-tabs mb-4" id="settingsTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab">Umum</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="appearance-tab" data-bs-toggle="tab" data-bs-target="#appearance" type="button" role="tab">Tampilan</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="social-tab" data-bs-toggle="tab" data-bs-target="#social" type="button" role="tab">Sosial Media</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email" type="button" role="tab">Email</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="backup-tab" data-bs-toggle="tab" data-bs-target="#backup" type="button" role="tab">Backup</button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="settingsTabContent">
+            <!-- General Settings -->
+            <div class="tab-pane fade show active" id="general" role="tabpanel">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <h4>Informasi Umum</h4>
+                            <p>Pengaturan dasar website</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Nama Website</label>
+                                <input type="text" class="form-control" value="Budaya Batak">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Tagline</label>
+                                <input type="text" class="form-control" value="Warisan Leluhur Sumatera Utara">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Deskripsi Website</label>
+                        <textarea class="form-control" rows="3">Website resmi untuk memperkenalkan kekayaan budaya Batak kepada masyarakat luas dan wisatawan. Menyajikan informasi tentang sejarah, ulos, rumah adat, tarian, musik, kuliner, dan wisata budaya Batak.</textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Email Kontak</label>
+                                <input type="email" class="form-control" value="info@budayabatak.com">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">No. Telepon</label>
+                                <input type="text" class="form-control" value="+62 61 1234 5678">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Alamat</label>
+                        <textarea class="form-control" rows="2">Jl. Letjen Jamin Ginting No. 1, Medan, Sumatera Utara 20154</textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Bahasa Default</label>
+                                <select class="form-select">
+                                    <option value="id" selected>Indonesia</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Zona Waktu</label>
+                                <select class="form-select">
+                                    <option value="WIB" selected>WIB (UTC+7)</option>
+                                    <option value="WITA">WITA (UTC+8)</option>
+                                    <option value="WIT">WIT (UTC+9)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Format Tanggal</label>
+                                <select class="form-select">
+                                    <option value="d-m-Y" selected>15-03-2024</option>
+                                    <option value="Y-m-d">2024-03-15</option>
+                                    <option value="m/d/Y">03/15/2024</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appearance Settings -->
+            <div class="tab-pane fade" id="appearance" role="tabpanel">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-paint-brush"></i>
+                        <div>
+                            <h4>Tampilan Website</h4>
+                            <p>Pengaturan logo, warna, dan tema</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="form-label">Logo Website</label>
+                                <div class="logo-preview">
+                                    <i class="fas fa-dharmachakra"></i>
+                                </div>
+                                <button class="btn-outline-save btn-sm">
+                                    <i class="fas fa-upload me-2"></i>Upload Logo
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="form-label">Favicon</label>
+                                <div style="width: 64px; height: 64px; background: #B22222; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 2px solid #D4AF37;">
+                                    <i class="fas fa-dharmachakra text-gold fa-2x"></i>
+                                </div>
+                                <button class="btn-outline-save btn-sm mt-2">
+                                    <i class="fas fa-upload me-2"></i>Upload Favicon
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Warna Utama</label>
+                                <div>
+                                    <input type="color" class="color-input" value="#B22222">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Warna Sekunder</label>
+                                <div>
+                                    <input type="color" class="color-input" value="#2C2C2C">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Warna Aksen</label>
+                                <div>
+                                    <input type="color" class="color-input" value="#D4AF37">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Tema</label>
+                        <select class="form-select">
+                            <option value="light" selected>Terang</option>
+                            <option value="dark">Gelap</option>
+                            <option value="auto">Auto (ikuti sistem)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Font</label>
+                        <select class="form-select">
+                            <option value="poppins" selected>Poppins</option>
+                            <option value="inter">Inter</option>
+                            <option value="roboto">Roboto</option>
+                            <option value="opensans">Open Sans</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Ukuran Font (px)</label>
+                        <input type="range" class="form-range" min="12" max="18" value="16">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Settings -->
+            <div class="tab-pane fade" id="social" role="tabpanel">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-share-alt"></i>
+                        <div>
+                            <h4>Sosial Media</h4>
+                            <p>Link akun sosial media</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Facebook</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fab fa-facebook-f"></i></span>
+                            <input type="url" class="form-control" value="https://facebook.com/budayabatak">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Instagram</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fab fa-instagram"></i></span>
+                            <input type="url" class="form-control" value="https://instagram.com/budaya_batak">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">YouTube</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fab fa-youtube"></i></span>
+                            <input type="url" class="form-control" value="https://youtube.com/@budayabatak">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">TikTok</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fab fa-tiktok"></i></span>
+                            <input type="url" class="form-control" value="https://tiktok.com/@budayabatak">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Twitter</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fab fa-twitter"></i></span>
+                            <input type="url" class="form-control" value="https://twitter.com/budayabatak">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Settings -->
+            <div class="tab-pane fade" id="email" role="tabpanel">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Pengaturan Email</h4>
+                            <p>Konfigurasi SMTP untuk notifikasi</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">SMTP Host</label>
+                                <input type="text" class="form-control" value="smtp.gmail.com">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">SMTP Port</label>
+                                <input type="number" class="form-control" value="587">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Email Pengirim</label>
+                                <input type="email" class="form-control" value="noreply@budayabatak.com">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Nama Pengirim</label>
+                                <input type="text" class="form-control" value="Budaya Batak">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" value="noreply@budayabatak.com">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" value="********">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Keamanan</label>
+                        <select class="form-select">
+                            <option value="tls" selected>TLS</option>
+                            <option value="ssl">SSL</option>
+                            <option value="none">None</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn-outline-save">
+                        <i class="fas fa-envelope me-2"></i>Test Email
+                    </button>
+                </div>
+            </div>
+
+            <!-- Backup Settings -->
+            <div class="tab-pane fade" id="backup" role="tabpanel">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-database"></i>
+                        <div>
+                            <h4>Backup Database</h4>
+                            <p>Kelola backup database website</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Backup Otomatis</h5>
+                        <div class="d-flex align-items-center gap-3">
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span>Aktifkan backup otomatis setiap hari</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Daftar Backup</h5>
+                        
+                        <div class="backup-item">
+                            <div class="backup-info">
+                                <i class="fas fa-file-archive"></i>
+                                <div>
+                                    <h6>backup-2024-03-15.zip</h6>
+                                    <small>15 Mar 2024, 350 MB</small>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn-outline-save btn-sm me-2">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="btn-outline-save btn-sm">
+                                    <i class="fas fa-undo"></i> Restore
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="backup-item">
+                            <div class="backup-info">
+                                <i class="fas fa-file-archive"></i>
+                                <div>
+                                    <h6>backup-2024-03-14.zip</h6>
+                                    <small>14 Mar 2024, 348 MB</small>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn-outline-save btn-sm me-2">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="btn-outline-save btn-sm">
+                                    <i class="fas fa-undo"></i> Restore
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="backup-item">
+                            <div class="backup-info">
+                                <i class="fas fa-file-archive"></i>
+                                <div>
+                                    <h6>backup-2024-03-13.zip</h6>
+                                    <small>13 Mar 2024, 345 MB</small>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn-outline-save btn-sm me-2">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="btn-outline-save btn-sm">
+                                    <i class="fas fa-undo"></i> Restore
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-3">
+                        <button class="btn-save">
+                            <i class="fas fa-database me-2"></i>Backup Sekarang
+                        </button>
+                        <button class="btn-outline-save">
+                            <i class="fas fa-cloud-upload-alt me-2"></i>Upload Backup
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="text-end mt-4">
+            <button class="btn-save btn-lg" onclick="saveSettings()">
+                <i class="fas fa-save me-2"></i>Simpan Semua Pengaturan
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Toggle sidebar
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Check authentication
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'index.html';
+        }
+
+        // Load user info
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        document.getElementById('userName').textContent = user.name || 'Admin';
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Save settings
+        function saveSettings() {
+            // Implementasi save settings
+            alert('Pengaturan berhasil disimpan!');
+        }
+
+        // Preview logo upload
+        function previewLogo(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.querySelector('.logo-preview');
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Logo">`;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</body>
+</html>

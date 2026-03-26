@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Wisata - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: linear-gradient(135deg, #2C2C2C, #8B1A1A);
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            transition: all 0.3s;
+            z-index: 1000;
+            border-right: 4px solid #D4AF37;
+        }
+
+        .sidebar-logo {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #D4AF37;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-logo img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-logo h3 {
+            color: #D4AF37;
+            font-weight: 700;
+        }
+
+        .sidebar-logo p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 15px 5px 15px 5px;
+            transition: all 0.3s;
+            gap: 10px;
+        }
+
+        .sidebar-menu li a i {
+            width: 30px;
+            text-align: center;
+            color: #D4AF37;
+        }
+
+        .sidebar-menu li a:hover {
+            background: rgba(212,175,55,0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu li.active a {
+            background: #D4AF37;
+            color: #2C2C2C;
+            font-weight: 600;
+        }
+
+        .sidebar-menu li.active a i {
+            color: #2C2C2C;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            margin-left: 280px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        /* ===== TOP NAVBAR ===== */
+        .top-navbar {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 20px 5px 20px 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #D4AF37;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: #B22222;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #D4AF37;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: #B22222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #D4AF37;
+        }
+
+        .user-avatar i {
+            color: #D4AF37;
+            font-size: 1.5rem;
+        }
+
+        .user-details h6 {
+            margin: 0;
+            color: #2C2C2C;
+            font-weight: 600;
+        }
+
+        .user-details small {
+            color: #666;
+        }
+
+        .logout-btn {
+            background: #B22222;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 2px solid #D4AF37;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #8B1A1A;
+            transform: translateY(-2px);
+        }
+
+        /* ===== PAGE HEADER ===== */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .page-header h2 {
+            color: #B22222;
+            font-weight: 700;
+        }
+
+        .btn-add {
+            background: #B22222;
+            color: white;
+            border: 2px solid #D4AF37;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-add:hover {
+            background: #8B1A1A;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(178,34,34,0.3);
+        }
+
+        /* ===== STATS CARDS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 30px 10px 30px 10px;
+            padding: 20px;
+            border: 3px solid #D4AF37;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: #B22222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #D4AF37;
+        }
+
+        .stat-icon i {
+            font-size: 1.8rem;
+            color: #D4AF37;
+        }
+
+        .stat-info h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #B22222;
+            margin: 0;
+        }
+
+        .stat-info p {
+            color: #666;
+            margin: 0;
+        }
+
+        /* ===== TABLE CARD ===== */
+        .table-card {
+            background: white;
+            border-radius: 30px 10px 30px 10px;
+            padding: 20px;
+            border: 3px solid #D4AF37;
+            margin-bottom: 20px;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #D4AF37;
+        }
+
+        .table-header h5 {
+            color: #B22222;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 8px 15px;
+            border: 2px solid #D4AF37;
+            border-radius: 50px;
+            outline: none;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+        .table th {
+            color: #B22222;
+            font-weight: 600;
+            border-bottom: 2px solid #D4AF37;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .rating {
+            color: #D4AF37;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-action {
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .btn-edit {
+            background: #D4AF37;
+        }
+
+        .btn-edit:hover {
+            background: #B8860B;
+            transform: scale(1.1);
+        }
+
+        .btn-delete {
+            background: #B22222;
+        }
+
+        .btn-delete:hover {
+            background: #8B1A1A;
+            transform: scale(1.1);
+        }
+
+        .btn-view {
+            background: #2C2C2C;
+        }
+
+        .btn-view:hover {
+            background: #1a1a1a;
+            transform: scale(1.1);
+        }
+
+        /* ===== MAP MINI ===== */
+        .map-mini {
+            background: white;
+            border-radius: 30px 10px 30px 10px;
+            padding: 20px;
+            border: 3px solid #D4AF37;
+            margin-bottom: 20px;
+        }
+
+        .map-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .map-header h6 {
+            color: #B22222;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        #miniMap {
+            height: 200px;
+            border-radius: 20px 5px 20px 5px;
+            border: 2px solid #D4AF37;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-content {
+            border-radius: 30px 10px 30px 10px;
+            border: 4px solid #D4AF37;
+        }
+
+        .modal-header {
+            background: #B22222;
+            color: white;
+            border-bottom: 2px solid #D4AF37;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .modal-footer {
+            border-top: 2px dashed #D4AF37;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #eee;
+            border-radius: 50px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #B22222;
+            box-shadow: 0 0 0 0.2rem rgba(178,34,34,0.25);
+            outline: none;
+        }
+
+        textarea.form-control {
+            border-radius: 20px;
+        }
+
+        .facility-tag {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #f0f0f0;
+            border-radius: 50px;
+            margin: 5px;
+            cursor: pointer;
+            border: 2px solid #D4AF37;
+        }
+
+        .facility-tag.selected {
+            background: #B22222;
+            color: white;
+            border-color: #D4AF37;
+        }
+
+        .facility-tag i {
+            margin-right: 5px;
+        }
+
+        .price-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .price-input-group .form-control {
+            flex: 1;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -280px;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .filter-section {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <img src="../../frontend/assets/images/logo-batak.png" alt="Logo" onerror="this.src='https://via.placeholder.com/80x80/B22222/FFFFFF?text=BATAK'">
+            <h3>Budaya Batak</h3>
+            <p>Admin Panel</p>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li>
+                <a href="dashboard.html">
+                    <i class="fas fa-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="articles.html">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Artikel</span>
+                </a>
+            </li>
+            <li>
+                <a href="gallery.html">
+                    <i class="fas fa-images"></i>
+                    <span>Galeri</span>
+                </a>
+            </li>
+            <li>
+                <a href="events.html">
+                    <i class="fas fa-calendar"></i>
+                    <span>Event</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="wisata.html">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Wisata</span>
+                </a>
+            </li>
+            <li>
+                <a href="messages.html">
+                    <i class="fas fa-envelope"></i>
+                    <span>Pesan</span>
+                </a>
+            </li>
+            <li>
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fas fa-gear"></i>
+                    <span>Pengaturan</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <h6 id="userName">Admin</h6>
+                    <small>Administrator</small>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h2>Manajemen Wisata</h2>
+            <button class="btn-add" onclick="openAddModal()">
+                <i class="fas fa-plus me-2"></i>Tambah Wisata
+            </button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>25</h3>
+                    <p>Total Wisata</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>4.8</h3>
+                    <p>Rata-rata Rating</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>156</h3>
+                    <p>Total Foto</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>12.5K</h3>
+                    <p>Total Likes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Mini -->
+        <div class="map-mini">
+            <div class="map-header">
+                <h6>Peta Wisata Batak</h6>
+                <button class="btn btn-sm btn-outline-primary" onclick="openFullMap()">
+                    <i class="fas fa-expand"></i> Perbesar
+                </button>
+            </div>
+            <div id="miniMap"></div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="table-card">
+            <div class="table-header">
+                <h5>Daftar Wisata Budaya Batak</h5>
+                <div class="filter-section">
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="all">Semua Kategori</option>
+                        <option value="alam">Alam</option>
+                        <option value="sejarah">Sejarah</option>
+                        <option value="budaya">Budaya</option>
+                        <option value="religi">Religi</option>
+                        <option value="kuliner">Kuliner</option>
+                    </select>
+                    
+                    <select class="filter-select" id="ratingFilter">
+                        <option value="all">Semua Rating</option>
+                        <option value="5">5 Bintang</option>
+                        <option value="4">4+ Bintang</option>
+                        <option value="3">3+ Bintang</option>
+                    </select>
+                    
+                    <input type="text" class="filter-select" placeholder="Cari wisata..." id="searchInput">
+                </div>
+            </div>
+
+            <table class="table" id="wisataTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Wisata</th>
+                        <th>Kategori</th>
+                        <th>Lokasi</th>
+                        <th>Rating</th>
+                        <th>Harga Tiket</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Danau Toba</td>
+                        <td>Alam</td>
+                        <td>Sumatera Utara</td>
+                        <td><span class="rating">★★★★★</span> 4.9</td>
+                        <td>Rp 15.000</td>
+                        <td><span class="status-badge success">Aktif</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-action btn-view" onclick="viewWisata(1)"><i class="fas fa-eye"></i></button>
+                                <button class="btn-action btn-edit" onclick="editWisata(1)"><i class="fas fa-edit"></i></button>
+                                <button class="btn-action btn-delete" onclick="deleteWisata(1)"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Pulau Samosir</td>
+                        <td>Budaya</td>
+                        <td>Samosir</td>
+                        <td><span class="rating">★★★★★</span> 4.8</td>
+                        <td>Rp 10.000</td>
+                        <td><span class="status-badge success">Aktif</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-action btn-view" onclick="viewWisata(2)"><i class="fas fa-eye"></i></button>
+                                <button class="btn-action btn-edit" onclick="editWisata(2)"><i class="fas fa-edit"></i></button>
+                                <button class="btn-action btn-delete" onclick="deleteWisata(2)"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Rumah Bolon</td>
+                        <td>Sejarah</td>
+                        <td>Pematang Purba</td>
+                        <td><span class="rating">★★★★½</span> 4.5</td>
+                        <td>Rp 25.000</td>
+                        <td><span class="status-badge success">Aktif</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-action btn-view" onclick="viewWisata(3)"><i class="fas fa-eye"></i></button>
+                                <button class="btn-action btn-edit" onclick="editWisata(3)"><i class="fas fa-edit"></i></button>
+                                <button class="btn-action btn-delete" onclick="deleteWisata(3)"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Tomok</td>
+                        <td>Budaya</td>
+                        <td>Samosir</td>
+                        <td><span class="rating">★★★★★</span> 4.7</td>
+                        <td>Rp 10.000</td>
+                        <td><span class="status-badge success">Aktif</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-action btn-view" onclick="viewWisata(4)"><i class="fas fa-eye"></i></button>
+                                <button class="btn-action btn-edit" onclick="editWisata(4)"><i class="fas fa-edit"></i></button>
+                                <button class="btn-action btn-delete" onclick="deleteWisata(4)"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Air Terjun Sipiso-piso</td>
+                        <td>Alam</td>
+                        <td>Karo</td>
+                        <td><span class="rating">★★★★½</span> 4.5</td>
+                        <td>Rp 20.000</td>
+                        <td><span class="status-badge success">Aktif</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-action btn-view" onclick="viewWisata(5)"><i class="fas fa-eye"></i></button>
+                                <button class="btn-action btn-edit" onclick="editWisata(5)"><i class="fas fa-edit"></i></button>
+                                <button class="btn-action btn-delete" onclick="deleteWisata(5)"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Museum Batak TB Silalahi</td>
+                        <td>Sejarah</td>
+                        <td>Balige</td>
+                        <td><span class="rating">★★★★★</span> 4.8</td>
+                        <td>Rp 25.000</td>
+                        <td><span class="status-badge warning">Renovasi</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-action btn-view" onclick="viewWisata(6)"><i class="fas fa-eye"></i></button>
+                                <button class="btn-action btn-edit" onclick="editWisata(6)"><i class="fas fa-edit"></i></button>
+                                <button class="btn-action btn-delete" onclick="deleteWisata(6)"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Tambah/Edit Wisata -->
+    <div class="modal fade" id="wisataModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Tambah Wisata</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="wisataForm">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Nama Wisata" id="wisataName">
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select" id="wisataCategory">
+                                    <option selected disabled>Kategori</option>
+                                    <option value="alam">Alam</option>
+                                    <option value="sejarah">Sejarah</option>
+                                    <option value="budaya">Budaya</option>
+                                    <option value="religi">Religi</option>
+                                    <option value="kuliner">Kuliner</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <textarea class="form-control" rows="3" placeholder="Deskripsi Wisata" id="wisataDesc"></textarea>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Alamat" id="wisataAddress">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Kota" id="wisataCity">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Latitude" id="wisataLat">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Longitude" id="wisataLng">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="Harga Dewasa" id="priceAdult">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="Harga Anak" id="priceChild">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="Harga Asing" id="priceForeign">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Jam Buka" id="openTime">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Jam Tutup" id="closeTime">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Fasilitas</label>
+                            <div>
+                                <span class="facility-tag" onclick="toggleFacility(this)"><i class="fas fa-parking"></i> Parkir</span>
+                                <span class="facility-tag" onclick="toggleFacility(this)"><i class="fas fa-utensils"></i> Restoran</span>
+                                <span class="facility-tag" onclick="toggleFacility(this)"><i class="fas fa-bed"></i> Penginapan</span>
+                                <span class="facility-tag" onclick="toggleFacility(this)"><i class="fas fa-wifi"></i> WiFi</span>
+                                <span class="facility-tag" onclick="toggleFacility(this)"><i class="fas fa-restroom"></i> Toilet</span>
+                                <span class="facility-tag" onclick="toggleFacility(this)"><i class="fas fa-car"></i> Transportasi</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Upload Foto Wisata</label>
+                            <input type="file" class="form-control" id="wisataImages" multiple accept="image/*">
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Telepon" id="wisataPhone">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" placeholder="Email" id="wisataEmail">
+                            </div>
+                        </div>
+                        
+                        <input type="url" class="form-control" placeholder="Website" id="wisataWebsite">
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select class="form-select" id="wisataStatus">
+                                    <option value="active">Aktif</option>
+                                    <option value="inactive">Tidak Aktif</option>
+                                    <option value="renovation">Renovasi</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" onclick="saveWisata()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Hapus -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus wisata ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Lihat Wisata -->
+    <div class="modal fade" id="viewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detail Wisata</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="https://source.unsplash.com/600x400/?lake,toba" class="img-fluid rounded mb-3">
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="text-gold">Danau Toba</h4>
+                            <p><i class="fas fa-map-marker-alt text-gold me-2"></i> Sumatera Utara</p>
+                            <p><i class="fas fa-tag text-gold me-2"></i> Alam</p>
+                            <p><span class="rating">★★★★★</span> 4.9 (2.500 ulasan)</p>
+                            <p><i class="fas fa-ticket-alt text-gold me-2"></i> Rp 15.000 - Rp 50.000</p>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <h6>Deskripsi</h6>
+                        <p>Danau vulkanik terbesar di dunia dengan Pulau Samosir di tengahnya. Keindahan alam yang memukau dengan budaya Batak yang kental.</p>
+                    </div>
+                    <div class="mt-3">
+                        <h6>Fasilitas</h6>
+                        <span class="facility-tag"><i class="fas fa-parking"></i> Parkir</span>
+                        <span class="facility-tag"><i class="fas fa-utensils"></i> Restoran</span>
+                        <span class="facility-tag"><i class="fas fa-bed"></i> Penginapan</span>
+                        <span class="facility-tag"><i class="fas fa-wifi"></i> WiFi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Toggle sidebar
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Check authentication
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'index.html';
+        }
+
+        // Load user info
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        document.getElementById('userName').textContent = user.name || 'Admin';
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Initialize DataTable
+        $(document).ready(function() {
+            $('#wisataTable').DataTable({
+                pageLength: 10,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json'
+                }
+            });
+
+            // Initialize Mini Map
+            var miniMap = L.map('miniMap').setView([2.5, 98.8], 7);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(miniMap);
+
+            // Add markers for each destination
+            var markers = [
+                { lat: 2.6845, lng: 98.8756, name: 'Danau Toba' },
+                { lat: 2.5833, lng: 98.8167, name: 'Pulau Samosir' },
+                { lat: 2.9, lng: 98.75, name: 'Rumah Bolon' },
+                { lat: 2.9167, lng: 98.6167, name: 'Sipiso-piso' }
+            ];
+
+            markers.forEach(function(marker) {
+                L.marker([marker.lat, marker.lng])
+                    .addTo(miniMap)
+                    .bindPopup(marker.name);
+            });
+        });
+
+        // Filter functions
+        document.getElementById('categoryFilter').addEventListener('change', filterTable);
+        document.getElementById('ratingFilter').addEventListener('change', filterTable);
+        document.getElementById('searchInput').addEventListener('keyup', filterTable);
+
+        function filterTable() {
+            const category = document.getElementById('categoryFilter').value;
+            const rating = document.getElementById('ratingFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            
+            console.log('Filter:', category, rating, search);
+        }
+
+        // Facility tags
+        function toggleFacility(element) {
+            element.classList.toggle('selected');
+        }
+
+        // Modal functions
+        let currentWisataId = null;
+        let deleteId = null;
+
+        function openAddModal() {
+            currentWisataId = null;
+            document.getElementById('modalTitle').textContent = 'Tambah Wisata';
+            document.getElementById('wisataForm').reset();
+            
+            // Reset facility tags
+            document.querySelectorAll('.facility-tag').forEach(tag => {
+                tag.classList.remove('selected');
+            });
+            
+            new bootstrap.Modal(document.getElementById('wisataModal')).show();
+        }
+
+        function editWisata(id) {
+            currentWisataId = id;
+            document.getElementById('modalTitle').textContent = 'Edit Wisata';
+            // Load data wisata
+            new bootstrap.Modal(document.getElementById('wisataModal')).show();
+        }
+
+        function viewWisata(id) {
+            new bootstrap.Modal(document.getElementById('viewModal')).show();
+        }
+
+        function deleteWisata(id) {
+            deleteId = id;
+            new bootstrap.Modal(document.getElementById('deleteModal')).show();
+        }
+
+        function confirmDelete() {
+            console.log('Menghapus wisata ID:', deleteId);
+            bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
+            alert('Wisata berhasil dihapus!');
+        }
+
+        function saveWisata() {
+            // Implementasi simpan
+            bootstrap.Modal.getInstance(document.getElementById('wisataModal')).hide();
+            alert('Wisata berhasil disimpan!');
+        }
+
+        function openFullMap() {
+            window.open('https://www.openstreetmap.org/#map=8/2.5/98.8', '_blank');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel Budaya Batak - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== VARIABEL WARNA BATAK ===== */
+        :root {
+            --merah-batak: #B22222;
+            --merah-tua: #8B1A1A;
+            --hitam-batak: #2C2C2C;
+            --emas-batak: #D4AF37;
+            --coklat-batak: #8B4513;
+            --hijau-batak: #2E8B57;
+            --putih: #F5F5F5;
+        }
+
+        /* ===== HEADER ARTIKEL ===== */
+        .page-header-artikel {
+            position: relative;
+            min-height: 60vh;
+            background: linear-gradient(135deg, var(--hitam-batak), var(--merah-tua), var(--coklat-batak));
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 120px 0 60px;
+            border-bottom: 8px solid var(--emas-batak);
+        }
+
+        .header-artikel-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(212,175,55,0.1) 0px, rgba(212,175,55,0.1) 15px, transparent 15px, transparent 30px),
+                repeating-linear-gradient(135deg, rgba(139,69,19,0.1) 0px, rgba(139,69,19,0.1) 25px, transparent 25px, transparent 50px);
+            z-index: 1;
+        }
+
+        .header-title-artikel {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--emas-batak);
+            text-shadow: 6px 6px 0 var(--merah-tua), 10px 10px 0 var(--hitam-batak);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 3;
+            letter-spacing: 4px;
+        }
+
+        .header-subtitle-artikel {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 3;
+            text-shadow: 3px 3px 0 var(--hitam-batak);
+            max-width: 600px;
+        }
+
+        /* ===== SEARCH SECTION ===== */
+        .search-section {
+            background: var(--putih);
+            padding: 30px 0;
+            border-bottom: 2px solid var(--emas-batak);
+        }
+
+        .search-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 25px;
+            padding-right: 60px;
+            border: 3px solid var(--emas-batak);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--merah-batak);
+            box-shadow: 0 0 0 5px rgba(178,34,34,0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--merah-batak);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--emas-batak);
+        }
+
+        .search-btn:hover {
+            background: var(--merah-tua);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* ===== KATEGORI SECTION ===== */
+        .kategori-section {
+            background: linear-gradient(135deg, #f8f9fa, white);
+            padding: 30px 0;
+            border-bottom: 2px solid var(--emas-batak);
+        }
+
+        .kategori-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .kategori-btn {
+            padding: 10px 25px;
+            border: 2px solid var(--merah-batak);
+            background: transparent;
+            color: var(--hitam-batak);
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .kategori-btn:hover, .kategori-btn.active {
+            background: var(--merah-batak);
+            color: white;
+            border-color: var(--emas-batak);
+        }
+
+        /* ===== ARTIKEL CARD ===== */
+        .artikel-card {
+            background: white;
+            border-radius: 40px 15px 40px 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            height: 100%;
+            border: 3px solid var(--emas-batak);
+            transition: all 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .artikel-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(178,34,34,0.2);
+            border-color: var(--merah-batak);
+        }
+
+        .artikel-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .artikel-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .artikel-card:hover .artikel-image img {
+            transform: scale(1.1);
+        }
+
+        .artikel-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--merah-batak);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            border: 2px solid var(--emas-batak);
+            z-index: 2;
+        }
+
+        .artikel-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .artikel-meta {
+            display: flex;
+            gap: 15px;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .artikel-meta i {
+            color: var(--emas-batak);
+            margin-right: 5px;
+        }
+
+        .artikel-content h3 {
+            color: var(--merah-batak);
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .artikel-excerpt {
+            color: var(--hitam-batak);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .artikel-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 2px dashed var(--emas-batak);
+        }
+
+        .artikel-stats {
+            display: flex;
+            gap: 15px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .artikel-stats i {
+            color: var(--emas-batak);
+            margin-right: 5px;
+        }
+
+        .btn-artikel {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--merah-batak);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--emas-batak);
+        }
+
+        .btn-artikel:hover {
+            background: var(--merah-tua);
+            transform: translateX(5px);
+            color: white;
+        }
+
+        /* ===== ARTIKEL POPULER ===== */
+        .populer-sidebar {
+            background: white;
+            border-radius: 40px 15px 40px 15px;
+            padding: 25px;
+            border: 3px solid var(--emas-batak);
+            position: sticky;
+            top: 100px;
+        }
+
+        .populer-title {
+            color: var(--merah-batak);
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px dashed var(--emas-batak);
+        }
+
+        .populer-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .populer-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .populer-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px 5px 20px 5px;
+            overflow: hidden;
+            border: 2px solid var(--emas-batak);
+        }
+
+        .populer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .populer-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .populer-content h4 a {
+            color: var(--hitam-batak);
+            text-decoration: none;
+        }
+
+        .populer-content h4 a:hover {
+            color: var(--merah-batak);
+        }
+
+        .populer-meta {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .populer-meta i {
+            color: var(--emas-batak);
+            margin-right: 5px;
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination-section {
+            margin-top: 50px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: white;
+            border: 2px solid var(--merah-batak);
+            color: var(--hitam-batak);
+            font-weight: 600;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .page-link:hover, .page-link.active {
+            background: var(--merah-batak);
+            color: white;
+            border-color: var(--emas-batak);
+            transform: scale(1.1);
+        }
+
+        .page-link.next {
+            width: auto;
+            padding: 0 20px;
+            border-radius: 50px;
+        }
+
+        /* ===== LOADING SPINNER ===== */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--putih);
+            border-top: 5px solid var(--merah-batak);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== NO RESULT ===== */
+        .no-result {
+            text-align: center;
+            padding: 50px 0;
+            display: none;
+        }
+
+        .no-result i {
+            font-size: 5rem;
+            color: var(--emas-batak);
+            margin-bottom: 20px;
+        }
+
+        .no-result h3 {
+            color: var(--merah-batak);
+            margin-bottom: 10px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-title-artikel {
+                font-size: 3rem;
+            }
+            
+            .artikel-meta {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .artikel-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .populer-sidebar {
+                position: static;
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-dharmachakra me-2" style="color: #D4AF37;"></i>
+                <span class="brand-indo">Budaya Batak</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Budaya
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sejarah.html"><i class="fas fa-history me-2"></i>Sejarah Batak</a></li>
+                            <li><a class="dropdown-item" href="ulos.html"><i class="fas fa-tshirt me-2"></i>Filosofi Ulos</a></li>
+                            <li><a class="dropdown-item" href="rumah-adat.html"><i class="fas fa-home me-2"></i>Rumah Adat</a></li>
+                            <li><a class="dropdown-item" href="tortor.html"><i class="fas fa-shoe-prints me-2"></i>Tarian Tortor</a></li>
+                            <li><a class="dropdown-item" href="gondang.html"><i class="fas fa-drum me-2"></i>Musik Gondang</a></li>
+                            <li><a class="dropdown-item" href="kuliner.html"><i class="fas fa-utensils me-2"></i>Kuliner Khas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wisata.html">Wisata</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="galeri.html">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="artikel.html">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="event.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="kontak.html">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header-artikel">
+        <div class="header-artikel-pattern"></div>
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div style="width: 70px; height: 70px; background: var(--emas-batak); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-newspaper fa-2x" style="color: var(--hitam-batak);"></i>
+                        </div>
+                        <span class="text-white" style="font-size: 2rem; font-weight: 300;">ᯀᯒ᯲ᯖᯪᯄ᯦ᯞ᯲</span>
+                    </div>
+                    <h1 class="header-title-artikel">ARTIKEL BUDAYA</h1>
+                    <p class="header-subtitle-artikel">Kumpulan artikel, berita, dan informasi tentang budaya Batak</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-wrapper" data-aos="fade-up">
+                <input type="text" class="search-input" id="searchInput" placeholder="Cari artikel...">
+                <button class="search-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kategori Section -->
+    <section class="kategori-section">
+        <div class="container">
+            <div class="kategori-buttons" data-aos="fade-up">
+                <button class="kategori-btn active" data-kategori="all">Semua</button>
+                <button class="kategori-btn" data-kategori="sejarah">Sejarah</button>
+                <button class="kategori-btn" data-kategori="ulos">Ulos</button>
+                <button class="kategori-btn" data-kategori="rumah-adat">Rumah Adat</button>
+                <button class="kategori-btn" data-kategori="tortor">Tortor</button>
+                <button class="kategori-btn" data-kategori="gondang">Gondang</button>
+                <button class="kategori-btn" data-kategori="kuliner">Kuliner</button>
+                <button class="kategori-btn" data-kategori="wisata">Wisata</button>
+                <button class="kategori-btn" data-kategori="tokoh">Tokoh</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artikel Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content - Artikel List -->
+                <div class="col-lg-8">
+                    <!-- Loading Spinner -->
+                    <div class="loading-spinner" id="loadingSpinner">
+                        <div class="spinner"></div>
+                        <p class="mt-3">Memuat artikel...</p>
+                    </div>
+
+                    <!-- No Result -->
+                    <div class="no-result" id="noResult">
+                        <i class="fas fa-search"></i>
+                        <h3>Artikel Tidak Ditemukan</h3>
+                        <p>Coba kata kunci atau kategori lain</p>
+                    </div>
+
+                    <!-- Artikel Grid -->
+                    <div class="row g-4" id="artikelGrid">
+                        <!-- Artikel 1 - Sejarah -->
+                        <div class="col-md-6" data-kategori="sejarah" data-aos="fade-up">
+                            <div class="artikel-card">
+                                <div class="artikel-image">
+                                    <img src="https://source.unsplash.com/600x400/?history,indonesia" alt="Sejarah Batak">
+                                    <span class="artikel-category">Sejarah</span>
+                                </div>
+                                <div class="artikel-content">
+                                    <div class="artikel-meta">
+                                        <span><i class="fas fa-calendar"></i> 15 Mar 2024</span>
+                                        <span><i class="fas fa-user"></i> Admin</span>
+                                    </div>
+                                    <h3>Sejarah dan Asal Usul Suku Batak</h3>
+                                    <p class="artikel-excerpt">Mengenal asal-usul suku Batak dari Pusuk Buhit hingga persebarannya di Sumatera Utara...</p>
+                                    <div class="artikel-footer">
+                                        <div class="artikel-stats">
+                                            <span><i class="fas fa-eye"></i> 1.2k</span>
+                                            <span><i class="fas fa-comment"></i> 15</span>
+                                        </div>
+                                        <a href="artikel-detail.html?id=1" class="btn-artikel">Baca <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Artikel 2 - Ulos -->
+                        <div class="col-md-6" data-kategori="ulos" data-aos="fade-up" data-aos-delay="50">
+                            <div class="artikel-card">
+                                <div class="artikel-image">
+                                    <img src="https://source.unsplash.com/601x400/?weaving,traditional" alt="Filosofi Ulos">
+                                    <span class="artikel-category">Ulos</span>
+                                </div>
+                                <div class="artikel-content">
+                                    <div class="artikel-meta">
+                                        <span><i class="fas fa-calendar"></i> 12 Mar 2024</span>
+                                        <span><i class="fas fa-user"></i> Admin</span>
+                                    </div>
+                                    <h3>Filosofi Ulos: Lebih dari Sekadar Kain</h3>
+                                    <p class="artikel-excerpt">Setiap helai benang dalam ulos mengandung doa dan makna filosofis yang mendalam...</p>
+                                    <div class="artikel-footer">
+                                        <div class="artikel-stats">
+                                            <span><i class="fas fa-eye"></i> 985</span>
+                                            <span><i class="fas fa-comment"></i> 12</span>
+                                        </div>
+                                        <a href="artikel-detail.html?id=2" class="btn-artikel">Baca <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Artikel 3 - Rumah Adat -->
+                        <div class="col-md-6" data-kategori="rumah-adat" data-aos="fade-up" data-aos-delay="100">
+                            <div class="artikel-card">
+                                <div class="artikel-image">
+                                    <img src="https://source.unsplash.com/602x400/?traditional,house" alt="Rumah Adat">
+                                    <span class="artikel-category">Rumah Adat</span>
+                                </div>
+                                <div class="artikel-content">
+                                    <div class="artikel-meta">
+                                        <span><i class="fas fa-calendar"></i> 10 Mar 2024</span>
+                                        <span><i class="fas fa-user"></i> Admin</span>
+                                    </div>
+                                    <h3>Rumah Bolon: Arsitektur Tradisional Batak</h3>
+                                    <p class="artikel-excerpt">Mengenal filosofi di balik arsitektur rumah adat Batak yang penuh makna...</p>
+                                    <div class="artikel-footer">
+                                        <div class="artikel-stats">
+                                            <span><i class="fas fa-eye"></i> 756</span>
+                                            <span><i class="fas fa-comment"></i> 8</span>
+                                        </div>
+                                        <a href="artikel-detail.html?id=3" class="btn-artikel">Baca <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Artikel 4 - Tortor -->
+                        <div class="col-md-6" data-kategori="tortor" data-aos="fade-up" data-aos-delay="150">
+                            <div class="artikel-card">
+                                <div class="artikel-image">
+                                    <img src="https://source.unsplash.com/603x400/?dance,traditional" alt="Tarian Tortor">
+                                    <span class="artikel-category">Tortor</span>
+                                </div>
+                                <div class="artikel-content">
+                                    <div class="artikel-meta">
+                                        <span><i class="fas fa-calendar"></i> 8 Mar 2024</span>
+                                        <span><i class="fas fa-user"></i> Admin</span>
+                                    </div>
+                                    <h3>Tari Tortor: Gerakan Penuh Doa dan Makna</h3>
+                                    <p class="artikel-excerpt">Setiap gerakan dalam tarian tortor memiliki makna doa dan penghormatan kepada leluhur...</p>
+                                    <div class="artikel-footer">
+                                        <div class="artikel-stats">
+                                            <span><i class="fas fa-eye"></i> 1.5k</span>
+                                            <span><i class="fas fa-comment"></i> 21</span>
+                                        </div>
+                                        <a href="artikel-detail.html?id=4" class="btn-artikel">Baca <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Artikel 5 - Gondang -->
+                        <div class="col-md-6" data-kategori="gondang" data-aos="fade-up" data-aos-delay="200">
+                            <div class="artikel-card">
+                                <div class="artikel-image">
+                                    <img src="https://source.unsplash.com/604x400/?music,traditional" alt="Musik Gondang">
+                                    <span class="artikel-category">Gondang</span>
+                                </div>
+                                <div class="artikel-content">
+                                    <div class="artikel-meta">
+                                        <span><i class="fas fa-calendar"></i> 5 Mar 2024</span>
+                                        <span><i class="fas fa-user"></i> Admin</span>
+                                    </div>
+                                    <h3>Musik Gondang: Irama Sakral Batak</h3>
+                                    <p class="artikel-excerpt">Mengenal alat musik dan irama gondang yang mengiringi setiap upacara adat Batak...</p>
+                                    <div class="artikel-footer">
+                                        <div class="artikel-stats">
+                                            <span><i class="fas fa-eye"></i> 623</span>
+                                            <span><i class="fas fa-comment"></i> 9</span>
+                                        </div>
+                                        <a href="artikel-detail.html?id=5" class="btn-artikel">Baca <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Artikel 6 - Kuliner -->
+                        <div class="col-md-6" data-kategori="kuliner" data-aos="fade-up" data-aos-delay="250">
+                            <div class="artikel-card">
+                                <div class="artikel-image">
+                                    <img src="https://source.unsplash.com/605x400/?indonesian,food" alt="Kuliner Batak">
+                                    <span class="artikel-category">Kuliner</span>
+                                </div>
+                                <div class="artikel-content">
+                                    <div class="artikel-meta">
+                                        <span><i class="fas fa-calendar"></i> 3 Mar 2024</span>
+                                        <span><i class="fas fa-user"></i> Admin</span>
+                                    </div>
+                                    <h3>Kuliner Khas Batak: Cita Rasa Andaliman</h3>
+                                    <p class="artikel-excerpt">Jelajahi kelezatan saksang, naniura, mie gomak dan hidangan khas Batak lainnya...</p>
+                                    <div class="artikel-footer">
+                                        <div class="artikel-stats">
+                                            <span><i class="fas fa-eye"></i> 892</span>
+                                            <span><i class="fas fa-comment"></i> 14</span>
+                                        </div>
+                                        <a href="artikel-detail.html?id=6" class="btn-artikel">Baca <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Artikel 7 - Wisata -->
+                        <div class="col-md-6" data-kategori="wisata" data-aos="fade-up" data-aos-delay="300">
+                            <div class="artikel-card">
+                                <div class="artikel-image">
+                                    <img src="https://source.unsplash.com/606x400/?lake,toba" alt="Danau Toba">
+                                    <span class="artikel-category">Wisata</span>
+                                </div>
+                                <div class="artikel-content">
+                                    <div class="artikel-meta">
+                                        <span><i class="fas fa-calendar"></i> 1 Mar 2024</span>
+                                        <span><i class="fas fa-user"></i> Admin</span>
+                                    </div>
+                                    <h3>Pesona Danau Toba dan Pulau Samosir</h3>
+                                    <p class="artikel-excerpt">Destinasi wisata super prioritas dengan keindahan alam dan budaya yang memukau...</p>
+                                    <div class="artikel-footer">
+                                        <div class="artikel-stats">
+                                            <span><i class="fas fa-eye"></i> 2.1k</span>
+                                            <span><i class="fas fa-comment"></i> 32</span>
+                                        </div>
+                                        <a href="artikel-detail.html?id=7" class="btn-artikel">Baca <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Artikel 8 - Tokoh -->
+                        <div class="col-md-6" data-kategori="tokoh" data-aos="fade-up" data-aos-delay="350">
+                            <div class="artikel-card">
+                                <div class="artikel-image">
+                                    <img src="https://source.unsplash.com/607x400/?portrait,man" alt="Tokoh Batak">
+                                    <span class="artikel-category">Tokoh</span>
+                                </div>
+                                <div class="artikel-content">
+                                    <div class="artikel-meta">
+                                        <span><i class="fas fa-calendar"></i> 28 Feb 2024</span>
+                                        <span><i class="fas fa-user"></i> Admin</span>
+                                    </div>
+                                    <h3>Pahlawan Nasional dari Tanah Batak</h3>
+                                    <p class="artikel-excerpt">Mengenal tokoh-tokoh Batak yang berjasa bagi bangsa Indonesia...</p>
+                                    <div class="artikel-footer">
+                                        <div class="artikel-stats">
+                                            <span><i class="fas fa-eye"></i> 1.1k</span>
+                                            <span><i class="fas fa-comment"></i> 18</span>
+                                        </div>
+                                        <a href="artikel-detail.html?id=8" class="btn-artikel">Baca <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Artikel 9 - Tambahan Sejarah -->
+                        <div class="col-md-6" data-kategori="sejarah" data-aos="fade-up" data-aos-delay="400">
+                            <div class="artikel-card">
+                                <div class="artikel-image">
+                                    <img src="https://source.unsplash.com/608x400/?ancient,kingdom" alt="Kerajaan Batak">
+                                    <span class="artikel-category">Sejarah</span>
+                                </div>
+                                <div class="artikel-content">
+                                    <div class="artikel-meta">
+                                        <span><i class="fas fa-calendar"></i> 25 Feb 2024</span>
+                                        <span><i class="fas fa-user"></i> Admin</span>
+                                    </div>
+                                    <h3>Kerajaan-Kerajaan Kuno di Tanah Batak</h3>
+                                    <p class="artikel-excerpt">Jejak kerajaan Batak sebelum kedatangan kolonial Belanda...</p>
+                                    <div class="artikel-footer">
+                                        <div class="artikel-stats">
+                                            <span><i class="fas fa-eye"></i> 745</span>
+                                            <span><i class="fas fa-comment"></i> 11</span>
+                                        </div>
+                                        <a href="artikel-detail.html?id=9" class="btn-artikel">Baca <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Artikel 10 - Tambahan Ulos -->
+                        <div class="col-md-6" data-kategori="ulos" data-aos="fade-up" data-aos-delay="450">
+                            <div class="artikel-card">
+                                <div class="artikel-image">
+                                    <img src="https://source.unsplash.com/609x400/?textile,pattern" alt="Motif Ulos">
+                                    <span class="artikel-category">Ulos</span>
+                                </div>
+                                <div class="artikel-content">
+                                    <div class="artikel-meta">
+                                        <span><i class="fas fa-calendar"></i> 22 Feb 2024</span>
+                                        <span><i class="fas fa-user"></i> Admin</span>
+                                    </div>
+                                    <h3>Makna di Balik Motif Ulos Batak</h3>
+                                    <p class="artikel-excerpt">Setiap motif dalam ulos memiliki filosofi dan doa yang berbeda...</p>
+                                    <div class="artikel-footer">
+                                        <div class="artikel-stats">
+                                            <span><i class="fas fa-eye"></i> 567</span>
+                                            <span><i class="fas fa-comment"></i> 7</span>
+                                        </div>
+                                        <a href="artikel-detail.html?id=10" class="btn-artikel">Baca <i class="fas fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-section">
+                        <nav class="pagination">
+                            <a href="#" class="page-link"><i class="fas fa-chevron-left"></i></a>
+                            <a href="#" class="page-link active">1</a>
+                            <a href="#" class="page-link">2</a>
+                            <a href="#" class="page-link">3</a>
+                            <a href="#" class="page-link">4</a>
+                            <a href="#" class="page-link">5</a>
+                            <a href="#" class="page-link next">Next <i class="fas fa-chevron-right ms-2"></i></a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Sidebar - Artikel Populer -->
+                <div class="col-lg-4">
+                    <div class="populer-sidebar" data-aos="fade-left">
+                        <h3 class="populer-title"><i class="fas fa-fire me-2"></i>Artikel Populer</h3>
+                        
+                        <div class="populer-item">
+                            <div class="populer-image">
+                                <img src="https://source.unsplash.com/610x400/?dance,traditional" alt="Tortor">
+                            </div>
+                            <div class="populer-content">
+                                <h4><a href="artikel-detail.html?id=4">Tari Tortor: Gerakan Penuh Doa</a></h4>
+                                <div class="populer-meta">
+                                    <i class="fas fa-eye"></i> 1.5k dilihat
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="populer-item">
+                            <div class="populer-image">
+                                <img src="https://source.unsplash.com/611x400/?lake,toba" alt="Danau Toba">
+                            </div>
+                            <div class="populer-content">
+                                <h4><a href="artikel-detail.html?id=7">Pesona Danau Toba</a></h4>
+                                <div class="populer-meta">
+                                    <i class="fas fa-eye"></i> 2.1k dilihat
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="populer-item">
+                            <div class="populer-image">
+                                <img src="https://source.unsplash.com/612x400/?history,indonesia" alt="Sejarah">
+                            </div>
+                            <div class="populer-content">
+                                <h4><a href="artikel-detail.html?id=1">Sejarah Suku Batak</a></h4>
+                                <div class="populer-meta">
+                                    <i class="fas fa-eye"></i> 1.2k dilihat
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="populer-item">
+                            <div class="populer-image">
+                                <img src="https://source.unsplash.com/613x400/?weaving,traditional" alt="Ulos">
+                            </div>
+                            <div class="populer-content">
+                                <h4><a href="artikel-detail.html?id=2">Filosofi Ulos</a></h4>
+                                <div class="populer-meta">
+                                    <i class="fas fa-eye"></i> 985 dilihat
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="populer-item">
+                            <div class="populer-image">
+                                <img src="https://source.unsplash.com/614x400/?indonesian,food" alt="Kuliner">
+                            </div>
+                            <div class="populer-content">
+                                <h4><a href="artikel-detail.html?id=6">Kuliner Khas Batak</a></h4>
+                                <div class="populer-meta">
+                                    <i class="fas fa-eye"></i> 892 dilihat
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kategori Populer -->
+                        <h3 class="populer-title mt-5"><i class="fas fa-tags me-2"></i>Kategori</h3>
+                        
+                        <div class="kategori-list">
+                            <a href="#" class="kategori-item d-flex justify-content-between align-items-center p-2 border-bottom">
+                                <span><i class="fas fa-history me-2" style="color: var(--merah-batak);"></i>Sejarah</span>
+                                <span class="badge bg-gold">8</span>
+                            </a>
+                            <a href="#" class="kategori-item d-flex justify-content-between align-items-center p-2 border-bottom">
+                                <span><i class="fas fa-tshirt me-2" style="color: var(--merah-batak);"></i>Ulos</span>
+                                <span class="badge bg-gold">6</span>
+                            </a>
+                            <a href="#" class="kategori-item d-flex justify-content-between align-items-center p-2 border-bottom">
+                                <span><i class="fas fa-home me-2" style="color: var(--merah-batak);"></i>Rumah Adat</span>
+                                <span class="badge bg-gold">4</span>
+                            </a>
+                            <a href="#" class="kategori-item d-flex justify-content-between align-items-center p-2 border-bottom">
+                                <span><i class="fas fa-shoe-prints me-2" style="color: var(--merah-batak);"></i>Tortor</span>
+                                <span class="badge bg-gold">5</span>
+                            </a>
+                            <a href="#" class="kategori-item d-flex justify-content-between align-items-center p-2 border-bottom">
+                                <span><i class="fas fa-drum me-2" style="color: var(--merah-batak);"></i>Gondang</span>
+                                <span class="badge bg-gold">3</span>
+                            </a>
+                            <a href="#" class="kategori-item d-flex justify-content-between align-items-center p-2 border-bottom">
+                                <span><i class="fas fa-utensils me-2" style="color: var(--merah-batak);"></i>Kuliner</span>
+                                <span class="badge bg-gold">7</span>
+                            </a>
+                            <a href="#" class="kategori-item d-flex justify-content-between align-items-center p-2">
+                                <span><i class="fas fa-map-marked-alt me-2" style="color: var(--merah-batak);"></i>Wisata</span>
+                                <span class="badge bg-gold">5</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-pattern"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>Budaya Batak</h4>
+                        <span>Warisan Leluhur</span>
+                    </div>
+                    <p class="mt-3">Melestarikan kekayaan budaya Batak untuk generasi mendatang. "Horas jala gabe ma di hita saluhutna".</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Budaya</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="sejarah.html"><i class="fas fa-chevron-right me-2"></i>Sejarah</a></li>
+                        <li><a href="ulos.html"><i class="fas fa-chevron-right me-2"></i>Ulos</a></li>
+                        <li><a href="rumah-adat.html"><i class="fas fa-chevron-right me-2"></i>Rumah Adat</a></li>
+                        <li><a href="tortor.html"><i class="fas fa-chevron-right me-2"></i>Tarian</a></li>
+                        <li><a href="gondang.html"><i class="fas fa-chevron-right me-2"></i>Musik</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Jelajah</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="wisata.html"><i class="fas fa-chevron-right me-2"></i>Wisata</a></li>
+                        <li><a href="event.html"><i class="fas fa-chevron-right me-2"></i>Event</a></li>
+                        <li><a href="galeri.html"><i class="fas fa-chevron-right me-2"></i>Galeri</a></li>
+                        <li><a href="artikel.html"><i class="fas fa-chevron-right me-2"></i>Artikel</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5>Kontak</h5>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Medan, Sumatera Utara</p>
+                        <p><i class="fas fa-phone me-2"></i> +62 61 1234 5678</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@budayabatak.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2024 Budaya Batak. All rights reserved. Horas! 🏆</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Kebijakan Privasi</a>
+                        <a href="#">Syarat Layanan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="btn btn-primary back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+        
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // ===== SISTEM FILTER ARTIKEL =====
+        const kategoriBtns = document.querySelectorAll('.kategori-btn');
+        const artikelCards = document.querySelectorAll('.artikel-card');
+        const noResult = document.getElementById('noResult');
+        const artikelGrid = document.getElementById('artikelGrid');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        
+        let activeKategori = 'all';
+        let searchTerm = '';
+        
+        // Fungsi filter artikel
+        function filterArtikel() {
+            let visibleCount = 0;
+            
+            artikelCards.forEach(card => {
+                const cardKategori = card.closest('.col-md-6').getAttribute('data-kategori');
+                const cardTitle = card.querySelector('h3').innerText.toLowerCase();
+                const cardExcerpt = card.querySelector('.artikel-excerpt').innerText.toLowerCase();
+                
+                const matchKategori = activeKategori === 'all' || cardKategori === activeKategori;
+                const matchSearch = searchTerm === '' || 
+                                  cardTitle.includes(searchTerm) || 
+                                  cardExcerpt.includes(searchTerm);
+                
+                if (matchKategori && matchSearch) {
+                    card.closest('.col-md-6').style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.closest('.col-md-6').style.display = 'none';
+                }
+            });
+            
+            // Tampilkan no result jika tidak ada artikel
+            if (visibleCount === 0) {
+                noResult.style.display = 'block';
+            } else {
+                noResult.style.display = 'none';
+            }
+        }
+        
+        // Event listener untuk kategori buttons
+        kategoriBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                kategoriBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeKategori = btn.getAttribute('data-kategori');
+                filterArtikel();
+            });
+        });
+        
+        // ===== SISTEM SEARCH =====
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        
+        function handleSearch() {
+            searchTerm = searchInput.value.toLowerCase().trim();
+            filterArtikel();
+        }
+        
+        searchBtn.addEventListener('click', handleSearch);
+        
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                handleSearch();
+            }
+        });
+        
+        // Simulasi loading (untuk demo)
+        setTimeout(() => {
+            loadingSpinner.style.display = 'none';
+        }, 500);
+    </script>
+</body>
+</html>

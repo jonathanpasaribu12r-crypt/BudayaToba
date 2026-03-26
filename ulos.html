@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filosofi Ulos - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== VARIABEL WARNA BATAK ===== */
+        :root {
+            --merah-batak: #B22222;
+            --merah-tua: #8B1A1A;
+            --hitam-batak: #2C2C2C;
+            --emas-batak: #D4AF37;
+            --putih: #F5F5F5;
+            --abu-batak: #4A4A4A;
+        }
+
+        /* ===== HEADER ULOS PREMIUM ===== */
+        .page-header-ulos {
+            position: relative;
+            min-height: 80vh;
+            background: linear-gradient(165deg, var(--hitam-batak) 0%, var(--merah-tua) 50%, var(--hitam-batak) 100%);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 120px 0 80px;
+            border-bottom: 8px solid var(--emas-batak);
+        }
+
+        .header-ulos-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(90deg, rgba(212,175,55,0.08) 0px, rgba(212,175,55,0.08) 6px, transparent 6px, transparent 18px),
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 3px, transparent 3px, transparent 12px),
+                repeating-linear-gradient(45deg, rgba(178,34,34,0.05) 0px, rgba(178,34,34,0.05) 12px, transparent 12px, transparent 24px);
+            z-index: 1;
+        }
+
+        .header-gorga-1 {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%);
+            filter: blur(40px);
+            z-index: 1;
+        }
+
+        .header-gorga-2 {
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(178,34,34,0.2) 0%, transparent 70%);
+            filter: blur(50px);
+            z-index: 1;
+        }
+
+        .header-title-ulos {
+            font-size: 6rem;
+            font-weight: 900;
+            color: var(--emas-batak);
+            text-shadow: 6px 6px 0 var(--merah-tua), 10px 10px 0 var(--hitam-batak);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 3;
+            letter-spacing: 8px;
+            animation: titleGlow 3s infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 6px 6px 0 var(--merah-tua), 10px 10px 0 var(--hitam-batak); }
+            50% { text-shadow: 8px 8px 0 var(--merah-tua), 14px 14px 0 var(--hitam-batak); }
+        }
+
+        .header-subtitle-ulos {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 3;
+            text-shadow: 3px 3px 0 var(--hitam-batak);
+            max-width: 600px;
+        }
+
+        /* ===== ULOS SHOWCASE PREMIUM ===== */
+        .ulos-showcase-premium {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .ulos-frame-premium {
+            position: relative;
+            padding: 18px;
+            background: linear-gradient(145deg, var(--emas-batak), var(--merah-batak), var(--hitam-batak));
+            border-radius: 60px 20px 60px 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 0 4px rgba(212,175,55,0.3);
+            animation: framePulse 4s infinite;
+        }
+
+        @keyframes framePulse {
+            0%, 100% { box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 0 4px rgba(212,175,55,0.3); }
+            50% { box-shadow: 0 40px 80px rgba(178,34,34,0.4), 0 0 0 8px rgba(212,175,55,0.5); }
+        }
+
+        .ulos-image-premium {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(145deg, var(--merah-batak), var(--hitam-batak));
+            border-radius: 50px 15px 50px 15px;
+            overflow: hidden;
+            border: 4px solid rgba(255,215,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ulos-pattern-premium {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(255,215,0,0.2) 0px, rgba(255,215,0,0.2) 3px, transparent 3px, transparent 15px),
+                repeating-linear-gradient(90deg, rgba(255,255,255,0.15) 0px, rgba(255,255,255,0.15) 6px, transparent 6px, transparent 22px),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.25) 0px, rgba(0,0,0,0.25) 8px, transparent 8px, transparent 24px),
+                radial-gradient(circle at 30% 50%, rgba(212,175,55,0.2) 20px, transparent 20px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 60px 60px;
+        }
+
+        .ulos-word-premium {
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(255,215,0,0.25);
+            text-shadow: 6px 6px 0 rgba(0,0,0,0.3);
+            letter-spacing: 12px;
+            z-index: 3;
+            position: relative;
+            animation: textFloat 5s infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        .ulos-ornament {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 3px solid var(--emas-batak);
+            opacity: 0.3;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            z-index: 5;
+        }
+
+        .ulos-ornament-1 {
+            top: -20px;
+            left: -20px;
+            width: 60px;
+            height: 60px;
+            border-color: var(--emas-batak);
+        }
+
+        .ulos-ornament-2 {
+            bottom: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            border-color: var(--merah-batak);
+        }
+
+        /* ===== QUOTE BATAK PREMIUM ===== */
+        .batak-quote-premium {
+            background: linear-gradient(145deg, var(--hitam-batak), var(--merah-tua));
+            padding: 60px 40px;
+            border-radius: 60px 20px 60px 20px;
+            border: 5px solid var(--emas-batak);
+            color: white;
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+        }
+
+        .batak-quote-premium::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .batak-quote-premium i {
+            font-size: 4rem;
+            color: var(--emas-batak);
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .batak-quote-premium p {
+            font-size: 2.2rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .batak-quote-premium small {
+            color: var(--emas-batak);
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 2px;
+        }
+
+        /* ===== JENIS ULOS CARD PREMIUM ===== */
+        .jenis-ulos-card-premium {
+            background: white;
+            border-radius: 40px 15px 40px 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            height: 100%;
+            border: 3px solid var(--emas-batak);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .jenis-ulos-card-premium:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(178,34,34,0.3);
+            border-color: var(--merah-batak);
+        }
+
+        .jenis-ulos-card-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--merah-batak), var(--emas-batak), var(--hitam-batak));
+            z-index: 2;
+        }
+
+        .jenis-ulos-image-premium {
+            height: 220px;
+            background: linear-gradient(145deg, var(--merah-batak), var(--hitam-batak));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .jenis-ulos-image-premium i {
+            font-size: 5rem;
+            color: var(--emas-batak);
+            z-index: 3;
+            transition: all 0.5s;
+        }
+
+        .jenis-ulos-card-premium:hover .jenis-ulos-image-premium i {
+            transform: scale(1.2) rotate(10deg);
+            color: white;
+        }
+
+        .jenis-ulos-image-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(255,215,0,0.15) 0px, rgba(255,215,0,0.15) 6px, transparent 6px, transparent 18px);
+        }
+
+        .jenis-ulos-image-premium::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+        }
+
+        .jenis-ulos-content-premium {
+            padding: 30px 25px;
+            text-align: center;
+            background: white;
+        }
+
+        .jenis-ulos-content-premium h3 {
+            color: var(--merah-batak);
+            font-weight: 800;
+            margin-bottom: 10px;
+            font-size: 1.6rem;
+        }
+
+        .jenis-ulos-content-premium .ulos-makna {
+            color: var(--emas-batak);
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .jenis-ulos-content-premium p {
+            color: var(--hitam-batak);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .btn-ulos-detail {
+            display: inline-block;
+            padding: 8px 25px;
+            border: 2px solid var(--merah-batak);
+            color: var(--merah-batak);
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-ulos-detail:hover {
+            background: var(--merah-batak);
+            color: white;
+        }
+
+        /* ===== FILOSOFI GRID PREMIUM ===== */
+        .filosofi-grid-premium {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .filosofi-item-premium {
+            background: white;
+            padding: 25px;
+            border-radius: 30px 10px 30px 10px;
+            border: 2px solid var(--emas-batak);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .filosofi-item-premium:hover {
+            transform: translateY(-10px);
+            border-color: var(--merah-batak);
+            box-shadow: 0 20px 40px rgba(178,34,34,0.2);
+        }
+
+        .filosofi-item-premium i {
+            font-size: 2.5rem;
+            color: var(--merah-batak);
+            margin-bottom: 15px;
+        }
+
+        .filosofi-item-premium h4 {
+            color: var(--hitam-batak);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .filosofi-item-premium p {
+            color: var(--abu-batak);
+            font-size: 0.95rem;
+        }
+
+        /* ===== PROSES PEMBUATAN ===== */
+        .proses-timeline {
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .proses-item {
+            position: relative;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--merah-batak);
+            border-bottom: 2px solid var(--emas-batak);
+            transition: all 0.3s;
+        }
+
+        .proses-item:hover {
+            transform: translateX(15px);
+            box-shadow: 0 15px 30px rgba(178,34,34,0.15);
+        }
+
+        .proses-number {
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--merah-batak);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--emas-batak);
+            font-weight: 800;
+            font-size: 1.5rem;
+            border: 3px solid var(--emas-batak);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-title-ulos {
+                font-size: 3.5rem;
+                letter-spacing: 4px;
+            }
+            
+            .header-subtitle-ulos {
+                font-size: 1.2rem;
+            }
+            
+            .ulos-showcase-premium {
+                margin-top: 40px;
+            }
+            
+            .batak-quote-premium p {
+                font-size: 1.5rem;
+            }
+            
+            .filosofi-grid-premium {
+                grid-template-columns: 1fr;
+            }
+            
+            .proses-timeline {
+                padding-left: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-dharmachakra me-2" style="color: #D4AF37;"></i>
+                <span class="brand-indo">Budaya Batak</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                            Budaya
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sejarah.html"><i class="fas fa-history me-2"></i>Sejarah Batak</a></li>
+                            <li><a class="dropdown-item active" href="ulos.html"><i class="fas fa-tshirt me-2"></i>Filosofi Ulos</a></li>
+                            <li><a class="dropdown-item" href="rumah-adat.html"><i class="fas fa-home me-2"></i>Rumah Adat</a></li>
+                            <li><a class="dropdown-item" href="tortor.html"><i class="fas fa-shoe-prints me-2"></i>Tarian Tortor</a></li>
+                            <li><a class="dropdown-item" href="gondang.html"><i class="fas fa-drum me-2"></i>Musik Gondang</a></li>
+                            <li><a class="dropdown-item" href="kuliner.html"><i class="fas fa-utensils me-2"></i>Kuliner Khas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wisata.html">Wisata</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="galeri.html">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="artikel.html">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="event.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="kontak.html">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header Premium -->
+    <section class="page-header-ulos">
+        <div class="header-gorga-1"></div>
+        <div class="header-gorga-2"></div>
+        <div class="header-ulos-pattern"></div>
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row align-items-center">
+                <div class="col-lg-7" data-aos="fade-right" data-aos-duration="1200">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div style="width: 60px; height: 60px; background: var(--emas-batak); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-tshirt fa-2x" style="color: var(--hitam-batak);"></i>
+                        </div>
+                        <span class="text-white" style="font-size: 2rem; font-weight: 300;">ᯥᯞᯘ᯲</span>
+                    </div>
+                    <h1 class="header-title-ulos">ULOS</h1>
+                    <p class="header-subtitle-ulos">Kain tenun sakral yang menyimpan makna kasih sayang, restu, dan perlindungan dalam setiap helainya</p>
+                    
+                    <div class="d-flex gap-3 mt-5">
+                        <div class="text-center">
+                            <h3 class="text-gold mb-0">50+</h3>
+                            <small class="text-white">Jenis Ulos</small>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-gold mb-0">1000+</h3>
+                            <small class="text-white">Tahun Tradisi</small>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-gold mb-0">6</h3>
+                            <small class="text-white">Motif Utama</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-5" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="ulos-showcase-premium">
+                        <div class="ulos-frame-premium">
+                            <div class="ulos-image-premium">
+                                <div class="ulos-pattern-premium"></div>
+                                <div class="ulos-word-premium">ᯥᯞᯘ᯲</div>
+                                <div class="ulos-ornament ulos-ornament-1"></div>
+                                <div class="ulos-ornament ulos-ornament-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Batak Premium -->
+    <section class="container py-5">
+        <div class="batak-quote-premium" data-aos="zoom-in" data-aos-duration="1000">
+            <i class="fas fa-quote-right"></i>
+            <p>"Ijuk pangihot ni hodong, ulos pangihot ni holong"</p>
+            <small>— Ijuk pengikat ijuk, ulos pengikat kasih sayang —</small>
+        </div>
+    </section>
+
+    <!-- Makna Ulos Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
+                    <span class="section-subtitle">ᯇᯪᯞᯬᯘᯬᯇᯪ • Filosofi</span>
+                    <h2 class="section-title">Apa Itu Ulos?</h2>
+                    <div class="ulos-divider" style="justify-content: start;">
+                        <div class="ulos-divider-line" style="width: 80px;"></div>
+                    </div>
+                    
+                    <p class="lead mt-4" style="color: var(--merah-batak); font-weight: 600;">Lebih dari sekadar kain tenun biasa.</p>
+                    
+                    <p>Dalam falsafah hidup orang Batak, <strong class="text-gold">Ulos</strong> melambangkan kasih sayang, restu, perlindungan, dan ikatan batin antara pemberi dan penerima. Setiap helai benang yang ditenun mengandung doa dan harapan untuk kehidupan yang lebih baik.</p>
+                    
+                    <p class="mt-3">Ulos diberikan dalam berbagai upacara adat seperti pernikahan, kelahiran, kematian, dan pemberian restu. Tanpa Ulos, sebuah upacara adat Batak dianggap belum sempurna.</p>
+                    
+                    <div class="filosofi-grid-premium mt-4">
+                        <div class="filosofi-item-premium">
+                            <i class="fas fa-heart"></i>
+                            <h4>Kasih Sayang</h4>
+                            <p>Tanda kasih tulus dari orang tua kepada anak</p>
+                        </div>
+                        <div class="filosofi-item-premium">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Perlindungan</h4>
+                            <p>Melindungi dari dingin dan mara bahaya</p>
+                        </div>
+                        <div class="filosofi-item-premium">
+                            <i class="fas fa-crown"></i>
+                            <h4>Penghormatan</h4>
+                            <p>Bentuk penghormatan tertinggi dalam adat</p>
+                        </div>
+                        <div class="filosofi-item-premium">
+                            <i class="fas fa-pray"></i>
+                            <h4>Restu & Doa</h4>
+                            <p>Doa dan harapan untuk kehidupan lebih baik</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/600x600/?traditional,weaving" alt="Tenun Ulos" class="img-fluid" style="border-radius: 60px 20px 60px 20px; border: 8px solid var(--emas-batak); box-shadow: 0 30px 50px rgba(0,0,0,0.3);">
+                        <div style="position: absolute; bottom: -20px; right: -20px; width: 150px; height: 150px; background: var(--merah-batak); border-radius: 50%; border: 5px solid var(--emas-batak); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem; text-align: center; padding: 20px;">
+                            Tenun <br>Tradisional
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jenis-jenis Ulos Premium -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-subtitle">ᯥᯞᯘ᯲ • Ragam</span>
+                <h2 class="section-title">Jenis-jenis Ulos</h2>
+                <p class="section-description">Setiap helai ulos memiliki makna dan fungsi yang berbeda dalam adat Batak</p>
+                <div class="ulos-divider">
+                    <div class="ulos-divider-line"></div>
+                    <i class="fas fa-tshirt ulos-divider-icon"></i>
+                    <div class="ulos-divider-line"></div>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Ragidup -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="jenis-ulos-card-premium">
+                        <div class="jenis-ulos-image-premium">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="jenis-ulos-content-premium">
+                            <h3>Ulos Ragidup</h3>
+                            <div class="ulos-makna">"Simbol Kehidupan"</div>
+                            <p>Digunakan dalam upacara pernikahan. Melambangkan kehidupan baru dan kebahagiaan rumah tangga. Biasanya diberikan orang tua kepada mempelai sebagai restu.</p>
+                            <a href="#" class="btn-ulos-detail">Selengkapnya</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sibolang -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="jenis-ulos-card-premium">
+                        <div class="jenis-ulos-image-premium">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="jenis-ulos-content-premium">
+                            <h3>Ulos Sibolang</h3>
+                            <div class="ulos-makna">"Penghormatan Terakhir"</div>
+                            <p>Digunakan dalam upacara kematian. Melambangkan penghormatan terakhir kepada orang yang meninggal dan doa untuk perjalanan arwah.</p>
+                            <a href="#" class="btn-ulos-detail">Selengkapnya</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ragi Hotang -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="jenis-ulos-card-premium">
+                        <div class="jenis-ulos-image-premium">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="jenis-ulos-content-premium">
+                            <h3>Ulos Ragi Hotang</h3>
+                            <div class="ulos-makna">"Ikatan Persaudaraan"</div>
+                            <p>Simbol ikatan kekeluargaan yang kuat. Digunakan dalam acara-acara yang mempererat hubungan antar keluarga dan marga.</p>
+                            <a href="#" class="btn-ulos-detail">Selengkapnya</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tumtuman -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="jenis-ulos-card-premium">
+                        <div class="jenis-ulos-image-premium">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="jenis-ulos-content-premium">
+                            <h3>Ulos Tumtuman</h3>
+                            <div class="ulos-makna">"Tanda Terima Kasih"</div>
+                            <p>Diberikan kepada orang yang berjasa atau dihormati sebagai tanda terima kasih dan penghargaan atas jasa-jasanya.</p>
+                            <a href="#" class="btn-ulos-detail">Selengkapnya</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bolean -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="jenis-ulos-card-premium">
+                        <div class="jenis-ulos-image-premium">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="jenis-ulos-content-premium">
+                            <h3>Ulos Bolean</h3>
+                            <div class="ulos-makna">"Kesucian & Ketulusan"</div>
+                            <p>Ulos berwarna putih yang melambangkan kesucian. Digunakan dalam acara-acara adat tertentu yang memerlukan simbol ketulusan.</p>
+                            <a href="#" class="btn-ulos-detail">Selengkapnya</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pinuncaan -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="jenis-ulos-card-premium">
+                        <div class="jenis-ulos-image-premium">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="jenis-ulos-content-premium">
+                            <h3>Ulos Pinuncaan</h3>
+                            <div class="ulos-makna">"Doa & Harapan"</div>
+                            <p>Diberikan sebagai doa restu untuk orang yang akan merantau atau memulai kehidupan baru di tempat lain.</p>
+                            <a href="#" class="btn-ulos-detail">Selengkapnya</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proses Pembuatan Ulos -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <span class="section-subtitle">ᯈ᯲ᯒᯬᯘᯩᯘ᯲ • Proses</span>
+                    <h2 class="section-title">Pembuatan Ulos</h2>
+                    <div class="ulos-divider" style="justify-content: start;">
+                        <div class="ulos-divider-line" style="width: 80px;"></div>
+                    </div>
+                    <p class="lead mt-3">Sehelai ulos membutuhkan waktu berminggu-minggu hingga berbulan-bulan untuk diselesaikan.</p>
+                    
+                    <div class="proses-timeline mt-4">
+                        <div class="proses-item">
+                            <div class="proses-number">1</div>
+                            <h5>Pemilihan Bahan</h5>
+                            <p>Benang kapas atau katun pilihan yang akan ditenun menjadi ulos berkualitas tinggi</p>
+                        </div>
+                        <div class="proses-item">
+                            <div class="proses-number">2</div>
+                            <h5>Pewarnaan Alami</h5>
+                            <p>Menggunakan pewarna alami dari tumbuhan untuk mendapatkan warna merah, hitam, dan emas khas Batak</p>
+                        </div>
+                        <div class="proses-item">
+                            <div class="proses-number">3</div>
+                            <h5>Proses Menenun</h5>
+                            <p>Ditenun dengan alat tenun tradisional, memakan waktu 2-4 minggu hingga berbulan-bulan</p>
+                        </div>
+                        <div class="proses-item">
+                            <div class="proses-number">4</div>
+                            <h5>Pemberian Motif</h5>
+                            <p>Motif-motif khas yang memiliki makna filosofis masing-masing ditenun dengan teliti</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                    <div class="ulos-showcase-premium">
+                        <div class="ulos-frame-premium">
+                            <div class="ulos-image-premium" style="height: 500px;">
+                                <div class="ulos-pattern-premium"></div>
+                                <div style="position: relative; z-index: 3; text-align: center;">
+                                    <i class="fas fa-hands fa-4x" style="color: var(--emas-batak); margin-bottom: 20px;"></i>
+                                    <h4 style="color: white; text-shadow: 2px 2px 0 black;">Tenun Tradisional</h4>
+                                    <p style="color: rgba(255,255,255,0.8);">Diwariskan turun-temurun</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri Ulos Premium -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-subtitle">ᯎᯞᯩᯒᯪ • Galeri</span>
+                <h2 class="section-title">Galeri Ulos</h2>
+                <div class="ulos-divider">
+                    <div class="ulos-divider-line"></div>
+                    <i class="fas fa-tshirt ulos-divider-icon"></i>
+                    <div class="ulos-divider-line"></div>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="gallery-ulos">
+                        <img src="https://source.unsplash.com/600x400/?weaving,traditional" alt="Ulos 1">
+                        <div class="gallery-ulos-overlay">
+                            <h4>Ulos Ragidup</h4>
+                            <p>Motif kehidupan dan kebahagiaan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="gallery-ulos">
+                        <img src="https://source.unsplash.com/601x400/?textile,pattern" alt="Ulos 2">
+                        <div class="gallery-ulos-overlay">
+                            <h4>Ulos Sibolang</h4>
+                            <p>Motif penghormatan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="gallery-ulos">
+                        <img src="https://source.unsplash.com/602x400/?handicraft" alt="Ulos 3">
+                        <div class="gallery-ulos-overlay">
+                            <h4>Ulos Ragi Hotang</h4>
+                            <p>Motif persaudaraan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-pattern"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>Budaya Batak</h4>
+                        <span>Warisan Leluhur</span>
+                    </div>
+                    <p class="mt-3">Melestarikan kekayaan budaya Batak untuk generasi mendatang. "Horas jala gabe ma di hita saluhutna".</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Budaya</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="sejarah.html"><i class="fas fa-chevron-right me-2"></i>Sejarah</a></li>
+                        <li><a href="ulos.html"><i class="fas fa-chevron-right me-2"></i>Ulos</a></li>
+                        <li><a href="rumah-adat.html"><i class="fas fa-chevron-right me-2"></i>Rumah Adat</a></li>
+                        <li><a href="tortor.html"><i class="fas fa-chevron-right me-2"></i>Tarian</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Jelajah</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="wisata.html"><i class="fas fa-chevron-right me-2"></i>Wisata</a></li>
+                        <li><a href="event.html"><i class="fas fa-chevron-right me-2"></i>Event</a></li>
+                        <li><a href="galeri.html"><i class="fas fa-chevron-right me-2"></i>Galeri</a></li>
+                        <li><a href="artikel.html"><i class="fas fa-chevron-right me-2"></i>Artikel</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5>Kontak</h5>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Medan, Sumatera Utara</p>
+                        <p><i class="fas fa-phone me-2"></i> +62 61 1234 5678</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@budayabatak.com</p>
+                    </div>
+                    <div class="mt-3">
+                        <p><strong>Jam Informasi:</strong> Senin-Jumat, 08:00-17:00</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2024 Budaya Batak. All rights reserved. Horas! 🏆</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Kebijakan Privasi</a>
+                        <a href="#">Syarat Layanan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="btn btn-primary back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+        
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

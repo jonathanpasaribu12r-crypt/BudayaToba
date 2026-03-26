@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Budaya Batak - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lightbox CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== VARIABEL WARNA BATAK ===== */
+        :root {
+            --merah-batak: #B22222;
+            --merah-tua: #8B1A1A;
+            --hitam-batak: #2C2C2C;
+            --emas-batak: #D4AF37;
+            --putih: #F5F5F5;
+            --abu-galeri: #6c757d;
+        }
+
+        /* ===== HEADER GALERI ===== */
+        .page-header-galeri {
+            position: relative;
+            min-height: 60vh;
+            background: linear-gradient(165deg, var(--hitam-batak) 0%, var(--merah-tua) 50%, var(--hitam-batak) 100%);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 120px 0 60px;
+            border-bottom: 8px solid var(--emas-batak);
+        }
+
+        .header-galeri-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(212,175,55,0.1) 0px, rgba(212,175,55,0.1) 8px, transparent 8px, transparent 24px),
+                radial-gradient(circle at 70% 30%, rgba(178,34,34,0.1) 0%, transparent 300px);
+            z-index: 1;
+        }
+
+        .header-title-galeri {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--emas-batak);
+            text-shadow: 6px 6px 0 var(--merah-tua), 10px 10px 0 var(--hitam-batak);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 3;
+            letter-spacing: 4px;
+        }
+
+        .header-subtitle-galeri {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 3;
+            text-shadow: 3px 3px 0 var(--hitam-batak);
+            max-width: 600px;
+        }
+
+        /* ===== FILTER BUTTONS ===== */
+        .filter-section {
+            background: var(--putih);
+            padding: 30px 0;
+            border-bottom: 2px solid var(--emas-batak);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 25px;
+            border: 2px solid var(--merah-batak);
+            background: transparent;
+            color: var(--hitam-batak);
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--merah-batak);
+            color: white;
+            border-color: var(--emas-batak);
+        }
+
+        .filter-btn i {
+            margin-right: 8px;
+        }
+
+        /* ===== GALERI GRID ===== */
+        .galeri-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--putih), white);
+        }
+
+        .galeri-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .galeri-item {
+            position: relative;
+            border-radius: 30px 10px 30px 10px;
+            overflow: hidden;
+            border: 4px solid var(--emas-batak);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transition: all 0.4s;
+            cursor: pointer;
+            height: 300px;
+        }
+
+        .galeri-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(178,34,34,0.3);
+            border-color: var(--merah-batak);
+        }
+
+        .galeri-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .galeri-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .galeri-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(139,26,26,0.95), transparent);
+            padding: 30px 20px 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.4s;
+        }
+
+        .galeri-item:hover .galeri-overlay {
+            transform: translateY(0);
+        }
+
+        .galeri-overlay h4 {
+            color: var(--emas-batak);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .galeri-overlay p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .galeri-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--merah-batak);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            border: 1px solid var(--emas-batak);
+        }
+
+        .galeri-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            backdrop-filter: blur(5px);
+            border: 2px solid var(--emas-batak);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .galeri-item:hover .galeri-icon {
+            opacity: 1;
+        }
+
+        /* ===== VIDEO CARD ===== */
+        .video-item {
+            position: relative;
+            border-radius: 30px 10px 30px 10px;
+            overflow: hidden;
+            border: 4px solid var(--emas-batak);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transition: all 0.4s;
+            cursor: pointer;
+            height: 300px;
+        }
+
+        .video-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--merah-batak);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: var(--merah-batak);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            border: 3px solid var(--emas-batak);
+            animation: pulse 2s infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .video-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 20px;
+            color: white;
+        }
+
+        .video-overlay h4 {
+            color: var(--emas-batak);
+            margin-bottom: 5px;
+        }
+
+        .video-duration {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            border: 1px solid var(--emas-batak);
+        }
+
+        /* ===== LOAD MORE BUTTON ===== */
+        .load-more {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn-load-more {
+            display: inline-block;
+            padding: 15px 45px;
+            background: var(--merah-batak);
+            color: white;
+            border: 3px solid var(--emas-batak);
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-load-more:hover {
+            background: var(--merah-tua);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(178,34,34,0.3);
+        }
+
+        .btn-load-more i {
+            margin-left: 10px;
+        }
+
+        /* ===== MODAL VIDEO ===== */
+        .video-modal .modal-content {
+            background: transparent;
+            border: none;
+        }
+
+        .video-modal .modal-body {
+            padding: 0;
+        }
+
+        .video-modal .btn-close {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            background: white;
+            opacity: 1;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-title-galeri {
+                font-size: 3rem;
+            }
+            
+            .galeri-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .filter-buttons {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .video-modal .btn-close {
+                top: -30px;
+                right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-dharmachakra me-2" style="color: #D4AF37;"></i>
+                <span class="brand-indo">Budaya Batak</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Budaya
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sejarah.html"><i class="fas fa-history me-2"></i>Sejarah Batak</a></li>
+                            <li><a class="dropdown-item" href="ulos.html"><i class="fas fa-tshirt me-2"></i>Filosofi Ulos</a></li>
+                            <li><a class="dropdown-item" href="rumah-adat.html"><i class="fas fa-home me-2"></i>Rumah Adat</a></li>
+                            <li><a class="dropdown-item" href="tortor.html"><i class="fas fa-shoe-prints me-2"></i>Tarian Tortor</a></li>
+                            <li><a class="dropdown-item" href="gondang.html"><i class="fas fa-drum me-2"></i>Musik Gondang</a></li>
+                            <li><a class="dropdown-item" href="kuliner.html"><i class="fas fa-utensils me-2"></i>Kuliner Khas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wisata.html">Wisata</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="galeri.html">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="artikel.html">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="event.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="kontak.html">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header-galeri">
+        <div class="header-galeri-pattern"></div>
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div style="width: 70px; height: 70px; background: var(--emas-batak); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-images fa-2x" style="color: var(--hitam-batak);"></i>
+                        </div>
+                        <span class="text-white" style="font-size: 2rem; font-weight: 300;">ᯎᯞᯩᯒᯪ</span>
+                    </div>
+                    <h1 class="header-title-galeri">GALERI BUDAYA BATAK</h1>
+                    <p class="header-subtitle-galeri">Koleksi foto dan video yang menampilkan keindahan budaya Batak</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-buttons" data-aos="fade-up">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th-large"></i> Semua
+                </button>
+                <button class="filter-btn" data-filter="ulos">
+                    <i class="fas fa-tshirt"></i> Ulos
+                </button>
+                <button class="filter-btn" data-filter="rumah-adat">
+                    <i class="fas fa-home"></i> Rumah Adat
+                </button>
+                <button class="filter-btn" data-filter="tortor">
+                    <i class="fas fa-shoe-prints"></i> Tarian Tortor
+                </button>
+                <button class="filter-btn" data-filter="gondang">
+                    <i class="fas fa-drum"></i> Musik Gondang
+                </button>
+                <button class="filter-btn" data-filter="kuliner">
+                    <i class="fas fa-utensils"></i> Kuliner
+                </button>
+                <button class="filter-btn" data-filter="wisata">
+                    <i class="fas fa-map-marked-alt"></i> Wisata
+                </button>
+                <button class="filter-btn" data-filter="video">
+                    <i class="fas fa-video"></i> Video
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri Grid -->
+    <section class="galeri-section">
+        <div class="container">
+            <!-- Galeri Foto & Video -->
+            <div class="galeri-grid" id="galeri-grid">
+                <!-- Item 1 - Ulos -->
+                <div class="galeri-item" data-category="ulos" data-aos="fade-up">
+                    <img src="https://source.unsplash.com/600x400/?traditional,textile" alt="Ulos Batak">
+                    <div class="galeri-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="galeri-overlay">
+                        <h4>Ulos Ragidup</h4>
+                        <p>Kain tenun tradisional untuk upacara pernikahan</p>
+                        <span class="galeri-category">Ulos</span>
+                    </div>
+                </div>
+
+                <!-- Item 2 - Rumah Adat -->
+                <div class="galeri-item" data-category="rumah-adat" data-aos="fade-up" data-aos-delay="50">
+                    <img src="https://source.unsplash.com/601x400/?traditional,house" alt="Rumah Adat Batak">
+                    <div class="galeri-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="galeri-overlay">
+                        <h4>Rumah Bolon</h4>
+                        <p>Rumah adat Batak Toba di Samosir</p>
+                        <span class="galeri-category">Rumah Adat</span>
+                    </div>
+                </div>
+
+                <!-- Item 3 - Tarian Tortor -->
+                <div class="galeri-item" data-category="tortor" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://source.unsplash.com/602x400/?traditional,dance" alt="Tarian Tortor">
+                    <div class="galeri-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="galeri-overlay">
+                        <h4>Tari Tortor</h4>
+                        <p>Tarian sakral dalam upacara adat Batak</p>
+                        <span class="galeri-category">Tortor</span>
+                    </div>
+                </div>
+
+                <!-- Item 4 - Musik Gondang -->
+                <div class="galeri-item" data-category="gondang" data-aos="fade-up" data-aos-delay="150">
+                    <img src="https://source.unsplash.com/603x400/?traditional,music" alt="Musik Gondang">
+                    <div class="galeri-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="galeri-overlay">
+                        <h4>Gondang Sabangunan</h4>
+                        <p>Ensambel musik tradisional Batak</p>
+                        <span class="galeri-category">Gondang</span>
+                    </div>
+                </div>
+
+                <!-- Item 5 - Kuliner -->
+                <div class="galeri-item" data-category="kuliner" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://source.unsplash.com/604x400/?indonesian,food" alt="Kuliner Batak">
+                    <div class="galeri-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="galeri-overlay">
+                        <h4>Saksang</h4>
+                        <p>Hidangan daging khas Batak dengan rempah</p>
+                        <span class="galeri-category">Kuliner</span>
+                    </div>
+                </div>
+
+                <!-- Item 6 - Wisata Danau Toba -->
+                <div class="galeri-item" data-category="wisata" data-aos="fade-up" data-aos-delay="250">
+                    <img src="https://source.unsplash.com/605x400/?lake,volcano" alt="Danau Toba">
+                    <div class="galeri-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="galeri-overlay">
+                        <h4>Danau Toba</h4>
+                        <p>Danau vulkanik terbesar di dunia</p>
+                        <span class="galeri-category">Wisata</span>
+                    </div>
+                </div>
+
+                <!-- Item 7 - Video Tortor -->
+                <div class="video-item" data-category="video" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://source.unsplash.com/606x400/?dance,performance" alt="Video Tortor" class="video-thumbnail">
+                    <div class="video-play" onclick="playVideo('VIDEO_ID_1')">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="video-duration">15:30</div>
+                    <div class="video-overlay">
+                        <h4>Tari Tortor Pangurason</h4>
+                        <p>Video dokumentasi tari tortor</p>
+                    </div>
+                </div>
+
+                <!-- Item 8 - Video Gondang -->
+                <div class="video-item" data-category="video" data-aos="fade-up" data-aos-delay="350">
+                    <img src="https://source.unsplash.com/607x400/?music,traditional" alt="Video Gondang" class="video-thumbnail">
+                    <div class="video-play" onclick="playVideo('VIDEO_ID_2')">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="video-duration">22:15</div>
+                    <div class="video-overlay">
+                        <h4>Musik Gondang Sabangunan</h4>
+                        <p>Ensambel musik tradisional</p>
+                    </div>
+                </div>
+
+                <!-- Item 9 - Ulos Detail -->
+                <div class="galeri-item" data-category="ulos" data-aos="fade-up" data-aos-delay="400">
+                    <img src="https://source.unsplash.com/608x400/?weaving,handicraft" alt="Tenun Ulos">
+                    <div class="galeri-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="galeri-overlay">
+                        <h4>Proses Menenun Ulos</h4>
+                        <p>Pengrajin menenun ulos dengan alat tradisional</p>
+                        <span class="galeri-category">Ulos</span>
+                    </div>
+                </div>
+
+                <!-- Item 10 - Rumah Adat Karo -->
+                <div class="galeri-item" data-category="rumah-adat" data-aos="fade-up" data-aos-delay="450">
+                    <img src="https://source.unsplash.com/609x400/?indonesian,house" alt="Rumah Adat Karo">
+                    <div class="galeri-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="galeri-overlay">
+                        <h4>Siwaluh Jabu</h4>
+                        <p>Rumah adat Batak Karo</p>
+                        <span class="galeri-category">Rumah Adat</span>
+                    </div>
+                </div>
+
+                <!-- Item 11 - Upacara Adat -->
+                <div class="galeri-item" data-category="tortor" data-aos="fade-up" data-aos-delay="500">
+                    <img src="https://source.unsplash.com/610x400/?ceremony,traditional" alt="Upacara Adat">
+                    <div class="galeri-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <div class="galeri-overlay">
+                        <h4>Upacara Pernikahan Adat</h4>
+                        <p>Prosesi mangulosi dalam pernikahan Batak</p>
+                        <span class="galeri-category">Tortor</span>
+                    </div>
+                </div>
+
+                <!-- Item 12 - Video Kuliner -->
+                <div class="video-item" data-category="video" data-aos="fade-up" data-aos-delay="550">
+                    <img src="https://source.unsplash.com/611x400/?cooking,traditional" alt="Video Kuliner" class="video-thumbnail">
+                    <div class="video-play" onclick="playVideo('VIDEO_ID_3')">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="video-duration">18:45</div>
+                    <div class="video-overlay">
+                        <h4>Masak Saksang</h4>
+                        <p>Proses pembuatan saksang khas Batak</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more" data-aos="fade-up">
+                <button class="btn-load-more" id="loadMoreBtn">
+                    Muat Lebih Banyak <i class="fas fa-arrow-down"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section Terpisah -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-subtitle">ᯘᯯ᯲ᯖᯬᯉᯬ᯲ • Video Pilihan</span>
+                <h2 class="section-title">Video Dokumentasi Budaya</h2>
+                <p class="section-description">Koleksi video lengkap tentang budaya Batak</p>
+                <div class="ulos-divider">
+                    <div class="ulos-divider-line"></div>
+                    <i class="fas fa-video ulos-divider-icon"></i>
+                    <div class="ulos-divider-line"></div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="video-item" style="height: 250px;">
+                        <img src="https://source.unsplash.com/612x400/?dance,indonesia" alt="Video" class="video-thumbnail">
+                        <div class="video-play" onclick="playVideo('VIDEO_ID_4')">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-duration">25:30</div>
+                        <div class="video-overlay">
+                            <h4>Tortor dan Gondang</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="video-item" style="height: 250px;">
+                        <img src="https://source.unsplash.com/613x400/?weaving,traditional" alt="Video" class="video-thumbnail">
+                        <div class="video-play" onclick="playVideo('VIDEO_ID_5')">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-duration">32:15</div>
+                        <div class="video-overlay">
+                            <h4>Proses Menenun Ulos</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="video-item" style="height: 250px;">
+                        <img src="https://source.unsplash.com/614x400/?lake,toba" alt="Video" class="video-thumbnail">
+                        <div class="video-play" onclick="playVideo('VIDEO_ID_6')">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-duration">45:20</div>
+                        <div class="video-overlay">
+                            <h4>Keindahan Danau Toba</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Video -->
+    <div class="modal fade video-modal" id="videoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="ratio ratio-16x9">
+                        <iframe id="videoIframe" src="" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-pattern"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>Budaya Batak</h4>
+                        <span>Warisan Leluhur</span>
+                    </div>
+                    <p class="mt-3">Melestarikan kekayaan budaya Batak untuk generasi mendatang. "Horas jala gabe ma di hita saluhutna".</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Budaya</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="sejarah.html"><i class="fas fa-chevron-right me-2"></i>Sejarah</a></li>
+                        <li><a href="ulos.html"><i class="fas fa-chevron-right me-2"></i>Ulos</a></li>
+                        <li><a href="rumah-adat.html"><i class="fas fa-chevron-right me-2"></i>Rumah Adat</a></li>
+                        <li><a href="tortor.html"><i class="fas fa-chevron-right me-2"></i>Tarian</a></li>
+                        <li><a href="gondang.html"><i class="fas fa-chevron-right me-2"></i>Musik</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Jelajah</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="wisata.html"><i class="fas fa-chevron-right me-2"></i>Wisata</a></li>
+                        <li><a href="event.html"><i class="fas fa-chevron-right me-2"></i>Event</a></li>
+                        <li><a href="galeri.html"><i class="fas fa-chevron-right me-2"></i>Galeri</a></li>
+                        <li><a href="artikel.html"><i class="fas fa-chevron-right me-2"></i>Artikel</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5>Kontak</h5>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Medan, Sumatera Utara</p>
+                        <p><i class="fas fa-phone me-2"></i> +62 61 1234 5678</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@budayabatak.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2024 Budaya Batak. All rights reserved. Horas! 🏆</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Kebijakan Privasi</a>
+                        <a href="#">Syarat Layanan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="btn btn-primary back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+        
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Filter Gallery
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.galeri-item, .video-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const filterValue = button.getAttribute('data-filter');
+                
+                galleryItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 100);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+        
+        // Load More Functionality
+        let currentItems = 12;
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const allItems = document.querySelectorAll('.galeri-item, .video-item');
+        
+        // Hide items beyond initial load
+        for (let i = currentItems; i < allItems.length; i++) {
+            allItems[i].style.display = 'none';
+        }
+        
+        loadMoreBtn.addEventListener('click', () => {
+            const hiddenItems = document.querySelectorAll('.galeri-item[style*="display: none"], .video-item[style*="display: none"]');
+            
+            if (hiddenItems.length > 0) {
+                for (let i = 0; i < Math.min(6, hiddenItems.length); i++) {
+                    hiddenItems[i].style.display = 'block';
+                    setTimeout(() => {
+                        hiddenItems[i].style.opacity = '1';
+                        hiddenItems[i].style.transform = 'scale(1)';
+                    }, 100);
+                }
+            }
+            
+            if (hiddenItems.length <= 6) {
+                loadMoreBtn.innerHTML = 'Semua telah dimuat <i class="fas fa-check"></i>';
+                loadMoreBtn.disabled = true;
+                loadMoreBtn.style.opacity = '0.6';
+            }
+        });
+        
+        // Video Player Function
+        function playVideo(videoId) {
+            // Daftar ID video YouTube
+            const videoUrls = {
+                'VIDEO_ID_1': 'https://www.youtube.com/embed/5vN5VcMhRQM',
+                'VIDEO_ID_2': 'https://www.youtube.com/embed/kF1c6I2zq0c',
+                'VIDEO_ID_3': 'https://www.youtube.com/embed/VIDEO_ID_3',
+                'VIDEO_ID_4': 'https://www.youtube.com/embed/VIDEO_ID_4',
+                'VIDEO_ID_5': 'https://www.youtube.com/embed/VIDEO_ID_5',
+                'VIDEO_ID_6': 'https://www.youtube.com/embed/VIDEO_ID_6'
+            };
+            
+            const videoUrl = videoUrls[videoId] || 'https://www.youtube.com/embed/5vN5VcMhRQM';
+            
+            const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+            document.getElementById('videoIframe').src = videoUrl + '?autoplay=1';
+            videoModal.show();
+        }
+        
+        // Reset video modal when closed
+        document.getElementById('videoModal').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('videoIframe').src = '';
+        });
+        
+        // Lightbox options
+        lightbox.option({
+            'resizeDuration': 300,
+            'wrapAround': true,
+            'albumLabel': 'Gambar %1 dari %2',
+            'fadeDuration': 300,
+            'imageFadeDuration': 300
+        });
+        
+        // Add lightbox to gallery items
+        document.querySelectorAll('.galeri-item').forEach((item, index) => {
+            const img = item.querySelector('img');
+            const overlay = item.querySelector('.galeri-overlay');
+            const title = overlay ? overlay.querySelector('h4')?.innerText : 'Budaya Batak';
+            
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.setAttribute('data-lightbox', 'galeri');
+            link.setAttribute('data-title', title);
+            
+            // Wrap the item with the link
+            item.parentNode.insertBefore(link, item);
+            link.appendChild(item);
+        });
+    </script>
+</body>
+</html>

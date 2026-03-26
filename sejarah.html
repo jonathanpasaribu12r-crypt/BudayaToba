@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sejarah Batak - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== VARIABEL WARNA BATAK ===== */
+        :root {
+            --merah-batak: #B22222;
+            --merah-tua: #8B1A1A;
+            --hitam-batak: #2C2C2C;
+            --emas-batak: #D4AF37;
+            --putih: #F5F5F5;
+        }
+
+        /* ===== MOTIF ULOS BACKGROUND ===== */
+        .ulos-bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(178,34,34,0.05) 0px, rgba(178,34,34,0.05) 8px, transparent 8px, transparent 16px),
+                repeating-linear-gradient(135deg, rgba(212,175,55,0.05) 0px, rgba(212,175,55,0.05) 12px, transparent 12px, transparent 24px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== HEADER ===== */
+        .page-header-ulos {
+            position: relative;
+            min-height: 70vh;
+            background: linear-gradient(135deg, var(--hitam-batak), var(--merah-tua));
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 120px 0 80px;
+            border-bottom: 8px solid var(--emas-batak);
+        }
+
+        .header-ulos-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(90deg, rgba(212,175,55,0.1) 0px, rgba(212,175,55,0.1) 4px, transparent 4px, transparent 12px),
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 8px);
+            z-index: 1;
+        }
+
+        .header-title {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--emas-batak);
+            text-shadow: 5px 5px 0 var(--merah-tua), 8px 8px 0 var(--hitam-batak);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 4px;
+        }
+
+        .header-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 0 var(--hitam-batak);
+        }
+
+        /* ===== ULOS SHOWCASE - TIDAK MIRING ===== */
+        .ulos-showcase {
+            position: relative;
+            max-width: 300px;
+            margin-left: auto;
+        }
+
+        .ulos-frame {
+            position: relative;
+            padding: 10px;
+            background: linear-gradient(135deg, var(--emas-batak), var(--merah-tua));
+            border-radius: 30px 10px 30px 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .ulos-image {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--merah-batak), var(--hitam-batak));
+            border-radius: 25px 5px 25px 5px;
+            overflow: hidden;
+            border: 3px solid rgba(255,215,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ulos-motif {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(255,215,0,0.2) 0px, rgba(255,215,0,0.2) 2px, transparent 2px, transparent 10px),
+                repeating-linear-gradient(90deg, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 4px, transparent 4px, transparent 15px),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.2) 0px, rgba(0,0,0,0.2) 5px, transparent 5px, transparent 15px);
+        }
+
+        .ulos-text {
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(255,215,0,0.3);
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+            letter-spacing: 5px;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* ===== ULOS DIVIDER - TIDAK MIRING ===== */
+        .ulos-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .ulos-divider-line {
+            width: 100px;
+            height: 4px;
+            background: repeating-linear-gradient(90deg, var(--merah-batak) 0px, var(--merah-batak) 10px, var(--emas-batak) 10px, var(--emas-batak) 20px);
+        }
+
+        .ulos-divider-icon {
+            font-size: 1.5rem;
+            color: var(--merah-batak);
+        }
+
+        /* ===== STATS CARD - TIDAK MIRING ===== */
+        .stat-card-batak {
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--emas-batak);
+            text-align: center;
+        }
+
+        .stat-card-batak h3 {
+            color: var(--emas-batak);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-card-batak small {
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        /* ===== TIMELINE - TIDAK MIRING ===== */
+        .timeline-batak {
+            position: relative;
+            padding: 60px 0;
+        }
+
+        .timeline-batak::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 100%;
+            background: repeating-linear-gradient(to bottom, var(--merah-batak) 0px, var(--merah-batak) 10px, var(--emas-batak) 10px, var(--emas-batak) 20px);
+        }
+
+        .timeline-item-batak {
+            position: relative;
+            margin-bottom: 70px;
+        }
+
+        .timeline-year-batak {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--merah-batak);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            border: 4px solid var(--emas-batak);
+            z-index: 3;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        }
+
+        .timeline-content-batak {
+            position: relative;
+            width: 45%;
+            background: white;
+            padding: 35px;
+            border-radius: 20px 5px 20px 5px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 3px solid var(--emas-batak);
+        }
+
+        .timeline-item-batak:nth-child(odd) .timeline-content-batak {
+            margin-right: 55%;
+        }
+
+        .timeline-item-batak:nth-child(even) .timeline-content-batak {
+            margin-left: 55%;
+        }
+
+        .timeline-content-batak::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 25px;
+            height: 25px;
+            background: var(--emas-batak);
+            border-radius: 50%;
+            border: 4px solid var(--merah-batak);
+        }
+
+        .timeline-item-batak:nth-child(odd) .timeline-content-batak::before {
+            right: -40px;
+        }
+
+        .timeline-item-batak:nth-child(even) .timeline-content-batak::before {
+            left: -40px;
+        }
+
+        .timeline-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px 5px 15px 5px;
+            border: 3px solid var(--merah-batak);
+            margin-top: 20px;
+        }
+
+        /* ===== CARD BATAK - TIDAK MIRING ===== */
+        .card-batak {
+            background: white;
+            border-radius: 25px 8px 25px 8px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            height: 100%;
+            border: 3px solid var(--emas-batak);
+            position: relative;
+        }
+
+        .card-batak:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(178,34,34,0.2);
+        }
+
+        .card-batak::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(90deg, var(--merah-batak) 0px, var(--merah-batak) 15px, var(--emas-batak) 15px, var(--emas-batak) 30px);
+        }
+
+        .card-batak-header {
+            padding: 25px 20px 10px;
+            text-align: center;
+        }
+
+        .card-batak-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--merah-batak), var(--merah-tua));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            border: 4px solid var(--emas-batak);
+        }
+
+        .card-batak-icon span {
+            color: var(--emas-batak);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .card-batak-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-batak-body h3 {
+            color: var(--merah-batak);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .card-batak-body p {
+            color: var(--hitam-batak);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .card-batak-footer {
+            padding: 15px 20px;
+            border-top: 2px dashed var(--emas-batak);
+            text-align: center;
+        }
+
+        .batak-location {
+            color: var(--merah-tua);
+            font-weight: 600;
+        }
+
+        /* ===== GALLERY - TIDAK MIRING ===== */
+        .gallery-ulos {
+            position: relative;
+            border-radius: 20px 8px 20px 8px;
+            overflow: hidden;
+            border: 4px solid var(--emas-batak);
+            height: 250px;
+        }
+
+        .gallery-ulos img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-ulos-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(139,26,26,0.9), transparent);
+            padding: 30px 20px 20px;
+            color: white;
+        }
+
+        .gallery-ulos-overlay h4 {
+            color: var(--emas-batak);
+            font-weight: 700;
+        }
+
+        /* ===== VIDEO WRAPPER - TIDAK MIRING ===== */
+        .video-batak-wrapper {
+            position: relative;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--merah-batak), var(--merah-tua));
+            border-radius: 30px 10px 30px 10px;
+            border: 4px solid var(--emas-batak);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .video-batak-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px 5px 20px 5px;
+            border: 3px solid var(--emas-batak);
+        }
+
+        .video-batak-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 3rem;
+            }
+            
+            .timeline-batak::before {
+                left: 30px;
+            }
+            
+            .timeline-year-batak {
+                left: 30px;
+                transform: translateX(0);
+                font-size: 1rem;
+                padding: 8px 20px;
+            }
+            
+            .timeline-item-batak:nth-child(odd) .timeline-content-batak,
+            .timeline-item-batak:nth-child(even) .timeline-content-batak {
+                margin: 80px 0 0 70px;
+                width: calc(100% - 70px);
+            }
+            
+            .timeline-item-batak:nth-child(odd) .timeline-content-batak::before,
+            .timeline-item-batak:nth-child(even) .timeline-content-batak::before {
+                left: -35px;
+                right: auto;
+            }
+            
+            .ulos-showcase {
+                margin: 30px auto 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-dharmachakra me-2" style="color: #D4AF37;"></i>
+                <span class="brand-indo">Budaya Batak</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                            Budaya
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item active" href="sejarah.html"><i class="fas fa-history me-2"></i>Sejarah Batak</a></li>
+                            <li><a class="dropdown-item" href="ulos.html"><i class="fas fa-tshirt me-2"></i>Filosofi Ulos</a></li>
+                            <li><a class="dropdown-item" href="rumah-adat.html"><i class="fas fa-home me-2"></i>Rumah Adat</a></li>
+                            <li><a class="dropdown-item" href="tortor.html"><i class="fas fa-shoe-prints me-2"></i>Tarian Tortor</a></li>
+                            <li><a class="dropdown-item" href="gondang.html"><i class="fas fa-drum me-2"></i>Musik Gondang</a></li>
+                            <li><a class="dropdown-item" href="kuliner.html"><i class="fas fa-utensils me-2"></i>Kuliner Khas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wisata.html">Wisata</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="galeri.html">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="artikel.html">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="event.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="kontak.html">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header-ulos">
+        <div class="header-ulos-pattern"></div>
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="row align-items-center">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <i class="fas fa-dharmachakra fa-3x" style="color: #D4AF37;"></i>
+                        <span class="text-white" style="font-size: 1.5rem;">ᯘᯩᯐᯒᯂ᯲ ᯅᯗᯂ᯲</span>
+                    </div>
+                    <h1 class="header-title">SEJARAH BATAK</h1>
+                    <p class="header-subtitle">Jejak peradaban dan warisan leluhur dari Tanah Sumatera Utara</p>
+                    
+                    <!-- Stats -->
+                    <div class="row mt-5 g-3">
+                        <div class="col-4">
+                            <div class="stat-card-batak">
+                                <h3>3000+</h3>
+                                <small>Tahun Sejarah</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-card-batak">
+                                <h3>6</h3>
+                                <small>Sub Suku</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-card-batak">
+                                <h3>400+</h3>
+                                <small>Marga</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-left">
+                    <!-- Gambar Ulos - TIDAK MIRING -->
+                    <div class="ulos-showcase">
+                        <div class="ulos-frame">
+                            <div class="ulos-image">
+                                <div class="ulos-motif"></div>
+                                <div class="ulos-text">ᯥᯞᯘ᯲</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri Gambar -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-subtitle">ᯎᯞᯩᯒᯪ - Warisan Visual</span>
+                <h2 class="section-title">Galeri Sejarah Batak</h2>
+                <div class="ulos-divider">
+                    <div class="ulos-divider-line"></div>
+                    <i class="fas fa-tshirt ulos-divider-icon"></i>
+                    <div class="ulos-divider-line"></div>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="gallery-ulos">
+                        <img src="https://source.unsplash.com/600x400/?indonesia,temple" alt="Situs Megalitik">
+                        <div class="gallery-ulos-overlay">
+                            <h4>Situs Megalitik</h4>
+                            <p>Peninggalan purba di dataran tinggi Toba</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="gallery-ulos">
+                        <img src="https://source.unsplash.com/601x400/?manuscript,old" alt="Pustaha Laklak">
+                        <div class="gallery-ulos-overlay">
+                            <h4>Pustaha Laklak</h4>
+                            <p>Naskah kuno Batak dari kulit kayu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="gallery-ulos">
+                        <img src="https://source.unsplash.com/602x400/?volcano,lake" alt="Pusuk Buhit">
+                        <div class="gallery-ulos-overlay">
+                            <h4>Pusuk Buhit</h4>
+                            <p>Tempat asal leluhur Batak</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Sejarah -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-subtitle">ᯖᯪᯔᯩᯞᯉᯪ - Perjalanan Masa</span>
+                <h2 class="section-title">Timeline Sejarah Batak</h2>
+                <div class="ulos-divider">
+                    <div class="ulos-divider-line"></div>
+                    <i class="fas fa-dharmachakra ulos-divider-icon"></i>
+                    <div class="ulos-divider-line"></div>
+                </div>
+            </div>
+            
+            <div class="timeline-batak">
+                <!-- Item 1 -->
+                <div class="timeline-item-batak" data-aos="fade-up">
+                    <div class="timeline-year-batak">1000 M</div>
+                    <div class="timeline-content-batak">
+                        <h3 style="color: #B22222;">Awal Peradaban Batak</h3>
+                        <p>Masyarakat Batak mulai mendiami daerah dataran tinggi Sumatera Utara, khususnya di sekitar Pusuk Buhit dan tepi Danau Toba. Sistem marga mulai terbentuk.</p>
+                        <img src="https://source.unsplash.com/600x300/?ancient,civilization" alt="Peradaban Kuno" class="timeline-image">
+                    </div>
+                </div>
+                
+                <!-- Item 2 -->
+                <div class="timeline-item-batak" data-aos="fade-up">
+                    <div class="timeline-year-batak">1290</div>
+                    <div class="timeline-content-batak">
+                        <h3 style="color: #B22222;">Kerajaan Batak Pertama</h3>
+                        <p>Berdirinya kerajaan Batak pertama di daerah Toba yang dipimpin oleh Raja Isomba. Mulai berkembangnya sistem sosial dan adat istiadat.</p>
+                        <img src="https://source.unsplash.com/600x301/?kingdom,ancient" alt="Kerajaan Kuno" class="timeline-image">
+                    </div>
+                </div>
+                
+                <!-- Item 3 -->
+                <div class="timeline-item-batak" data-aos="fade-up">
+                    <div class="timeline-year-batak">1824</div>
+                    <div class="timeline-content-batak">
+                        <h3 style="color: #B22222;">Kedatangan Misionaris</h3>
+                        <p>Misionaris dari Jerman, termasuk Dr. I.L. Nommensen, tiba di Tanah Batak dan mulai menyebarkan agama Kristen. Titik awal perubahan besar.</p>
+                        <img src="https://source.unsplash.com/600x302/?church,mission" alt="Misionaris" class="timeline-image">
+                    </div>
+                </div>
+                
+                <!-- Item 4 -->
+                <div class="timeline-item-batak" data-aos="fade-up">
+                    <div class="timeline-year-batak">1907</div>
+                    <div class="timeline-content-batak">
+                        <h3 style="color: #B22222;">Masa Kolonial Belanda</h3>
+                        <p>Belanda mulai menguasai wilayah Batak setelah ekspedisi militer. Sistem pemerintahan tradisional berbaur dengan administrasi kolonial.</p>
+                        <img src="https://source.unsplash.com/600x303/?colonial,history" alt="Masa Kolonial" class="timeline-image">
+                    </div>
+                </div>
+                
+                <!-- Item 5 -->
+                <div class="timeline-item-batak" data-aos="fade-up">
+                    <div class="timeline-year-batak">1945</div>
+                    <div class="timeline-content-batak">
+                        <h3 style="color: #B22222;">Kemerdekaan Indonesia</h3>
+                        <p>Masyarakat Batak turut berjuang dalam mempertahankan kemerdekaan. Tokoh Batak seperti DR. FL Tobing terlibat dalam BPUPKI.</p>
+                        <img src="https://source.unsplash.com/600x304/?independence,indonesia" alt="Kemerdekaan" class="timeline-image">
+                    </div>
+                </div>
+                
+                <!-- Item 6 -->
+                <div class="timeline-item-batak" data-aos="fade-up">
+                    <div class="timeline-year-batak">2024</div>
+                    <div class="timeline-content-batak">
+                        <h3 style="color: #B22222;">Pelestarian Budaya</h3>
+                        <p>Budaya Batak terus dilestarikan di era modern dengan digitalisasi dan promosi budaya kepada generasi muda.</p>
+                        <img src="https://source.unsplash.com/600x305/?culture,digital" alt="Budaya Digital" class="timeline-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Dokumentasi -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <span class="section-subtitle">ᯖᯬᯉᯬ᯲ᯖᯬᯉᯬ᯲ - Dokumentasi</span>
+                    <h2 class="section-title">Video Sejarah Batak</h2>
+                    <div class="ulos-divider" style="justify-content: start;">
+                        <div class="ulos-divider-line" style="width: 50px;"></div>
+                        <i class="fas fa-play ulos-divider-icon"></i>
+                    </div>
+                    <p class="lead mt-3">Saksikan dokumentasi perjalanan sejarah suku Batak, dari masa kerajaan hingga kini.</p>
+                    
+                    <div class="mt-4">
+                        <div class="d-flex gap-2 mb-2">
+                            <i class="fas fa-check-circle" style="color: #D4AF37;"></i>
+                            <span>Dokumentasi situs megalitik</span>
+                        </div>
+                        <div class="d-flex gap-2 mb-2">
+                            <i class="fas fa-check-circle" style="color: #D4AF37;"></i>
+                            <span>Wawancara dengan raja adat</span>
+                        </div>
+                        <div class="d-flex gap-2 mb-2">
+                            <i class="fas fa-check-circle" style="color: #D4AF37;"></i>
+                            <span>Penjelasan sistem marga</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="video-batak-wrapper">
+                        <div class="video-batak-container">
+                            <iframe 
+                                src="https://www.youtube.com/watch?v=Vu-5KnFsIKw" 
+                                title="Sejarah Batak"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sub Suku Batak -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="section-subtitle">ᯘᯮᯅ᯲ - Keragaman</span>
+                <h2 class="section-title">6 Sub Suku Batak</h2>
+                <div class="ulos-divider">
+                    <div class="ulos-divider-line"></div>
+                    <i class="fas fa-users ulos-divider-icon"></i>
+                    <div class="ulos-divider-line"></div>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="card-batak">
+                        <div class="card-batak-header">
+                            <div class="card-batak-icon">
+                                <span>TB</span>
+                            </div>
+                        </div>
+                        <div class="card-batak-body">
+                            <h3>Batak Toba</h3>
+                            <p>Sub suku terbesar di sekitar Danau Toba dan Pulau Samosir. Sistem marga kompleks.</p>
+                        </div>
+                        <div class="card-batak-footer">
+                            <span class="batak-location"><i class="fas fa-map-marker-alt me-1"></i> Toba, Samosir</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-batak">
+                        <div class="card-batak-header">
+                            <div class="card-batak-icon">
+                                <span>KR</span>
+                            </div>
+                        </div>
+                        <div class="card-batak-body">
+                            <h3>Batak Karo</h3>
+                            <p>Dataran tinggi Karo dengan bahasa dan adat khas, rumah adat Siwaluh Jabu.</p>
+                        </div>
+                        <div class="card-batak-footer">
+                            <span class="batak-location"><i class="fas fa-map-marker-alt me-1"></i> Tanah Karo</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-batak">
+                        <div class="card-batak-header">
+                            <div class="card-batak-icon">
+                                <span>SM</span>
+                            </div>
+                        </div>
+                        <div class="card-batak-body">
+                            <h3>Batak Simalungun</h3>
+                            <p>Perpaduan budaya Toba dan Karo dengan bahasa tersendiri.</p>
+                        </div>
+                        <div class="card-batak-footer">
+                            <span class="batak-location"><i class="fas fa-map-marker-alt me-1"></i> Simalungun</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-batak">
+                        <div class="card-batak-header">
+                            <div class="card-batak-icon">
+                                <span>PK</span>
+                            </div>
+                        </div>
+                        <div class="card-batak-body">
+                            <h3>Batak Pakpak</h3>
+                            <p>Wilayah Dairi dan Pakpak Bharat, adat erat dengan alam pegunungan.</p>
+                        </div>
+                        <div class="card-batak-footer">
+                            <span class="batak-location"><i class="fas fa-map-marker-alt me-1"></i> Dairi</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-batak">
+                        <div class="card-batak-header">
+                            <div class="card-batak-icon">
+                                <span>MD</span>
+                            </div>
+                        </div>
+                        <div class="card-batak-body">
+                            <h3>Batak Mandailing</h3>
+                            <p>Pengaruh budaya Islam dengan adat istiadat yang tetap terjaga.</p>
+                        </div>
+                        <div class="card-batak-footer">
+                            <span class="batak-location"><i class="fas fa-map-marker-alt me-1"></i> Mandailing</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="card-batak">
+                        <div class="card-batak-header">
+                            <div class="card-batak-icon">
+                                <span>AG</span>
+                            </div>
+                        </div>
+                        <div class="card-batak-body">
+                            <h3>Batak Angkola</h3>
+                            <p>Tapanuli Selatan dengan tradisi mirip Mandailing, dialek berbeda.</p>
+                        </div>
+                        <div class="card-batak-footer">
+                            <span class="batak-location"><i class="fas fa-map-marker-alt me-1"></i> Tapsel</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-pattern"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>Budaya Batak</h4>
+                        <span>Warisan Leluhur</span>
+                    </div>
+                    <p class="mt-3">Melestarikan kekayaan budaya Batak. "Horas jala gabe ma di hita saluhutna".</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Budaya</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="sejarah.html"><i class="fas fa-chevron-right me-2"></i>Sejarah</a></li>
+                        <li><a href="ulos.html"><i class="fas fa-chevron-right me-2"></i>Ulos</a></li>
+                        <li><a href="rumah-adat.html"><i class="fas fa-chevron-right me-2"></i>Rumah Adat</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Jelajah</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="wisata.html"><i class="fas fa-chevron-right me-2"></i>Wisata</a></li>
+                        <li><a href="event.html"><i class="fas fa-chevron-right me-2"></i>Event</a></li>
+                        <li><a href="galeri.html"><i class="fas fa-chevron-right me-2"></i>Galeri</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5>Kontak</h5>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Medan, Sumatera Utara</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@budayabatak.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2024 Budaya Batak. Horas! 🏆</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Kebijakan Privasi</a>
+                        <a href="#">Syarat Layanan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="btn btn-primary back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+        
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

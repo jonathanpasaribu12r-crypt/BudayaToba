@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Budaya Batak CMS</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f5f7fb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: linear-gradient(180deg, #1e1e2f, #2d2d44);
+            color: white;
+            padding: 20px 0;
+            overflow-y: auto;
+            border-right: 3px solid #D4AF37;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        .sidebar.collapsed { width: 80px; }
+        .sidebar.collapsed .sidebar-logo h3, .sidebar.collapsed .sidebar-logo p, 
+        .sidebar.collapsed .sidebar-menu li a span { display: none; }
+        .sidebar.collapsed .sidebar-menu li a { justify-content: center; }
+        
+        .sidebar-logo { text-align: center; padding: 0 20px 20px; border-bottom: 1px solid rgba(212,175,55,0.3); margin-bottom: 20px; }
+        .sidebar-logo i { font-size: 45px; color: #D4AF37; margin-bottom: 10px; }
+        .sidebar-logo h3 { color: #D4AF37; font-weight: 700; font-size: 1.3rem; }
+        .sidebar-logo p { color: rgba(255,255,255,0.6); font-size: 0.8rem; }
+        
+        .sidebar-menu { list-style: none; padding: 0; }
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+            gap: 12px;
+        }
+        .sidebar-menu li a i { width: 28px; color: #D4AF37; }
+        .sidebar-menu li a:hover { background: rgba(212,175,55,0.15); color: white; padding-left: 25px; }
+        .sidebar-menu li.active a { background: linear-gradient(90deg, #D4AF37, transparent); color: #D4AF37; border-left: 3px solid #D4AF37; }
+        
+        .main-content { margin-left: 280px; padding: 20px; transition: all 0.3s; }
+        .main-content.expanded { margin-left: 80px; }
+        
+        .top-navbar {
+            background: white;
+            padding: 12px 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(212,175,55,0.3);
+        }
+        .menu-toggle { background: none; border: none; font-size: 1.3rem; color: #B22222; cursor: pointer; width: 40px; height: 40px; border-radius: 10px; }
+        .menu-toggle:hover { background: rgba(178,34,34,0.1); }
+        .user-avatar { width: 45px; height: 45px; background: linear-gradient(135deg, #B22222, #8B1A1A); border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid #D4AF37; }
+        .user-avatar i { color: #D4AF37; font-size: 1.3rem; }
+        .logout-btn { background: #B22222; color: white; border: none; padding: 8px 18px; border-radius: 12px; border: 1px solid #D4AF37; transition: all 0.3s; }
+        .logout-btn:hover { background: #8B1A1A; transform: translateY(-2px); }
+        
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
+        .page-header h2 { color: #B22222; font-weight: 700; margin: 0; font-size: 1.8rem; }
+        .btn-save { background: linear-gradient(135deg, #B22222, #8B1A1A); color: white; border: none; padding: 12px 30px; border-radius: 12px; font-weight: 600; transition: all 0.3s; box-shadow: 0 5px 15px rgba(178,34,34,0.3); cursor: pointer; }
+        .btn-save:hover { transform: translateY(-3px); }
+        
+        .section-card {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            border: 1px solid rgba(212,175,55,0.3);
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+        }
+        .section-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; }
+        .section-header i { font-size: 1.8rem; color: #B22222; background: rgba(178,34,34,0.1); padding: 12px; border-radius: 16px; }
+        .section-header h4 { color: #B22222; font-weight: 700; margin: 0; }
+        
+        .form-label { font-weight: 600; color: #2C2C2C; margin-bottom: 8px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-control, .form-select {
+            border: 2px solid #eef2f6;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        .form-control:focus { border-color: #B22222; box-shadow: 0 0 0 3px rgba(178,34,34,0.1); outline: none; }
+        textarea.form-control { border-radius: 16px; min-height: 100px; }
+        
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #D4AF37;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #faf9f7;
+        }
+        .image-preview img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .nav-tabs {
+            border-bottom: none;
+            margin-bottom: 25px;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+        }
+        .nav-tabs .nav-link {
+            color: #6c757d;
+            font-weight: 600;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            transition: all 0.3s;
+        }
+        .nav-tabs .nav-link:hover { background: rgba(178,34,34,0.1); color: #B22222; }
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, #B22222, #8B1A1A);
+            color: white;
+        }
+        
+        .card-item {
+            background: #f8f9fc;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #eef2f6;
+            transition: all 0.3s;
+        }
+        .card-item:hover { border-color: #D4AF37; }
+        
+        .btn-upload { background: #D4AF37; color: #2C2C2C; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; width: 100%; }
+        .btn-upload:hover { background: #c4a12e; transform: translateY(-2px); }
+        .btn-primary { background: #B22222; color: white; border: none; padding: 10px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+        .btn-primary:hover { background: #8B1A1A; transform: translateY(-2px); }
+        .btn-danger { background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 10px; cursor: pointer; }
+        
+        .connection-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .connection-status.connected { background: rgba(40,167,69,0.9); color: white; }
+        .connection-status.disconnected { background: rgba(220,53,69,0.9); color: white; }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+        }
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #D4AF37;
+            border-top-color: #B22222;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .upload-progress { display: none; margin-top: 10px; background: #e9ecef; border-radius: 50px; overflow: hidden; }
+        .progress-bar { background: linear-gradient(90deg, #B22222, #D4AF37); height: 8px; width: 0%; transition: width 0.3s; }
+        
+        @media (max-width: 768px) {
+            .sidebar { width: 80px; }
+            .sidebar .sidebar-logo h3, .sidebar .sidebar-logo p, .sidebar .sidebar-menu li a span { display: none; }
+            .main-content { margin-left: 80px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingOverlay" class="loading-overlay"><div class="loading-spinner"></div></div>
+    <div id="connectionStatus" class="connection-status disconnected"><i class="fas fa-plug me-2"></i><span>Mengecek koneksi...</span></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-dharmachakra"></i>
+            <h3>Budaya Batak</h3>
+            <p>Content Management System</p>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" onclick="showTab('homepage')"><i class="fas fa-home"></i><span>Homepage</span></a></li>
+            <li><a href="#" onclick="showTab('hero')"><i class="fas fa-image"></i><span>Hero Section</span></a></li>
+            <li><a href="#" onclick="showTab('eksplorasi')"><i class="fas fa-compass"></i><span>Eksplorasi</span></a></li>
+            <li><a href="#" onclick="showTab('statistik')"><i class="fas fa-chart-bar"></i><span>Statistik</span></a></li>
+            <li><a href="#" onclick="showTab('ulos')"><i class="fas fa-tshirt"></i><span>Filosofi Ulos</span></a></li>
+            <li><a href="#" onclick="showTab('jenisUlos')"><i class="fas fa-tshirt"></i><span>Jenis Ulos</span></a></li>
+            <li><a href="#" onclick="showTab('tarian')"><i class="fas fa-music"></i><span>Tarian & Musik</span></a></li>
+            <li><a href="#" onclick="showTab('video')"><i class="fas fa-video"></i><span>Video</span></a></li>
+            <li><a href="#" onclick="showTab('wisata')"><i class="fas fa-map-marked-alt"></i><span>Wisata</span></a></li>
+            <li><a href="#" onclick="showTab('artikel')"><i class="fas fa-newspaper"></i><span>Artikel</span></a></li>
+            <li><a href="#" onclick="showTab('event')"><i class="fas fa-calendar"></i><span>Event</span></a></li>
+            <li><a href="#" onclick="showTab('quote')"><i class="fas fa-quote-left"></i><span>Quote</span></a></li>
+            <li><a href="#" onclick="showTab('kontak')"><i class="fas fa-address-card"></i><span>Kontak</span></a></li>
+            <li><a href="#" onclick="showTab('footer')"><i class="fas fa-copyright"></i><span>Footer</span></a></li>
+            <li><a href="#" onclick="showTab('seo')"><i class="fas fa-chart-line"></i><span>SEO</span></a></li>
+        </ul>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="top-navbar">
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            <div class="d-flex align-items-center gap-3">
+                <div class="user-avatar"><i class="fas fa-user-cog"></i></div>
+                <div><h6 class="mb-0">Admin</h6><small class="text-muted">Administrator</small></div>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</button>
+            </div>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <!-- HOMEPAGE DASHBOARD -->
+        <div id="homepage" class="tab-pane">
+            <div class="page-header">
+                <h2><i class="fas fa-home me-2"></i>Dashboard</h2>
+                <div>
+                    <button class="btn btn-primary me-2" onclick="previewHomepage()"><i class="fas fa-eye me-2"></i>Preview</button>
+                    <button class="btn-save" onclick="saveAll()"><i class="fas fa-save me-2"></i>Simpan Semua</button>
+                </div>
+            </div>
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-info-circle"></i><h4>Selamat Datang di Admin Panel</h4></div>
+                <p class="mb-0">Gunakan menu di samping untuk mengelola konten website Budaya Batak. Klik <strong>Simpan Semua</strong> setelah melakukan perubahan.</p>
+                <hr>
+                <div class="row text-center" id="quickStats"></div>
+            </div>
+        </div>
+
+        <!-- HERO SECTION -->
+        <div id="hero" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-image"></i><h4>Hero Section</h4></div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="form-label">Badge Text</label><input type="text" class="form-control" id="heroBadge" value="ᯂᯬᯒᯘ᯲">
+                        <label class="form-label">Welcome Text</label><input type="text" class="form-control" id="heroWelcome" value="Horas! Selamat Datang">
+                        <label class="form-label">Judul Utama</label><input type="text" class="form-control" id="heroTitle" value="Jelajahi Kekayaan Budaya Batak">
+                        <label class="form-label">Deskripsi</label><textarea class="form-control" id="heroDesc" rows="3">Temukan keindahan tradisi, seni, kuliner, dan warisan budaya Batak yang memperkaya Indonesia.</textarea>
+                        <div class="row">
+                            <div class="col-md-6"><label class="form-label">Tombol 1 Teks</label><input type="text" class="form-control" id="heroBtn1Text" value="Mulai Perjalanan"></div>
+                            <div class="col-md-6"><label class="form-label">Tombol 1 Link</label><input type="text" class="form-control" id="heroBtn1Link" value="#eksplorasi"></div>
+                            <div class="col-md-6 mt-2"><label class="form-label">Tombol 2 Teks</label><input type="text" class="form-control" id="heroBtn2Text" value="Tonton Video"></div>
+                            <div class="col-md-6 mt-2"><label class="form-label">Tombol 2 Link</label><input type="text" class="form-control" id="heroBtn2Link" value="#video-section"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Gambar Hero</label>
+                        <div class="image-preview" id="heroImagePreview"><img id="heroPreviewImg" src="https://via.placeholder.com/400x300?text=Ulos+Image"></div>
+                        <input type="file" class="form-control" id="heroImage" accept="image/*">
+                        <button class="btn-upload mt-2" onclick="uploadHeroImage()"><i class="fas fa-upload me-2"></i>Upload Gambar</button>
+                        <div class="upload-progress" id="heroUploadProgress"><div class="progress"><div class="progress-bar"></div></div></div>
+                        <label class="form-label mt-3">Tag Gambar</label><input type="text" class="form-control" id="heroImageTag" value="Ulos Batak">
+                    </div>
+                </div>
+                <h5 class="mt-4">Statistik Hero</h5>
+                <div id="heroStats"></div>
+                <button class="btn btn-primary mt-2" onclick="addStat()"><i class="fas fa-plus me-2"></i>Tambah Statistik</button>
+            </div>
+        </div>
+
+        <!-- EKSPLORASI -->
+        <div id="eksplorasi" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-compass"></i><h4>Eksplorasi Budaya</h4></div>
+                <label class="form-label">Subtitle</label><input type="text" class="form-control" id="eksplorasiSubtitle" value="Kearifan Lokal">
+                <label class="form-label">Title</label><input type="text" class="form-control" id="eksplorasiTitle" value="Eksplorasi Budaya Batak">
+                <label class="form-label">Deskripsi</label><textarea class="form-control" id="eksplorasiDesc" rows="2">Pelajari berbagai aspek budaya Batak melalui kategori berikut:</textarea>
+                <h5 class="mt-4">Kartu Kategori</h5>
+                <div id="eksplorasiCards"></div>
+                <button class="btn btn-primary mt-2" onclick="addEksplorasiCard()"><i class="fas fa-plus me-2"></i>Tambah Kartu</button>
+            </div>
+        </div>
+
+        <!-- STATISTIK -->
+        <div id="statistik" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-chart-bar"></i><h4>Statistik</h4></div>
+                <div id="statistikCards"></div>
+                <button class="btn btn-primary mt-2" onclick="addStatCard()"><i class="fas fa-plus me-2"></i>Tambah Statistik</button>
+            </div>
+        </div>
+
+        <!-- ULOS FEATURE -->
+        <div id="ulos" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-tshirt"></i><h4>Filosofi Ulos</h4></div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="form-label">Subtitle</label><input type="text" class="form-control" id="ulosSubtitle" value="Kain Sakral Batak">
+                        <label class="form-label">Title</label><input type="text" class="form-control" id="ulosTitle" value="Filosofi Ulos">
+                        <label class="form-label">Quote</label><input type="text" class="form-control" id="ulosQuote" value="Ijuk pangihot ni hodong, ulos pangihot ni holong">
+                        <label class="form-label">Deskripsi</label><textarea class="form-control" id="ulosDesc" rows="4">Ulos bukan sekadar kain tenun biasa. Dalam falsafah hidup orang Batak, Ulos melambangkan kasih sayang, restu, perlindungan, dan ikatan batin.</textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Gambar Ulos</label>
+                        <div class="image-preview" id="ulosImagePreview"><img id="ulosPreviewImg" src="https://via.placeholder.com/400x300?text=Ulos+Feature"></div>
+                        <input type="file" class="form-control" id="ulosImage" accept="image/*">
+                        <button class="btn-upload mt-2" onclick="uploadUlosImage()"><i class="fas fa-upload me-2"></i>Upload Gambar</button>
+                        <div class="upload-progress" id="ulosUploadProgress"><div class="progress"><div class="progress-bar"></div></div></div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><label class="form-label">Tombol Teks</label><input type="text" class="form-control" id="ulosBtnText" value="Pelajari Tentang Ulos"></div>
+                    <div class="col-md-6"><label class="form-label">Tombol Link</label><input type="text" class="form-control" id="ulosBtnLink" value="ulos.html"></div>
+                </div>
+                <h5 class="mt-4">Filosofi Mini Cards</h5>
+                <div id="filosofiCards"></div>
+                <button class="btn btn-primary mt-2" onclick="addFilosofi()"><i class="fas fa-plus me-2"></i>Tambah Filosofi</button>
+            </div>
+        </div>
+
+        <!-- JENIS ULOS -->
+        <div id="jenisUlos" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-tshirt"></i><h4>Jenis Ulos</h4></div>
+                <div id="jenisUlosCards"></div>
+                <button class="btn btn-primary mt-2" onclick="addJenisUlos()"><i class="fas fa-plus me-2"></i>Tambah Jenis Ulos</button>
+            </div>
+        </div>
+
+        <!-- TARIAN & MUSIK -->
+        <div id="tarian" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-music"></i><h4>Tarian & Musik</h4></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Tari Tortor</h5>
+                        <label class="form-label">Quote</label><input type="text" class="form-control" id="tortorQuote" value="Tortor dohot gondang sada dapotan">
+                        <label class="form-label">Deskripsi</label><textarea class="form-control" id="tortorDesc" rows="3">Tarian sakral yang mengiringi upacara adat Batak.</textarea>
+                        <label class="form-label">Link</label><input type="text" class="form-control" id="tortorLink" value="tortor.html">
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Musik Gondang</h5>
+                        <label class="form-label">Quote</label><input type="text" class="form-control" id="gondangQuote" value="Gondang dohot tortor sada dapotan">
+                        <label class="form-label">Deskripsi</label><textarea class="form-control" id="gondangDesc" rows="3">Ensambel musik tradisional dengan taganing, gong, ogung, dan suling.</textarea>
+                        <label class="form-label">Link</label><input type="text" class="form-control" id="gondangLink" value="gondang.html">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIDEO -->
+        <div id="video" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-video"></i><h4>Video Section</h4></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Subtitle</label><input type="text" class="form-control" id="videoSubtitle" value="Media Budaya">
+                        <label class="form-label">Title</label><input type="text" class="form-control" id="videoTitle" value="Video Dokumentasi Budaya Batak">
+                        <label class="form-label">Deskripsi</label><textarea class="form-control" id="videoDesc" rows="2">Saksikan keindahan tarian tortor, musik gondang, dan upacara adat Batak</textarea>
+                        <label class="form-label">YouTube ID</label><input type="text" class="form-control" id="videoUrl" value="5vN5VcMhRQM">
+                        <label class="form-label">Meta Info</label><input type="text" class="form-control" id="videoMeta" value="Durasi: 15 menit | Kualitas: 4K">
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Poin-poin Video</h5>
+                        <div id="videoPoints"></div>
+                        <button class="btn btn-primary mt-2" onclick="addVideoPoint()"><i class="fas fa-plus me-2"></i>Tambah Poin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WISATA -->
+        <div id="wisata" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-map-marked-alt"></i><h4>Wisata</h4></div>
+                <div id="wisataCards"></div>
+                <button class="btn btn-primary mt-2" onclick="addWisata()"><i class="fas fa-plus me-2"></i>Tambah Wisata</button>
+            </div>
+        </div>
+
+        <!-- ARTIKEL -->
+        <div id="artikel" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-newspaper"></i><h4>Artikel</h4></div>
+                <div id="artikelCards"></div>
+                <button class="btn btn-primary mt-2" onclick="addArtikel()"><i class="fas fa-plus me-2"></i>Tambah Artikel</button>
+            </div>
+        </div>
+
+        <!-- EVENT -->
+        <div id="event" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-calendar"></i><h4>Event</h4></div>
+                <div id="eventCards"></div>
+                <button class="btn btn-primary mt-2" onclick="addEvent()"><i class="fas fa-plus me-2"></i>Tambah Event</button>
+            </div>
+        </div>
+
+        <!-- QUOTE -->
+        <div id="quote" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-quote-left"></i><h4>Quote</h4></div>
+                <label class="form-label">Teks Quote</label>
+                <textarea class="form-control" id="quoteText" rows="4">Horas jala gabe ma di hita saluhutna na mangalului parsaulian sian Debata na sun Badia, dilehon tondi na denggan, parsaulian na denggan dohot gogo na denggan</textarea>
+                <label class="form-label">Penulis</label><input type="text" class="form-control" id="quoteAuthor" value="Harapan dalam adat Batak">
+                <label class="form-label">Terjemahan</label><input type="text" class="form-control" id="quoteTranslate" value="Semoga kita semua selamat dan berhasil">
+            </div>
+        </div>
+
+        <!-- KONTAK -->
+        <div id="kontak" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-address-card"></i><h4>Kontak</h4></div>
+                <label class="form-label">Deskripsi</label>
+                <textarea class="form-control" id="kontakDesc" rows="2">Silakan hubungi kami untuk informasi lebih lanjut tentang budaya Batak.</textarea>
+                <div class="row">
+                    <div class="col-md-4"><label class="form-label">Alamat</label><input type="text" class="form-control" id="kontakAlamat" value="Jl. Letjen Jamin Ginting No. 1, Medan"></div>
+                    <div class="col-md-4"><label class="form-label">Telepon</label><input type="text" class="form-control" id="kontakPhone" value="+62 61 1234 5678"></div>
+                    <div class="col-md-4"><label class="form-label">Email</label><input type="email" class="form-control" id="kontakEmail" value="info@budayabatak.com"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div id="footer" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-copyright"></i><h4>Footer</h4></div>
+                <label class="form-label">Teks About</label>
+                <textarea class="form-control" id="footerAbout" rows="3">Melestarikan dan memperkenalkan kekayaan budaya Batak kepada dunia. "Horas jala gabe ma di hita saluhutna"</textarea>
+                <div class="row">
+                    <div class="col-md-6"><label class="form-label">Alamat</label><input type="text" class="form-control" id="footerAddress" value="Medan, Sumatera Utara"></div>
+                    <div class="col-md-6"><label class="form-label">Telepon</label><input type="text" class="form-control" id="footerPhone" value="+62 61 1234 5678"></div>
+                    <div class="col-md-6 mt-2"><label class="form-label">Email</label><input type="email" class="form-control" id="footerEmail" value="info@budayabatak.com"></div>
+                    <div class="col-md-6 mt-2"><label class="form-label">Jam Operasional</label><input type="text" class="form-control" id="footerHours" value="Senin - Jumat: 08:00 - 17:00"></div>
+                </div>
+                <h5 class="mt-4">Social Media</h5>
+                <div class="row">
+                    <div class="col-md-3"><label>Facebook</label><input type="text" class="form-control" id="socialFacebook" value="https://facebook.com/budayabatak"></div>
+                    <div class="col-md-3"><label>Instagram</label><input type="text" class="form-control" id="socialInstagram" value="https://instagram.com/budayabatak"></div>
+                    <div class="col-md-3"><label>YouTube</label><input type="text" class="form-control" id="socialYoutube" value="https://youtube.com/@budayabatak"></div>
+                    <div class="col-md-3"><label>TikTok</label><input type="text" class="form-control" id="socialTiktok" value="https://tiktok.com/@budayabatak"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO -->
+        <div id="seo" class="tab-pane" style="display: none;">
+            <div class="section-card">
+                <div class="section-header"><i class="fas fa-chart-line"></i><h4>SEO Settings</h4></div>
+                <label class="form-label">Meta Title</label>
+                <input type="text" class="form-control" id="seoTitle" value="Budaya Batak | Warisan Leluhur Sumatera Utara">
+                <label class="form-label mt-3">Meta Description</label>
+                <textarea class="form-control" id="seoDesc" rows="3">Website resmi untuk memperkenalkan kekayaan budaya Batak kepada masyarakat luas dan wisatawan.</textarea>
+                <label class="form-label mt-3">Meta Keywords</label>
+                <input type="text" class="form-control" id="seoKeywords" value="batak, budaya batak, ulos, tortor, gondang, danau toba">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    
+    <script>
+        const API_BASE_URL = 'http://localhost:5000';
+        const STORAGE_KEY = 'budayaBatakHomepage';
+        
+        toastr.options = { closeButton: true, progressBar: true, positionClass: "toast-top-right", timeOut: 3000 };
+        
+        function showLoading(show) { document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none'; }
+        function showAlert(msg, type = 'success') { toastr[type](msg); }
+        
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-pane').forEach(tab => tab.style.display = 'none');
+            document.getElementById(tabId).style.display = 'block';
+            document.querySelectorAll('.sidebar-menu li').forEach(li => li.classList.remove('active'));
+            event.currentTarget.parentElement.classList.add('active');
+        }
+        
+        // DOM Helpers
+        function addStatToDOM(container, stat = { number: '100+', label: 'Stat Baru' }) {
+            const div = document.createElement('div'); div.className = 'card-item';
+            div.innerHTML = `<div class="row"><div class="col-md-5"><input type="text" class="form-control stat-number" value="${stat.number}"></div><div class="col-md-5"><input type="text" class="form-control stat-label" value="${stat.label}"></div><div class="col-md-2"><button class="btn btn-danger btn-sm" onclick="this.closest('.card-item').remove()"><i class="fas fa-trash"></i></button></div></div>`;
+            container.appendChild(div);
+        }
+        function addStat() { addStatToDOM(document.getElementById('heroStats')); }
+        
+        function addEksplorasiToDOM(container, card = {}) {
+            const div = document.createElement('div'); div.className = 'card-item';
+            div.innerHTML = `<div class="row"><div class="col-md-2"><input type="text" class="form-control card-icon" value="${card.icon || 'fas fa-star'}"></div><div class="col-md-3"><input type="text" class="form-control card-title" value="${card.title || ''}"></div><div class="col-md-5"><textarea class="form-control card-desc" rows="2">${card.description || ''}</textarea></div><div class="col-md-2"><button class="btn btn-danger btn-sm" onclick="this.closest('.card-item').remove()"><i class="fas fa-trash"></i></button></div></div><div class="row mt-2"><div class="col-md-6"><input type="text" class="form-control card-link" value="${card.link || '#'}"></div><div class="col-md-6"><input type="text" class="form-control card-link-text" value="${card.linkText || 'Selengkapnya'}"></div></div>`;
+            container.appendChild(div);
+        }
+        function addEksplorasiCard() { addEksplorasiToDOM(document.getElementById('eksplorasiCards')); }
+        
+        function addStatCardToDOM(container, stat = {}) {
+            const div = document.createElement('div'); div.className = 'card-item';
+            div.innerHTML = `<div class="row"><div class="col-md-3"><input type="text" class="form-control stat-number" value="${stat.number || '100+'}"></div><div class="col-md-3"><input type="text" class="form-control stat-label" value="${stat.label || 'Stat'}"></div><div class="col-md-4"><input type="text" class="form-control stat-desc" value="${stat.description || ''}"></div><div class="col-md-2"><button class="btn btn-danger btn-sm" onclick="this.closest('.card-item').remove()"><i class="fas fa-trash"></i></button></div></div>`;
+            container.appendChild(div);
+        }
+        function addStatCard() { addStatCardToDOM(document.getElementById('statistikCards')); }
+        
+        function addFilosofiToDOM(container, filo = {}) {
+            const div = document.createElement('div'); div.className = 'card-item';
+            div.innerHTML = `<div class="row"><div class="col-md-4"><input type="text" class="form-control" value="${filo.icon || 'fas fa-heart'}"></div><div class="col-md-6"><input type="text" class="form-control" value="${filo.title || 'Filosofi'}"></div><div class="col-md-2"><button class="btn btn-danger btn-sm" onclick="this.closest('.card-item').remove()"><i class="fas fa-trash"></i></button></div></div>`;
+            container.appendChild(div);
+        }
+        function addFilosofi() { addFilosofiToDOM(document.getElementById('filosofiCards')); }
+        
+        function addJenisUlosToDOM(container, ulos = {}) {
+            const div = document.createElement('div'); div.className = 'card-item';
+            div.innerHTML = `<div class="row"><div class="col-md-3"><input type="text" class="form-control" value="${ulos.name || ''}"></div><div class="col-md-3"><input type="text" class="form-control" value="${ulos.phrase || ''}"></div><div class="col-md-5"><input type="text" class="form-control" value="${ulos.description || ''}"></div><div class="col-md-1"><button class="btn btn-danger btn-sm" onclick="this.closest('.card-item').remove()"><i class="fas fa-trash"></i></button></div></div>`;
+            container.appendChild(div);
+        }
+        function addJenisUlos() { addJenisUlosToDOM(document.getElementById('jenisUlosCards')); }
+        
+        function addVideoPointToDOM(container, point = '') {
+            const div = document.createElement('div'); div.className = 'card-item';
+            div.innerHTML = `<div class="row"><div class="col-md-10"><input type="text" class="form-control" value="${point}"></div><div class="col-md-2"><button class="btn btn-danger btn-sm" onclick="this.closest('.card-item').remove()"><i class="fas fa-trash"></i></button></div></div>`;
+            container.appendChild(div);
+        }
+        function addVideoPoint() { addVideoPointToDOM(document.getElementById('videoPoints')); }
+        
+        function addWisataToDOM(container, wisata = {}) {
+            const div = document.createElement('div'); div.className = 'card-item';
+            div.innerHTML = `<div class="row"><div class="col-md-3"><input type="text" class="form-control" value="${wisata.name || ''}"></div><div class="col-md-5"><input type="text" class="form-control" value="${wisata.description || ''}"></div><div class="col-md-3"><input type="text" class="form-control" value="${wisata.location || ''}"></div><div class="col-md-1"><button class="btn btn-danger btn-sm" onclick="this.closest('.card-item').remove()"><i class="fas fa-trash"></i></button></div></div>`;
+            container.appendChild(div);
+        }
+        function addWisata() { addWisataToDOM(document.getElementById('wisataCards')); }
+        
+        function addArtikelToDOM(container, artikel = {}) {
+            const div = document.createElement('div'); div.className = 'card-item';
+            div.innerHTML = `<div class="row"><div class="col-md-2"><input type="text" class="form-control" value="${artikel.day || ''}"></div><div class="col-md-2"><input type="text" class="form-control" value="${artikel.month || ''}"></div><div class="col-md-4"><input type="text" class="form-control" value="${artikel.title || ''}"></div><div class="col-md-3"><input type="text" class="form-control" value="${artikel.excerpt || ''}"></div><div class="col-md-1"><button class="btn btn-danger btn-sm" onclick="this.closest('.card-item').remove()"><i class="fas fa-trash"></i></button></div></div>`;
+            container.appendChild(div);
+        }
+        function addArtikel() { addArtikelToDOM(document.getElementById('artikelCards')); }
+        
+        function addEventToDOM(container, event = {}) {
+            const div = document.createElement('div'); div.className = 'card-item';
+            div.innerHTML = `<div class="row"><div class="col-md-2"><input type="text" class="form-control" value="${event.day || ''}"></div><div class="col-md-2"><input type="text" class="form-control" value="${event.month || ''}"></div><div class="col-md-4"><input type="text" class="form-control" value="${event.name || ''}"></div><div class="col-md-3"><input type="text" class="form-control" value="${event.location || ''}"></div><div class="col-md-1"><button class="btn btn-danger btn-sm" onclick="this.closest('.card-item').remove()"><i class="fas fa-trash"></i></button></div></div>`;
+            container.appendChild(div);
+        }
+        function addEvent() { addEventToDOM(document.getElementById('eventCards')); }
+        
+        // Upload Functions
+        async function uploadHeroImage() {
+            const file = document.getElementById('heroImage').files[0];
+            if (!file) { showAlert('Pilih file gambar', 'warning'); return; }
+            const formData = new FormData(); formData.append('image', file);
+            const progress = document.getElementById('heroUploadProgress');
+            progress.style.display = 'block';
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/upload/hero`, { method: 'POST', body: formData });
+                const result = await res.json();
+                if (result.success) {
+                    document.getElementById('heroPreviewImg').src = result.filePath;
+                    showAlert('Gambar berhasil diupload!', 'success');
+                } else throw new Error(result.message);
+            } catch(err) { showAlert('Gagal upload: ' + err.message, 'error'); }
+            finally { progress.style.display = 'none'; }
+        }
+        
+        async function uploadUlosImage() {
+            const file = document.getElementById('ulosImage').files[0];
+            if (!file) { showAlert('Pilih file gambar', 'warning'); return; }
+            const formData = new FormData(); formData.append('image', file);
+            const progress = document.getElementById('ulosUploadProgress');
+            progress.style.display = 'block';
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/upload/ulos`, { method: 'POST', body: formData });
+                const result = await res.json();
+                if (result.success) {
+                    document.getElementById('ulosPreviewImg').src = result.filePath;
+                    showAlert('Gambar berhasil diupload!', 'success');
+                } else throw new Error(result.message);
+            } catch(err) { showAlert('Gagal upload: ' + err.message, 'error'); }
+            finally { progress.style.display = 'none'; }
+        }
+        
+        // Collect Data
+        function collectHeroStats() {
+            const stats = [];
+            document.querySelectorAll('#heroStats .card-item').forEach(item => {
+                stats.push({ number: item.querySelector('.stat-number')?.value || '', label: item.querySelector('.stat-label')?.value || '' });
+            });
+            return stats;
+        }
+        function collectEksplorasiCards() {
+            const cards = [];
+            document.querySelectorAll('#eksplorasiCards .card-item').forEach(item => {
+                cards.push({
+                    icon: item.querySelector('.card-icon')?.value || '',
+                    title: item.querySelector('.card-title')?.value || '',
+                    description: item.querySelector('.card-desc')?.value || '',
+                    link: item.querySelector('.card-link')?.value || '',
+                    linkText: item.querySelector('.card-link-text')?.value || ''
+                });
+            });
+            return cards;
+        }
+        function collectStatistikItems() {
+            const items = [];
+            document.querySelectorAll('#statistikCards .card-item').forEach(item => {
+                items.push({
+                    number: item.querySelector('.stat-number')?.value || '',
+                    label: item.querySelector('.stat-label')?.value || '',
+                    description: item.querySelector('.stat-desc')?.value || ''
+                });
+            });
+            return items;
+        }
+        function collectFilosofiCards() {
+            const filosofi = [];
+            document.querySelectorAll('#filosofiCards .card-item').forEach(item => {
+                const inputs = item.querySelectorAll('input');
+                filosofi.push({ icon: inputs[0]?.value || '', title: inputs[1]?.value || '' });
+            });
+            return filosofi;
+        }
+        function collectJenisUlos() {
+            const items = [];
+            document.querySelectorAll('#jenisUlosCards .card-item').forEach(item => {
+                const inputs = item.querySelectorAll('input');
+                items.push({ name: inputs[0]?.value || '', phrase: inputs[1]?.value || '', description: inputs[2]?.value || '' });
+            });
+            return items;
+        }
+        function collectVideoPoints() {
+            const points = [];
+            document.querySelectorAll('#videoPoints .card-item input').forEach(input => { if(input.value) points.push(input.value); });
+            return points;
+        }
+        function collectWisata() {
+            const items = [];
+            document.querySelectorAll('#wisataCards .card-item').forEach(item => {
+                const inputs = item.querySelectorAll('input');
+                items.push({ name: inputs[0]?.value || '', description: inputs[1]?.value || '', location: inputs[2]?.value || '' });
+            });
+            return items;
+        }
+        function collectArtikel() {
+            const items = [];
+            document.querySelectorAll('#artikelCards .card-item').forEach(item => {
+                const inputs = item.querySelectorAll('input');
+                items.push({ day: inputs[0]?.value || '', month: inputs[1]?.value || '', title: inputs[2]?.value || '', excerpt: inputs[3]?.value || '' });
+            });
+            return items;
+        }
+        function collectEvent() {
+            const items = [];
+            document.querySelectorAll('#eventCards .card-item').forEach(item => {
+                const inputs = item.querySelectorAll('input');
+                items.push({ day: inputs[0]?.value || '', month: inputs[1]?.value || '', name: inputs[2]?.value || '', location: inputs[3]?.value || '' });
+            });
+            return items;
+        }
+        
+        // Save All
+        async function saveAll() {
+            showLoading(true);
+            const data = {
+                lastUpdated: new Date().toISOString(),
+                hero: {
+                    badgeText: document.getElementById('heroBadge').value,
+                    welcomeText: document.getElementById('heroWelcome').value,
+                    title: document.getElementById('heroTitle').value,
+                    description: document.getElementById('heroDesc').value,
+                    button1Text: document.getElementById('heroBtn1Text').value,
+                    button1Link: document.getElementById('heroBtn1Link').value,
+                    button2Text: document.getElementById('heroBtn2Text').value,
+                    button2Link: document.getElementById('heroBtn2Link').value,
+                    imageTag: document.getElementById('heroImageTag').value,
+                    imageUrl: document.getElementById('heroPreviewImg').src,
+                    stats: collectHeroStats()
+                },
+                eksplorasi: {
+                    subtitle: document.getElementById('eksplorasiSubtitle').value,
+                    title: document.getElementById('eksplorasiTitle').value,
+                    description: document.getElementById('eksplorasiDesc').value,
+                    cards: collectEksplorasiCards()
+                },
+                statistik: { items: collectStatistikItems() },
+                ulosFeature: {
+                    subtitle: document.getElementById('ulosSubtitle').value,
+                    title: document.getElementById('ulosTitle').value,
+                    quote: document.getElementById('ulosQuote').value,
+                    description: document.getElementById('ulosDesc').value,
+                    buttonText: document.getElementById('ulosBtnText').value,
+                    buttonLink: document.getElementById('ulosBtnLink').value,
+                    imageUrl: document.getElementById('ulosPreviewImg').src,
+                    filosofi: collectFilosofiCards()
+                },
+                jenisUlos: collectJenisUlos(),
+                tarian: {
+                    tortor: {
+                        quote: document.getElementById('tortorQuote').value,
+                        description: document.getElementById('tortorDesc').value,
+                        link: document.getElementById('tortorLink').value
+                    },
+                    gondang: {
+                        quote: document.getElementById('gondangQuote').value,
+                        description: document.getElementById('gondangDesc').value,
+                        link: document.getElementById('gondangLink').value
+                    }
+                },
+                video: {
+                    subtitle: document.getElementById('videoSubtitle').value,
+                    title: document.getElementById('videoTitle').value,
+                    description: document.getElementById('videoDesc').value,
+                    url: document.getElementById('videoUrl').value,
+                    points: collectVideoPoints(),
+                    meta: document.getElementById('videoMeta').value
+                },
+                wisata: collectWisata(),
+                artikel: collectArtikel(),
+                event: collectEvent(),
+                quote: {
+                    text: document.getElementById('quoteText').value,
+                    author: document.getElementById('quoteAuthor').value,
+                    translate: document.getElementById('quoteTranslate').value
+                },
+                kontak: {
+                    description: document.getElementById('kontakDesc').value,
+                    alamat: document.getElementById('kontakAlamat').value,
+                    phone: document.getElementById('kontakPhone').value,
+                    email: document.getElementById('kontakEmail').value
+                },
+                footer: {
+                    aboutText: document.getElementById('footerAbout').value,
+                    address: document.getElementById('footerAddress').value,
+                    phone: document.getElementById('footerPhone').value,
+                    email: document.getElementById('footerEmail').value,
+                    workingHours: document.getElementById('footerHours').value,
+                    socialLinks: {
+                        facebook: document.getElementById('socialFacebook').value,
+                        instagram: document.getElementById('socialInstagram').value,
+                        youtube: document.getElementById('socialYoutube').value,
+                        tiktok: document.getElementById('socialTiktok').value
+                    }
+                },
+                seo: {
+                    title: document.getElementById('seoTitle').value,
+                    description: document.getElementById('seoDesc').value,
+                    keywords: document.getElementById('seoKeywords').value
+                }
+            };
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                const res = await fetch(`${API_BASE_URL}/api/homepage`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                if(res.ok) showAlert('✅ Data berhasil disimpan ke server!', 'success');
+                else showAlert('⚠️ Data disimpan ke lokal', 'warning');
+            } catch(err) { showAlert('⚠️ Data disimpan ke lokal', 'warning'); }
+            finally { showLoading(false); updateQuickStats(); }
+        }
+        
+        // Load Data
+        async function loadData() {
+            showLoading(true);
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/homepage`);
+                const result = await res.json();
+                if(result.success && result.data) {
+                    const d = result.data;
+                    if(d.hero) {
+                        document.getElementById('heroBadge').value = d.hero.badgeText || '';
+                        document.getElementById('heroWelcome').value = d.hero.welcomeText || '';
+                        document.getElementById('heroTitle').value = d.hero.title || '';
+                        document.getElementById('heroDesc').value = d.hero.description || '';
+                        document.getElementById('heroBtn1Text').value = d.hero.button1Text || '';
+                        document.getElementById('heroBtn1Link').value = d.hero.button1Link || '';
+                        document.getElementById('heroBtn2Text').value = d.hero.button2Text || '';
+                        document.getElementById('heroBtn2Link').value = d.hero.button2Link || '';
+                        document.getElementById('heroImageTag').value = d.hero.imageTag || '';
+                        if(d.hero.imageUrl) document.getElementById('heroPreviewImg').src = d.hero.imageUrl;
+                        if(d.hero.stats && d.hero.stats.length) {
+                            const container = document.getElementById('heroStats'); container.innerHTML = '';
+                            d.hero.stats.forEach(s => addStatToDOM(container, s));
+                        }
+                    }
+                    if(d.eksplorasi) {
+                        document.getElementById('eksplorasiSubtitle').value = d.eksplorasi.subtitle || '';
+                        document.getElementById('eksplorasiTitle').value = d.eksplorasi.title || '';
+                        document.getElementById('eksplorasiDesc').value = d.eksplorasi.description || '';
+                        if(d.eksplorasi.cards && d.eksplorasi.cards.length) {
+                            const container = document.getElementById('eksplorasiCards'); container.innerHTML = '';
+                            d.eksplorasi.cards.forEach(c => addEksplorasiToDOM(container, c));
+                        }
+                    }
+                    if(d.statistik && d.statistik.items && d.statistik.items.length) {
+                        const container = document.getElementById('statistikCards'); container.innerHTML = '';
+                        d.statistik.items.forEach(s => addStatCardToDOM(container, s));
+                    }
+                    if(d.ulosFeature) {
+                        document.getElementById('ulosSubtitle').value = d.ulosFeature.subtitle || '';
+                        document.getElementById('ulosTitle').value = d.ulosFeature.title || '';
+                        document.getElementById('ulosQuote').value = d.ulosFeature.quote || '';
+                        document.getElementById('ulosDesc').value = d.ulosFeature.description || '';
+                        document.getElementById('ulosBtnText').value = d.ulosFeature.buttonText || '';
+                        document.getElementById('ulosBtnLink').value = d.ulosFeature.buttonLink || '';
+                        if(d.ulosFeature.imageUrl) document.getElementById('ulosPreviewImg').src = d.ulosFeature.imageUrl;
+                        if(d.ulosFeature.filosofi && d.ulosFeature.filosofi.length) {
+                            const container = document.getElementById('filosofiCards'); container.innerHTML = '';
+                            d.ulosFeature.filosofi.forEach(f => addFilosofiToDOM(container, f));
+                        }
+                    }
+                    if(d.jenisUlos && d.jenisUlos.length) {
+                        const container = document.getElementById('jenisUlosCards'); container.innerHTML = '';
+                        d.jenisUlos.forEach(u => addJenisUlosToDOM(container, u));
+                    }
+                    if(d.tarian) {
+                        document.getElementById('tortorQuote').value = d.tarian.tortor?.quote || '';
+                        document.getElementById('tortorDesc').value = d.tarian.tortor?.description || '';
+                        document.getElementById('tortorLink').value = d.tarian.tortor?.link || '';
+                        document.getElementById('gondangQuote').value = d.tarian.gondang?.quote || '';
+                        document.getElementById('gondangDesc').value = d.tarian.gondang?.description || '';
+                        document.getElementById('gondangLink').value = d.tarian.gondang?.link || '';
+                    }
+                    if(d.video) {
+                        document.getElementById('videoSubtitle').value = d.video.subtitle || '';
+                        document.getElementById('videoTitle').value = d.video.title || '';
+                        document.getElementById('videoDesc').value = d.video.description || '';
+                        document.getElementById('videoUrl').value = d.video.url || '';
+                        document.getElementById('videoMeta').value = d.video.meta || '';
+                        if(d.video.points && d.video.points.length) {
+                            const container = document.getElementById('videoPoints'); container.innerHTML = '';
+                            d.video.points.forEach(p => addVideoPointToDOM(container, p));
+                        }
+                    }
+                    if(d.wisata && d.wisata.length) {
+                        const container = document.getElementById('wisataCards'); container.innerHTML = '';
+                        d.wisata.forEach(w => addWisataToDOM(container, w));
+                    }
+                    if(d.artikel && d.artikel.length) {
+                        const container = document.getElementById('artikelCards'); container.innerHTML = '';
+                        d.artikel.forEach(a => addArtikelToDOM(container, a));
+                    }
+                    if(d.event && d.event.length) {
+                        const container = document.getElementById('eventCards'); container.innerHTML = '';
+                        d.event.forEach(e => addEventToDOM(container, e));
+                    }
+                    if(d.quote) {
+                        document.getElementById('quoteText').value = d.quote.text || '';
+                        document.getElementById('quoteAuthor').value = d.quote.author || '';
+                        document.getElementById('quoteTranslate').value = d.quote.translate || '';
+                    }
+                    if(d.kontak) {
+                        document.getElementById('kontakDesc').value = d.kontak.description || '';
+                        document.getElementById('kontakAlamat').value = d.kontak.alamat || '';
+                        document.getElementById('kontakPhone').value = d.kontak.phone || '';
+                        document.getElementById('kontakEmail').value = d.kontak.email || '';
+                    }
+                    if(d.footer) {
+                        document.getElementById('footerAbout').value = d.footer.aboutText || '';
+                        document.getElementById('footerAddress').value = d.footer.address || '';
+                        document.getElementById('footerPhone').value = d.footer.phone || '';
+                        document.getElementById('footerEmail').value = d.footer.email || '';
+                        document.getElementById('footerHours').value = d.footer.workingHours || '';
+                        if(d.footer.socialLinks) {
+                            document.getElementById('socialFacebook').value = d.footer.socialLinks.facebook || '';
+                            document.getElementById('socialInstagram').value = d.footer.socialLinks.instagram || '';
+                            document.getElementById('socialYoutube').value = d.footer.socialLinks.youtube || '';
+                            document.getElementById('socialTiktok').value = d.footer.socialLinks.tiktok || '';
+                        }
+                    }
+                    if(d.seo) {
+                        document.getElementById('seoTitle').value = d.seo.title || '';
+                        document.getElementById('seoDesc').value = d.seo.description || '';
+                        document.getElementById('seoKeywords').value = d.seo.keywords || '';
+                    }
+                    showAlert('Data berhasil dimuat!', 'success');
+                } else { loadDefault(); }
+            } catch(err) { console.log(err); loadDefault(); }
+            finally { showLoading(false); updateQuickStats(); }
+        }
+        
+        function loadDefault() {
+            const stats = [ { number: '300+', label: 'Marga Batak' }, { number: '50+', label: 'Jenis Ulos' }, { number: '100+', label: 'Situs Budaya' } ];
+            const statsContainer = document.getElementById('heroStats'); statsContainer.innerHTML = '';
+            stats.forEach(s => addStatToDOM(statsContainer, s));
+            
+            const eksplorasi = [
+                { icon: 'fas fa-users', title: 'Tradisi & Upacara', description: 'Mempelajari berbagai upacara adat Batak.', link: 'tradisi.html', linkText: 'Selengkapnya' },
+                { icon: 'fas fa-paint-brush', title: 'Seni & Kerajinan', description: 'Menjelajahi keindahan tenun ulos.', link: 'seni.html', linkText: 'Selengkapnya' },
+                { icon: 'fas fa-utensils', title: 'Kuliner Tradisional', description: 'Mengenal berbagai hidangan khas Batak.', link: 'kuliner.html', linkText: 'Selengkapnya' },
+                { icon: 'fas fa-landmark', title: 'Warisan Budaya', description: 'Mengunjungi situs-situs bersejarah.', link: 'warisan.html', linkText: 'Selengkapnya' }
+            ];
+            const eksContainer = document.getElementById('eksplorasiCards'); eksContainer.innerHTML = '';
+            eksplorasi.forEach(e => addEksplorasiToDOM(eksContainer, e));
+            
+            const statistik = [
+                { number: '300+', label: 'Marga Batak', description: 'Sub-suku dan klan' },
+                { number: '50+', label: 'Jenis Ulos', description: 'Kain tenun tradisional' },
+                { number: '100+', label: 'Makanan Tradisional', description: 'Kuliner khas Batak' },
+                { number: '20+', label: 'Situs Warisan', description: 'Cagar budaya' }
+            ];
+            const statContainer = document.getElementById('statistikCards'); statContainer.innerHTML = '';
+            statistik.forEach(s => addStatCardToDOM(statContainer, s));
+            
+            const filosofi = [
+                { icon: 'fas fa-heart', title: 'Kasih Sayang' },
+                { icon: 'fas fa-shield-alt', title: 'Perlindungan' },
+                { icon: 'fas fa-crown', title: 'Penghormatan' },
+                { icon: 'fas fa-pray', title: 'Restu & Doa' }
+            ];
+            const filoContainer = document.getElementById('filosofiCards'); filoContainer.innerHTML = '';
+            filosofi.forEach(f => addFilosofiToDOM(filoContainer, f));
+            
+            const ulos = [
+                { name: 'Ulos Ragidup', phrase: 'Simbol kehidupan', description: 'Untuk upacara pernikahan' },
+                { name: 'Ulos Sibolang', phrase: 'Penghormatan terakhir', description: 'Untuk upacara dukacita' },
+                { name: 'Ulos Ragi Hotang', phrase: 'Ikatan persaudaraan', description: 'Simbol ikatan kekeluargaan' },
+                { name: 'Ulos Tumtuman', phrase: 'Tanda terima kasih', description: 'Diberikan kepada orang yang berjasa' }
+            ];
+            const ulosContainer = document.getElementById('jenisUlosCards'); ulosContainer.innerHTML = '';
+            ulos.forEach(u => addJenisUlosToDOM(ulosContainer, u));
+            
+            const points = ['Tari Tortor Sakral', 'Musik Gondang Sabangunan', 'Upacara Adat Pernikahan', 'Prosesi Mangulosi', 'Rumah Adat Bolon'];
+            const pointsContainer = document.getElementById('videoPoints'); pointsContainer.innerHTML = '';
+            points.forEach(p => addVideoPointToDOM(pointsContainer, p));
+            
+            const wisata = [
+                { name: 'Danau Toba', description: 'Danau vulkanik terbesar di dunia', location: 'Sumatera Utara' },
+                { name: 'Rumah Bolon', description: 'Rumah adat tradisional Batak', location: 'Samosir' },
+                { name: 'Museum Batak', description: 'Menyimpan koleksi sejarah dan budaya', location: 'Balige' }
+            ];
+            const wisataContainer = document.getElementById('wisataCards'); wisataContainer.innerHTML = '';
+            wisata.forEach(w => addWisataToDOM(wisataContainer, w));
+            
+            const artikel = [
+                { day: '15', month: 'Mar', title: 'Sejarah Marga-marga Batak', excerpt: 'Mengenal asal-usul dan silsilah marga...' },
+                { day: '20', month: 'Mar', title: 'Makna di Balik Ulos Batak', excerpt: 'Setiap motif ulos memiliki filosofi...' },
+                { day: '25', month: 'Mar', title: 'Tortor dan Gondang', excerpt: 'Hubungan sakral tarian dan musik...' }
+            ];
+            const artikelContainer = document.getElementById('artikelCards'); artikelContainer.innerHTML = '';
+            artikel.forEach(a => addArtikelToDOM(artikelContainer, a));
+            
+            const event = [
+                { day: '15-20', month: 'Juni 2024', name: 'Festival Danau Toba', location: 'Parapat' },
+                { day: '10-12', month: 'Agustus 2024', name: 'Pameran Ulos Internasional', location: 'Medan' }
+            ];
+            const eventContainer = document.getElementById('eventCards'); eventContainer.innerHTML = '';
+            event.forEach(e => addEventToDOM(eventContainer, e));
+            
+            showAlert('Data default dimuat', 'info');
+            updateQuickStats();
+        }
+        
+        function updateQuickStats() {
+            const stats = {
+                hero: document.querySelectorAll('#heroStats .card-item').length,
+                eksplorasi: document.querySelectorAll('#eksplorasiCards .card-item').length,
+                ulos: document.querySelectorAll('#jenisUlosCards .card-item').length,
+                wisata: document.querySelectorAll('#wisataCards .card-item').length,
+                artikel: document.querySelectorAll('#artikelCards .card-item').length,
+                event: document.querySelectorAll('#eventCards .card-item').length
+            };
+            document.getElementById('quickStats').innerHTML = `
+                <div class="col-md-2 col-6"><div class="p-3 border rounded"><h3 class="text-danger">${stats.hero}</h3><small>Hero Stats</small></div></div>
+                <div class="col-md-2 col-6"><div class="p-3 border rounded"><h3 class="text-danger">${stats.eksplorasi}</h3><small>Kategori</small></div></div>
+                <div class="col-md-2 col-6"><div class="p-3 border rounded"><h3 class="text-danger">${stats.ulos}</h3><small>Jenis Ulos</small></div></div>
+                <div class="col-md-2 col-6"><div class="p-3 border rounded"><h3 class="text-danger">${stats.wisata}</h3><small>Wisata</small></div></div>
+                <div class="col-md-2 col-6"><div class="p-3 border rounded"><h3 class="text-danger">${stats.artikel}</h3><small>Artikel</small></div></div>
+                <div class="col-md-2 col-6"><div class="p-3 border rounded"><h3 class="text-danger">${stats.event}</h3><small>Event</small></div></div>
+            `;
+        }
+        
+        function previewHomepage() { window.open('../index.html', '_blank'); }
+        function logout() { if(confirm('Logout?')) window.location.href = 'index.html'; }
+        
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('mainContent').classList.toggle('expanded');
+        });
+        
+        async function checkConnection() {
+            const statusDiv = document.getElementById('connectionStatus');
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/test`);
+                if(res.ok) {
+                    statusDiv.className = 'connection-status connected';
+                    statusDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Terhubung ke server';
+                } else throw new Error();
+            } catch(err) {
+                statusDiv.className = 'connection-status disconnected';
+                statusDiv.innerHTML = '<i class="fas fa-database me-2"></i>Mode Offline';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            showTab('homepage');
+            loadData();
+            checkConnection();
+            setInterval(checkConnection, 30000);
+        });
+    </script>
+</body>
+</html>

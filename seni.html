@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seni & Kerajinan Batak - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --merah-batak: #B22222;
+            --merah-tua: #8B1A1A;
+            --hitam-batak: #2C2C2C;
+            --emas-batak: #D4AF37;
+            --putih: #F5F5F5;
+        }
+
+        .page-header-seni {
+            min-height: 60vh;
+            background: linear-gradient(135deg, var(--hitam-batak), var(--merah-tua));
+            display: flex;
+            align-items: center;
+            padding: 120px 0 60px;
+            border-bottom: 8px solid var(--emas-batak);
+        }
+
+        .header-title-seni {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--emas-batak);
+            text-shadow: 6px 6px 0 var(--merah-tua), 10px 10px 0 var(--hitam-batak);
+            letter-spacing: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar (sama dengan tradisi.html) -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-dharmachakra me-2" style="color: #D4AF37;"></i>
+                <span class="brand-indo">Budaya Batak</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                            Budaya
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sejarah.html"><i class="fas fa-history me-2"></i>Sejarah Batak</a></li>
+                            <li><a class="dropdown-item" href="ulos.html"><i class="fas fa-tshirt me-2"></i>Filosofi Ulos</a></li>
+                            <li><a class="dropdown-item" href="rumah-adat.html"><i class="fas fa-home me-2"></i>Rumah Adat</a></li>
+                            <li><a class="dropdown-item" href="tortor.html"><i class="fas fa-shoe-prints me-2"></i>Tarian Tortor</a></li>
+                            <li><a class="dropdown-item" href="gondang.html"><i class="fas fa-drum me-2"></i>Musik Gondang</a></li>
+                            <li><a class="dropdown-item" href="kuliner.html"><i class="fas fa-utensils me-2"></i>Kuliner Khas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wisata.html">Wisata</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="galeri.html">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="artikel.html">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="event.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="kontak.html">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header-seni">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div style="width: 70px; height: 70px; background: var(--emas-batak); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-paint-brush fa-2x" style="color: var(--hitam-batak);"></i>
+                        </div>
+                        <span class="text-white" style="font-size: 2rem; font-weight: 300;">ᯘᯩᯉᯪ</span>
+                    </div>
+                    <h1 class="header-title-seni">SENI & KERAJINAN BATAK</h1>
+                    <p class="header-subtitle">Menjelajahi keindahan tenun ulos, ukiran gorga, dan seni tradisional</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Konten Seni -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Tenun Ulos -->
+                <div class="col-md-4">
+                    <div class="tradisi-card">
+                        <div class="tradisi-image">
+                            <img src="https://source.unsplash.com/600x400/?weaving,traditional" alt="Tenun Ulos">
+                        </div>
+                        <div class="tradisi-content">
+                            <h3>Tenun Ulos</h3>
+                            <p>Seni menenun kain tradisional Batak yang sarat makna filosofis. Setiap motif memiliki doa dan harapan.</p>
+                            <a href="ulos.html" class="btn-tradisi">Pelajari</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ukiran Gorga -->
+                <div class="col-md-4">
+                    <div class="tradisi-card">
+                        <div class="tradisi-image">
+                            <img src="https://source.unsplash.com/601x400/?wood,carving" alt="Ukiran Gorga">
+                        </div>
+                        <div class="tradisi-content">
+                            <h3>Ukiran Gorga</h3>
+                            <p>Seni ukir khas Batak yang menghiasi rumah adat. Setiap motif memiliki makna dan fungsi perlindungan.</p>
+                            <a href="#" class="btn-tradisi">Pelajari</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aksesoris Tradisional -->
+                <div class="col-md-4">
+                    <div class="tradisi-card">
+                        <div class="tradisi-image">
+                            <img src="https://source.unsplash.com/602x400/?traditional,jewelry" alt="Aksesoris Batak">
+                        </div>
+                        <div class="tradisi-content">
+                            <h3>Aksesoris Tradisional</h3>
+                            <p>Perhiasan dan aksesoris adat Batak yang digunakan dalam upacara pernikahan dan acara adat.</p>
+                            <a href="#" class="btn-tradisi">Pelajari</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (sama dengan tradisi.html) -->
+    <footer class="footer-section">
+        <div class="footer-pattern"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>Budaya Batak</h4>
+                        <span>Warisan Leluhur</span>
+                    </div>
+                    <p class="mt-3">Melestarikan kekayaan budaya Batak untuk generasi mendatang. "Horas jala gabe ma di hita saluhutna".</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Budaya</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="sejarah.html"><i class="fas fa-chevron-right me-2"></i>Sejarah</a></li>
+                        <li><a href="ulos.html"><i class="fas fa-chevron-right me-2"></i>Ulos</a></li>
+                        <li><a href="rumah-adat.html"><i class="fas fa-chevron-right me-2"></i>Rumah Adat</a></li>
+                        <li><a href="tortor.html"><i class="fas fa-chevron-right me-2"></i>Tarian</a></li>
+                        <li><a href="gondang.html"><i class="fas fa-chevron-right me-2"></i>Musik</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Jelajah</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="wisata.html"><i class="fas fa-chevron-right me-2"></i>Wisata</a></li>
+                        <li><a href="event.html"><i class="fas fa-chevron-right me-2"></i>Event</a></li>
+                        <li><a href="galeri.html"><i class="fas fa-chevron-right me-2"></i>Galeri</a></li>
+                        <li><a href="artikel.html"><i class="fas fa-chevron-right me-2"></i>Artikel</a></li>
+                        <li><a href="tradisi.html"><i class="fas fa-chevron-right me-2"></i>Tradisi</a></li>
+                        <li><a href="seni.html"><i class="fas fa-chevron-right me-2"></i>Seni</a></li>
+                        <li><a href="warisan.html"><i class="fas fa-chevron-right me-2"></i>Warisan</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5>Kontak</h5>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Medan, Sumatera Utara</p>
+                        <p><i class="fas fa-phone me-2"></i> +62 61 1234 5678</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@budayabatak.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2024 Budaya Batak. All rights reserved. Horas! 🏆</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" onclick="openPrivacyModal(); return false;" class="me-3">Kebijakan Privasi</a>
+                        <a href="#" onclick="openTermsModal(); return false;" class="me-3">Syarat Layanan</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) backToTop.classList.add('show');
+            else backToTop.classList.remove('show');
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

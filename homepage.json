@@ -1,0 +1,241 @@
+{
+  "hero": {
+    "badgeText": "HAII!!",
+    "welcomeText": "Horas! Selamat Datang",
+    "title": "Jelajahi Kekayaan Budaya Batak",
+    "description": "Temukan keindahan tradisi, seni, kuliner, dan warisan budaya Batak yang memperkaya Indonesia.",
+    "button1Text": "Mulai Perjalanan",
+    "button1Link": "#eksplorasi",
+    "button2Text": "Tonton Video",
+    "button2Link": "#video-section",
+    "imageTag": "Ulos Batak",
+    "stats": [
+      {
+        "number": "300+",
+        "label": "Marga Batak"
+      },
+      {
+        "number": "50+",
+        "label": "Jenis Ulos"
+      },
+      {
+        "number": "100+",
+        "label": "Situs Budaya"
+      }
+    ]
+  },
+  "eksplorasi": {
+    "subtitle": "Kearifan Lokal",
+    "title": "Eksplorasi Budaya Batak",
+    "description": "Pelajari berbagai aspek budaya Batak melalui kategori berikut:",
+    "cards": [
+      {
+        "icon": "fas fa-users",
+        "title": "Tradisi & Upacara",
+        "description": "Mempelajari berbagai upacara adat Batak seperti pernikahan, kematian, mangongkal holi, dan upacara syukuran.",
+        "link": "tradisi.html",
+        "linkText": "Selengkapnya"
+      },
+      {
+        "icon": "fas fa-paint-brush",
+        "title": "Seni & Kerajinan",
+        "description": "Menjelajahi keindahan tenun ulos, ukiran gorga, aksesoris tradisional, dan seni musik gondang.",
+        "link": "seni.html",
+        "linkText": "Selengkapnya"
+      },
+      {
+        "icon": "fas fa-utensils",
+        "title": "Kuliner Tradisional",
+        "description": "Mengenal berbagai hidangan khas Batak seperti Saksang, Naniura, Mie Gomak, Arsik, dan Dengke Mas na Niura.",
+        "link": "kuliner.html",
+        "linkText": "Selengkapnya"
+      },
+      {
+        "icon": "fas fa-landmark",
+        "title": "Warisan Budaya",
+        "description": "Mengunjungi situs-situs bersejarah seperti Rumah Bolon, Makam Raja-raja, Danau Toba, dan Museum Batak.",
+        "link": "warisan.html",
+        "linkText": "Selengkapnya"
+      }
+    ]
+  },
+  "statistik": {
+    "items": [
+      {
+        "number": "300+",
+        "label": "Marga Batak",
+        "description": "Sub-suku dan klan"
+      },
+      {
+        "number": "50+",
+        "label": "Jenis Ulos",
+        "description": "Kain tenun tradisional"
+      },
+      {
+        "number": "100+",
+        "label": "Makanan Tradisional",
+        "description": "Kuliner khas Batak"
+      },
+      {
+        "number": "20+",
+        "label": "Situs Warisan",
+        "description": "Cagar budaya"
+      }
+    ]
+  },
+  "ulosFeature": {
+    "subtitle": "Kain Sakral Batak",
+    "title": "Filosofi Ulos",
+    "quote": "Ijuk pangihot ni hodong, ulos pangihot ni holong",
+    "description": "Ulos bukan sekadar kain tenun biasa. Dalam falsafah hidup orang Batak, Ulos melambangkan kasih sayang, restu, perlindungan, dan ikatan batin antara pemberi dan penerima. Setiap helai benang yang ditenun mengandung doa dan harapan.",
+    "buttonText": "Pelajari Tentang Ulos",
+    "buttonLink": "ulos.html",
+    "filosofi": [
+      {
+        "icon": "fas fa-heart",
+        "title": "Kasih Sayang"
+      },
+      {
+        "icon": "fas fa-shield-alt",
+        "title": "Perlindungan"
+      },
+      {
+        "icon": "fas fa-crown",
+        "title": "Penghormatan"
+      },
+      {
+        "icon": "fas fa-pray",
+        "title": "Restu & Doa"
+      }
+    ],
+    "imageUrl": "/uploads/homepage/ulos-1773323759562-242579.jpg"
+  },
+  "jenisUlos": [
+    {
+      "name": "Ulos Ragidup",
+      "phrase": "Simbol kehidupan",
+      "description": "Untuk upacara pernikahan, simbol kehidupan dan kebahagiaan"
+    },
+    {
+      "name": "Ulos Sibolang",
+      "phrase": "Penghormatan terakhir",
+      "description": "Untuk upacara dukacita, simbol penghormatan"
+    },
+    {
+      "name": "Ulos Ragi Hotang",
+      "phrase": "Ikatan persaudaraan",
+      "description": "Simbol ikatan kekeluargaan yang kuat"
+    },
+    {
+      "name": "Ulos Tumtuman",
+      "phrase": "Tanda terima kasih",
+      "description": "Diberikan kepada orang yang berjasa"
+    }
+  ],
+  "tarian": {
+    "tortor": {
+      "quote": "Tortor dohot gondang sada dapotan",
+      "description": "Tarian sakral yang mengiringi upacara adat Batak. Setiap gerakan memiliki makna doa dan penghormatan kepada leluhur serta Yang Maha Kuasa.",
+      "link": "tortor.html"
+    },
+    "gondang": {
+      "quote": "Gondang dohot tortor sada dapotan",
+      "description": "Ensambel musik tradisional dengan taganing, gong, ogung, dan suling yang mengiringi tarian tortor dan upacara adat Batak.",
+      "link": "gondang.html"
+    }
+  },
+  "video": {
+    "subtitle": "Media Budaya",
+    "title": "Video Dokumentasi Budaya Batak",
+    "description": "Saksikan keindahan tarian tortor, musik gondang, dan upacara adat Batak",
+    "url": "https://www.youtube.com/watch?v=ERpFZSyNh6c",
+    "points": [
+      "Tari Tortor Sakral",
+      "Musik Gondang Sabangunan",
+      "Upacara Adat Pernikahan",
+      "Prosesi Mangulosi (Pemberian Ulos)",
+      "Rumah Adat Bolon"
+    ],
+    "meta": "Durasi: 15 menit | Kualitas: 4K | Produksi: 2024"
+  },
+  "wisata": [
+    {
+      "name": "Danau Toba",
+      "description": "Danau vulkanik terbesar di dunia dengan Pulau Samosir di tengahnya",
+      "location": "Sumatera Utara"
+    },
+    {
+      "name": "Rumah Bolon",
+      "description": "Rumah adat tradisional Batak dengan arsitektur dan ukiran khas",
+      "location": "Samosir"
+    },
+    {
+      "name": "Museum Batak",
+      "description": "Menyimpan berbagai koleksi sejarah dan budaya Batak",
+      "location": "Balige"
+    }
+  ],
+  "artikel": [
+    {
+      "day": "15",
+      "month": "Mar",
+      "title": "Sejarah Marga-marga Batak",
+      "excerpt": "Mengenal asal-usul dan silsilah marga dalam masyarakat Batak..."
+    },
+    {
+      "day": "20",
+      "month": "Mar",
+      "title": "Makna di Balik Ulos Batak",
+      "excerpt": "Setiap motif ulos memiliki filosofi dan doa yang terkandung di dalamnya..."
+    },
+    {
+      "day": "25",
+      "month": "Mar",
+      "title": "Tortor dan Gondang",
+      "excerpt": "Hubungan sakral antara tarian dan musik dalam upacara adat Batak..."
+    }
+  ],
+  "event": [
+    {
+      "day": "15-20",
+      "month": "Juni 2024",
+      "name": "Festival Danau Toba",
+      "location": "Parapat, Sumatera Utara"
+    },
+    {
+      "day": "10-12",
+      "month": "Agustus 2024",
+      "name": "Pameran Ulos Internasional",
+      "location": "Medan, Sumatera Utara"
+    }
+  ],
+  "quote": {
+    "text": "Horas jala gabe ma di hita saluhutna na mangalului parsaulian sian Debata na sun Badia, dilehon tondi na denggan, parsaulian na denggan dohot gogo na denggan",
+    "author": "Harapan dalam adat Batak",
+    "translate": "Semoga kita semua selamat dan berhasil dalam mencari berkat dari Tuhan"
+  },
+  "kontak": {
+    "description": "Silakan hubungi kami untuk informasi lebih lanjut tentang budaya Batak, atau jika Anda ingin berkontribusi dalam pelestarian budaya.",
+    "alamat": "Jl. Letjen Jamin Ginting No. 1, Medan, Sumatera Utara",
+    "phone": "082210335302",
+    "email": "info@budayabatak.com"
+  },
+  "footer": {
+    "aboutText": "Melestarikan dan memperkenalkan kekayaan budaya Batak kepada dunia. \"Horas jala gabe ma di hita saluhutna\" - Semoga kita semua selamat dan berhasil.",
+    "address": "Medan, Sumatera Utara",
+    "phone": "+62 61 1234 5678",
+    "email": "info@budayabatak.com",
+    "workingHours": "Senin - Jumat: 08:00 - 17:00, Sabtu: 09:00 - 14:00",
+    "socialLinks": {
+      "facebook": "#",
+      "instagram": "#",
+      "youtube": "#",
+      "tiktok": "#"
+    }
+  },
+  "seo": {
+    "title": "Budaya Batak | Warisan Leluhur Sumatera Utara",
+    "description": "Website resmi untuk memperkenalkan kekayaan budaya Batak kepada masyarakat luas dan wisatawan.",
+    "keywords": "batak, budaya batak, ulos, tortor, gondang, danau toba, sumatera utara"
+  }
+}

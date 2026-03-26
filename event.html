@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Budaya Batak - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== VARIABEL WARNA BATAK ===== */
+        :root {
+            --merah-batak: #B22222;
+            --merah-tua: #8B1A1A;
+            --hitam-batak: #2C2C2C;
+            --emas-batak: #D4AF37;
+            --putih: #F5F5F5;
+        }
+
+        /* ===== HEADER EVENT ===== */
+        .page-header-event {
+            position: relative;
+            min-height: 60vh;
+            background: linear-gradient(135deg, var(--hitam-batak), var(--merah-tua));
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 120px 0 60px;
+            border-bottom: 8px solid var(--emas-batak);
+        }
+
+        .header-title-event {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--emas-batak);
+            text-shadow: 6px 6px 0 var(--merah-tua), 10px 10px 0 var(--hitam-batak);
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+
+        .header-subtitle-event {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.5rem;
+            text-shadow: 3px 3px 0 var(--hitam-batak);
+            max-width: 600px;
+        }
+
+        /* ===== FILTER TAHUN ===== */
+        .filter-tahun {
+            background: var(--putih);
+            padding: 30px 0;
+            border-bottom: 2px solid var(--emas-batak);
+        }
+
+        .tahun-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tahun-btn {
+            padding: 12px 30px;
+            border: 2px solid var(--merah-batak);
+            background: transparent;
+            color: var(--hitam-batak);
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .tahun-btn:hover {
+            background: var(--merah-batak);
+            color: white;
+            border-color: var(--emas-batak);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(178,34,34,0.3);
+        }
+
+        .tahun-btn.active {
+            background: var(--merah-batak);
+            color: white;
+            border-color: var(--emas-batak);
+        }
+
+        /* ===== EVENT CARD ===== */
+        .event-card {
+            background: white;
+            border-radius: 40px 15px 40px 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            height: 100%;
+            border: 3px solid var(--emas-batak);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(178,34,34,0.2);
+            border-color: var(--merah-batak);
+        }
+
+        .event-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .event-card:hover .event-image img {
+            transform: scale(1.1);
+        }
+
+        .event-date-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--merah-batak);
+            color: white;
+            padding: 10px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 70px;
+            border: 2px solid var(--emas-batak);
+            z-index: 2;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .event-date-badge .day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .event-date-badge .month {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .event-content {
+            padding: 25px;
+            flex-grow: 1;
+            cursor: pointer;
+        }
+
+        .event-content h3 {
+            color: var(--merah-batak);
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            transition: color 0.3s;
+        }
+
+        .event-content h3:hover {
+            color: var(--emas-batak);
+        }
+
+        .event-location {
+            color: var(--emas-batak);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .event-location i {
+            margin-right: 5px;
+        }
+
+        .event-content p {
+            color: var(--hitam-batak);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            border-top: 2px dashed var(--emas-batak);
+            background: #fafafa;
+        }
+
+        .event-price {
+            font-weight: 700;
+            color: var(--merah-batak);
+        }
+
+        .btn-event {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--merah-batak);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--emas-batak);
+            cursor: pointer;
+        }
+
+        .btn-event:hover {
+            background: var(--merah-tua);
+            transform: translateX(5px);
+            color: white;
+        }
+
+        /* ===== EVENT FEATURED ===== */
+        .event-featured {
+            background: linear-gradient(135deg, var(--hitam-batak), var(--merah-tua));
+            color: white;
+            border-radius: 40px 15px 40px 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 3px solid var(--emas-batak);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .event-featured:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(178,34,34,0.4);
+        }
+
+        .event-featured h2 {
+            color: var(--emas-batak);
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .event-featured-date {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .event-featured-date i {
+            color: var(--emas-batak);
+            margin-right: 10px;
+        }
+
+        /* ===== KALENDER ===== */
+        .kalender-card {
+            background: white;
+            border-radius: 40px 15px 40px 15px;
+            padding: 25px;
+            border: 3px solid var(--emas-batak);
+            position: sticky;
+            top: 100px;
+        }
+
+        .kalender-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .kalender-header h3 {
+            color: var(--merah-batak);
+            font-weight: 700;
+        }
+
+        .kalender-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .kalender-hari {
+            font-weight: 600;
+            color: var(--emas-batak);
+            padding: 5px;
+        }
+
+        .kalender-tanggal {
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .kalender-tanggal:hover {
+            background: var(--merah-batak);
+            color: white;
+        }
+
+        .kalender-tanggal.event {
+            background: var(--emas-batak);
+            color: var(--hitam-batak);
+            font-weight: 700;
+        }
+
+        .kalender-tanggal.event:hover {
+            background: var(--merah-batak);
+            color: white;
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 50px;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: white;
+            border: 2px solid var(--merah-batak);
+            color: var(--hitam-batak);
+            font-weight: 600;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .page-link:hover {
+            background: var(--merah-batak);
+            color: white;
+            border-color: var(--emas-batak);
+            transform: scale(1.1);
+        }
+
+        .page-link.active {
+            background: var(--merah-batak);
+            color: white;
+            border-color: var(--emas-batak);
+        }
+
+        .page-link.next {
+            width: auto;
+            padding: 0 20px;
+            border-radius: 50px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-title-event {
+                font-size: 3rem;
+            }
+            
+            .event-featured {
+                padding: 25px;
+            }
+            
+            .event-featured h2 {
+                font-size: 2rem;
+            }
+            
+            .kalender-card {
+                position: static;
+                margin-top: 30px;
+            }
+            
+            .tahun-btn {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-gem me-2 text-gold"></i>
+                <span class="brand-indo">Budaya Batak</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Budaya
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sejarah.html"><i class="fas fa-history me-2"></i>Sejarah Batak</a></li>
+                            <li><a class="dropdown-item" href="ulos.html"><i class="fas fa-tshirt me-2"></i>Filosofi Ulos</a></li>
+                            <li><a class="dropdown-item" href="rumah-adat.html"><i class="fas fa-home me-2"></i>Rumah Adat</a></li>
+                            <li><a class="dropdown-item" href="tortor.html"><i class="fas fa-shoe-prints me-2"></i>Tarian Tortor</a></li>
+                            <li><a class="dropdown-item" href="gondang.html"><i class="fas fa-drum me-2"></i>Musik Gondang</a></li>
+                            <li><a class="dropdown-item" href="kuliner.html"><i class="fas fa-utensils me-2"></i>Kuliner Khas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wisata.html">Wisata</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="galeri.html">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="artikel.html">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="event.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="kontak.html">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header-event">
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div style="width: 70px; height: 70px; background: var(--emas-batak); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-calendar-alt fa-2x" style="color: var(--hitam-batak);"></i>
+                        </div>
+                        <span class="text-white" style="font-size: 2rem; font-weight: 300;">ᯀᯩᯇᯉ᯲</span>
+                    </div>
+                    <h1 class="header-title-event">EVENT BUDAYA</h1>
+                    <p class="header-subtitle-event">Jadwal dan informasi event, festival, dan upacara adat Batak</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Tahun -->
+    <section class="filter-tahun">
+        <div class="container">
+            <div class="tahun-buttons" data-aos="fade-up">
+                <button class="tahun-btn active" onclick="filterTahun('all')">Semua Event</button>
+                <button class="tahun-btn" onclick="filterTahun('2024')">2024</button>
+                <button class="tahun-btn" onclick="filterTahun('2025')">2025</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Featured - Bisa diklik -->
+    <section class="py-5">
+        <div class="container">
+            <div class="event-featured" data-aos="fade-up" onclick="location.href='event-detail.html?id=featured'">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <h2>Festival Danau Toba 2024</h2>
+                        <p class="event-featured-date"><i class="fas fa-calendar-alt"></i> 15 - 20 Juni 2024</p>
+                        <p class="event-featured-date"><i class="fas fa-map-marker-alt"></i> Parapat, Sumatera Utara</p>
+                        <p>Event tahunan terbesar yang menampilkan seluruh kekayaan budaya Batak. Dimeriahkan dengan tari tortor massal, pameran ulos, kuliner tradisional, dan berbagai pertunjukan seni.</p>
+                        <span class="btn btn-primary mt-3" onclick="event.stopPropagation(); location.href='event-detail.html?id=featured'">Detail Event</span>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <i class="fas fa-star fa-5x text-gold"></i>
+                        <p class="mt-3 text-gold">Event Utama 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event List -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row g-4" id="eventContainer">
+                        <!-- Event 1 - 2024 -->
+                        <div class="col-md-6 event-item" data-tahun="2024">
+                            <div class="event-card">
+                                <div class="event-image" onclick="location.href='event-detail.html?id=1'">
+                                    <img src="https://source.unsplash.com/600x400/?festival,traditional" alt="Festival Danau Toba">
+                                    <div class="event-date-badge">
+                                        <div class="day">15</div>
+                                        <div class="month">JUN</div>
+                                    </div>
+                                </div>
+                                <div class="event-content" onclick="location.href='event-detail.html?id=1'">
+                                    <h3>Festival Danau Toba</h3>
+                                    <div class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i> Parapat
+                                    </div>
+                                    <p>Perayaan tahunan budaya Batak dengan berbagai pertunjukan seni, pameran, dan kuliner.</p>
+                                </div>
+                                <div class="event-footer">
+                                    <span class="event-price">Gratis</span>
+                                    <a href="event-detail.html?id=1" class="btn-event">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event 2 - 2024 -->
+                        <div class="col-md-6 event-item" data-tahun="2024">
+                            <div class="event-card">
+                                <div class="event-image" onclick="location.href='event-detail.html?id=2'">
+                                    <img src="https://source.unsplash.com/601x400/?exhibition,textile" alt="Pameran Ulos">
+                                    <div class="event-date-badge">
+                                        <div class="day">10</div>
+                                        <div class="month">AGU</div>
+                                    </div>
+                                </div>
+                                <div class="event-content" onclick="location.href='event-detail.html?id=2'">
+                                    <h3>Pameran Ulos Internasional</h3>
+                                    <div class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i> Medan
+                                    </div>
+                                    <p>Pameran dan workshop tenun ulos dengan peserta dari berbagai negara.</p>
+                                </div>
+                                <div class="event-footer">
+                                    <span class="event-price">Rp 25K</span>
+                                    <a href="event-detail.html?id=2" class="btn-event">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event 3 - 2024 -->
+                        <div class="col-md-6 event-item" data-tahun="2024">
+                            <div class="event-card">
+                                <div class="event-image" onclick="location.href='event-detail.html?id=3'">
+                                    <img src="https://source.unsplash.com/602x400/?ceremony,traditional" alt="Upacara Adat">
+                                    <div class="event-date-badge">
+                                        <div class="day">5</div>
+                                        <div class="month">SEP</div>
+                                    </div>
+                                </div>
+                                <div class="event-content" onclick="location.href='event-detail.html?id=3'">
+                                    <h3>Upacara Mangongkal Holi</h3>
+                                    <div class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i> Samosir
+                                    </div>
+                                    <p>Upacara adat pemindahan tulang leluhur ke tempat yang lebih layak.</p>
+                                </div>
+                                <div class="event-footer">
+                                    <span class="event-price">Undangan</span>
+                                    <a href="event-detail.html?id=3" class="btn-event">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event 4 - 2024 -->
+                        <div class="col-md-6 event-item" data-tahun="2024">
+                            <div class="event-card">
+                                <div class="event-image" onclick="location.href='event-detail.html?id=4'">
+                                    <img src="https://source.unsplash.com/603x400/?dance,performance" alt="Pesta Danau Toba">
+                                    <div class="event-date-badge">
+                                        <div class="day">20</div>
+                                        <div class="month">OKT</div>
+                                    </div>
+                                </div>
+                                <div class="event-content" onclick="location.href='event-detail.html?id=4'">
+                                    <h3>Pesta Danau Toba</h3>
+                                    <div class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i> Balige
+                                    </div>
+                                    <p>Perlombaan tradisional, festival musik, dan karnaval budaya.</p>
+                                </div>
+                                <div class="event-footer">
+                                    <span class="event-price">Gratis</span>
+                                    <a href="event-detail.html?id=4" class="btn-event">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event 5 - 2025 -->
+                        <div class="col-md-6 event-item" data-tahun="2025">
+                            <div class="event-card">
+                                <div class="event-image" onclick="location.href='event-detail.html?id=5'">
+                                    <img src="https://source.unsplash.com/604x400/?music,festival" alt="Gondang Festival">
+                                    <div class="event-date-badge">
+                                        <div class="day">12</div>
+                                        <div class="month">JAN</div>
+                                    </div>
+                                </div>
+                                <div class="event-content" onclick="location.href='event-detail.html?id=5'">
+                                    <h3>Gondang Festival 2025</h3>
+                                    <div class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i> Toba
+                                    </div>
+                                    <p>Festival musik gondang dengan kompetisi antar kelompok musik tradisional.</p>
+                                </div>
+                                <div class="event-footer">
+                                    <span class="event-price">Rp 50K</span>
+                                    <a href="event-detail.html?id=5" class="btn-event">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event 6 - 2025 -->
+                        <div class="col-md-6 event-item" data-tahun="2025">
+                            <div class="event-card">
+                                <div class="event-image" onclick="location.href='event-detail.html?id=6'">
+                                    <img src="https://source.unsplash.com/605x400/?food,festival" alt="Kuliner Festival">
+                                    <div class="event-date-badge">
+                                        <div class="day">5</div>
+                                        <div class="month">FEB</div>
+                                    </div>
+                                </div>
+                                <div class="event-content" onclick="location.href='event-detail.html?id=6'">
+                                    <h3>Festival Kuliner Batak</h3>
+                                    <div class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i> Medan
+                                    </div>
+                                    <p>Pameran dan lomba masakan tradisional Batak.</p>
+                                </div>
+                                <div class="event-footer">
+                                    <span class="event-price">Rp 35K</span>
+                                    <a href="event-detail.html?id=6" class="btn-event">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <a href="#" class="page-link" onclick="changePage('prev'); return false;"><i class="fas fa-chevron-left"></i></a>
+                        <a href="#" class="page-link active" onclick="changePage(1); return false;">1</a>
+                        <a href="#" class="page-link" onclick="changePage(2); return false;">2</a>
+                        <a href="#" class="page-link" onclick="changePage(3); return false;">3</a>
+                        <a href="#" class="page-link" onclick="changePage(4); return false;">4</a>
+                        <a href="#" class="page-link next" onclick="changePage('next'); return false;">Selanjutnya <i class="fas fa-chevron-right ms-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Kalender -->
+                <div class="col-lg-4">
+                    <div class="kalender-card" data-aos="fade-left">
+                        <div class="kalender-header">
+                            <h3>Kalender Event</h3>
+                            <p class="text-gold">Juni 2024</p>
+                        </div>
+                        <div class="kalender-grid">
+                            <div class="kalender-hari">M</div>
+                            <div class="kalender-hari">S</div>
+                            <div class="kalender-hari">S</div>
+                            <div class="kalender-hari">R</div>
+                            <div class="kalender-hari">K</div>
+                            <div class="kalender-hari">J</div>
+                            <div class="kalender-hari">S</div>
+                            
+                            <div class="kalender-tanggal" onclick="lihatEvent(26)">26</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(27)">27</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(28)">28</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(29)">29</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(30)">30</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(31)">31</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(1)">1</div>
+                            
+                            <div class="kalender-tanggal" onclick="lihatEvent(2)">2</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(3)">3</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(4)">4</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(5)">5</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(6)">6</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(7)">7</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(8)">8</div>
+                            
+                            <div class="kalender-tanggal" onclick="lihatEvent(9)">9</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(10)">10</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(11)">11</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(12)">12</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(13)">13</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(14)">14</div>
+                            <div class="kalender-tanggal event" onclick="lihatEvent(15)">15</div>
+                            
+                            <div class="kalender-tanggal event" onclick="lihatEvent(16)">16</div>
+                            <div class="kalender-tanggal event" onclick="lihatEvent(17)">17</div>
+                            <div class="kalender-tanggal event" onclick="lihatEvent(18)">18</div>
+                            <div class="kalender-tanggal event" onclick="lihatEvent(19)">19</div>
+                            <div class="kalender-tanggal event" onclick="lihatEvent(20)">20</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(21)">21</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(22)">22</div>
+                            
+                            <div class="kalender-tanggal" onclick="lihatEvent(23)">23</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(24)">24</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(25)">25</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(26)">26</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(27)">27</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(28)">28</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(29)">29</div>
+                            
+                            <div class="kalender-tanggal" onclick="lihatEvent(30)">30</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(1)">1</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(2)">2</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(3)">3</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(4)">4</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(5)">5</div>
+                            <div class="kalender-tanggal" onclick="lihatEvent(6)">6</div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>Event Mendatang</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-circle text-gold me-2" style="font-size: 0.8rem;"></i> <a href="event-detail.html?id=1" style="color: var(--hitam-batak); text-decoration: none;">15-20 Juni: Festival Danau Toba</a></li>
+                                <li class="mb-2"><i class="fas fa-circle text-gold me-2" style="font-size: 0.8rem;"></i> <a href="event-detail.html?id=2" style="color: var(--hitam-batak); text-decoration: none;">10-12 Agustus: Pameran Ulos</a></li>
+                                <li class="mb-2"><i class="fas fa-circle text-gold me-2" style="font-size: 0.8rem;"></i> <a href="event-detail.html?id=3" style="color: var(--hitam-batak); text-decoration: none;">5 September: Upacara Mangongkal Holi</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-pattern"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>Budaya Batak</h4>
+                        <span>Warisan Leluhur</span>
+                    </div>
+                    <p class="mt-3">Melestarikan kekayaan budaya Batak untuk generasi mendatang. "Horas jala gabe ma di hita saluhutna".</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Budaya</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="sejarah.html"><i class="fas fa-chevron-right me-2"></i>Sejarah</a></li>
+                        <li><a href="ulos.html"><i class="fas fa-chevron-right me-2"></i>Ulos</a></li>
+                        <li><a href="rumah-adat.html"><i class="fas fa-chevron-right me-2"></i>Rumah Adat</a></li>
+                        <li><a href="tortor.html"><i class="fas fa-chevron-right me-2"></i>Tarian</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h5>Jelajah</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="wisata.html"><i class="fas fa-chevron-right me-2"></i>Wisata</a></li>
+                        <li><a href="event.html"><i class="fas fa-chevron-right me-2"></i>Event</a></li>
+                        <li><a href="galeri.html"><i class="fas fa-chevron-right me-2"></i>Galeri</a></li>
+                        <li><a href="artikel.html"><i class="fas fa-chevron-right me-2"></i>Artikel</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5>Kontak</h5>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Medan, Sumatera Utara</p>
+                        <p><i class="fas fa-phone me-2"></i> +62 61 1234 5678</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@budayabatak.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2024 Budaya Batak. All rights reserved. Horas! 🏆</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Kebijakan Privasi</a>
+                        <a href="#">Syarat Layanan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="btn btn-primary back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+        
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // FILTER TAHUN - BERFUNGSI SEKARANG!
+        function filterTahun(tahun) {
+            // Update active button
+            const buttons = document.querySelectorAll('.tahun-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(tahun === 'all' ? 'Semua' : tahun)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter events
+            const events = document.querySelectorAll('.event-item');
+            events.forEach(event => {
+                if (tahun === 'all' || event.getAttribute('data-tahun') === tahun) {
+                    event.style.display = 'block';
+                } else {
+                    event.style.display = 'none';
+                }
+            });
+            
+            // Show message if no events
+            const visibleEvents = document.querySelectorAll('.event-item[style="display: block"]').length;
+            const container = document.getElementById('eventContainer');
+            
+            // Remove existing message if any
+            const existingMsg = document.getElementById('noEventMessage');
+            if (existingMsg) existingMsg.remove();
+            
+            if (visibleEvents === 0) {
+                const noEventMsg = document.createElement('div');
+                noEventMsg.id = 'noEventMessage';
+                noEventMsg.className = 'col-12 text-center py-5';
+                noEventMsg.innerHTML = `
+                    <i class="fas fa-calendar-times fa-4x text-gold mb-3"></i>
+                    <h3>Tidak Ada Event di Tahun ${tahun}</h3>
+                    <p>Belum ada jadwal event untuk tahun ${tahun}</p>
+                `;
+                container.appendChild(noEventMsg);
+            }
+        }
+
+        // Event klik pada gambar dan konten
+        document.querySelectorAll('.event-image, .event-content').forEach(element => {
+            element.addEventListener('click', function(e) {
+                // Cari href terdekat
+                const card = this.closest('.event-card');
+                const btn = card.querySelector('.btn-event');
+                if (btn) {
+                    window.location.href = btn.getAttribute('href');
+                }
+            });
+        });
+
+        // Pagination function
+        function changePage(page) {
+            alert('Navigasi ke halaman ' + page);
+            // Implementasi pagination akan ditambahkan kemudian
+        }
+
+        // Kalender click
+        function lihatEvent(tanggal) {
+            alert('Lihat event tanggal ' + tanggal + ' Juni 2024');
+            // Implementasi akan diarahkan ke halaman event berdasarkan tanggal
+        }
+
+        // Smooth scroll untuk anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

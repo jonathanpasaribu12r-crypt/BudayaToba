@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Budaya Batak</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: linear-gradient(135deg, #2C2C2C, #8B1A1A);
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            transition: all 0.3s;
+            z-index: 1000;
+            border-right: 4px solid #D4AF37;
+        }
+
+        .sidebar-logo {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #D4AF37;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-logo i {
+            font-size: 50px;
+            color: #D4AF37;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-logo h3 {
+            color: #D4AF37;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-logo p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 15px 5px 15px 5px;
+            transition: all 0.3s;
+            gap: 10px;
+        }
+
+        .sidebar-menu li a i {
+            width: 30px;
+            text-align: center;
+            color: #D4AF37;
+        }
+
+        .sidebar-menu li a:hover {
+            background: rgba(212,175,55,0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu li.active a {
+            background: #D4AF37;
+            color: #2C2C2C;
+            font-weight: 600;
+        }
+
+        .sidebar-menu li.active a i {
+            color: #2C2C2C;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            margin-left: 280px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        /* ===== TOP NAVBAR ===== */
+        .top-navbar {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 20px 5px 20px 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #D4AF37;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: #B22222;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #D4AF37;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: #B22222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #D4AF37;
+        }
+
+        .user-avatar i {
+            color: #D4AF37;
+            font-size: 1.5rem;
+        }
+
+        .user-details h6 {
+            margin: 0;
+            color: #2C2C2C;
+            font-weight: 600;
+        }
+
+        .user-details small {
+            color: #666;
+        }
+
+        .logout-btn {
+            background: #B22222;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 2px solid #D4AF37;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #8B1A1A;
+            transform: translateY(-2px);
+        }
+
+        /* ===== STATS CARDS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 30px 10px 30px 10px;
+            padding: 25px;
+            border: 3px solid #D4AF37;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(178,34,34,0.2);
+            border-color: #B22222;
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            background: #B22222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #D4AF37;
+        }
+
+        .stat-icon i {
+            font-size: 2rem;
+            color: #D4AF37;
+        }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #B22222;
+            margin: 0;
+        }
+
+        .stat-info p {
+            color: #666;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* ===== WELCOME BANNER ===== */
+        .welcome-banner {
+            background: linear-gradient(135deg, #B22222, #8B1A1A);
+            border-radius: 30px 10px 30px 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 3px solid #D4AF37;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(212,175,55,0.1);
+            border-radius: 50%;
+        }
+
+        .welcome-banner h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .welcome-banner p {
+            margin-bottom: 0;
+            opacity: 0.9;
+        }
+
+        .welcome-banner .date {
+            font-size: 1rem;
+            margin-top: 10px;
+            color: #D4AF37;
+        }
+
+        /* ===== QUICK ACTIONS ===== */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 20px 5px 20px 5px;
+            padding: 20px;
+            border: 2px solid #D4AF37;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(178,34,34,0.2);
+            border-color: #B22222;
+        }
+
+        .action-card i {
+            font-size: 2rem;
+            color: #B22222;
+            margin-bottom: 10px;
+        }
+
+        .action-card span {
+            display: block;
+            font-weight: 600;
+            color: #2C2C2C;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -280px;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .user-details {
+                display: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-banner h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-dharmachakra"></i>
+            <h3>Budaya Batak</h3>
+            <p>Admin Panel</p>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a href="dashboard.html">
+                    <i class="fas fa-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="homepage.html">
+                    <i class="fas fa-home"></i>
+                    <span>Homepage</span>
+                </a>
+            </li>
+            <li>
+                <a href="articles.html">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Artikel</span>
+                </a>
+            </li>
+            <li>
+                <a href="gallery.html">
+                    <i class="fas fa-images"></i>
+                    <span>Galeri</span>
+                </a>
+            </li>
+            <li>
+                <a href="events.html">
+                    <i class="fas fa-calendar"></i>
+                    <span>Event</span>
+                </a>
+            </li>
+            <li>
+                <a href="wisata.html">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Wisata</span>
+                </a>
+            </li>
+            <li>
+                <a href="messages.html">
+                    <i class="fas fa-envelope"></i>
+                    <span>Pesan</span>
+                </a>
+            </li>
+            <li>
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fas fa-gear"></i>
+                    <span>Pengaturan</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <h6 id="userName">Admin</h6>
+                    <small>Administrator</small>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <h2>Horas! Selamat Datang, <span id="welcomeName">Admin</span></h2>
+            <p>Kelola konten website Budaya Batak dari sini.</p>
+            <div class="date" id="currentDate"></div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-card" onclick="location.href='homepage.html'">
+                <i class="fas fa-home"></i>
+                <span>Kelola Homepage</span>
+            </div>
+            <div class="action-card" onclick="location.href='articles.html'">
+                <i class="fas fa-newspaper"></i>
+                <span>Tambah Artikel</span>
+            </div>
+            <div class="action-card" onclick="location.href='gallery.html'">
+                <i class="fas fa-images"></i>
+                <span>Upload Galeri</span>
+            </div>
+            <div class="action-card" onclick="location.href='events.html'">
+                <i class="fas fa-calendar"></i>
+                <span>Buat Event</span>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalArticles">0</h3>
+                    <p>Total Artikel</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalGallery">0</h3>
+                    <p>Total Galeri</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalEvents">0</h3>
+                    <p>Total Event</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalMessages">0</h3>
+                    <p>Pesan Baru</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-white border-gold">
+                        <h5 class="mb-0 text-red">Informasi Website</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><strong>Website:</strong></td>
+                                <td><a href="http://localhost:5000" target="_blank">http://localhost:5000</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Admin Panel:</strong></td>
+                                <td><a href="http://localhost:5000/admin" target="_blank">http://localhost:5000/admin</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>API Test:</strong></td>
+                                <td><a href="http://localhost:5000/api/test" target="_blank">http://localhost:5000/api/test</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>MongoDB:</strong></td>
+                                <td>budaya_batak</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-white border-gold">
+                        <h5 class="mb-0 text-red">Panduan Cepat</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-gold me-2"></i> Kelola Homepage untuk mengubah teks dan gambar di beranda</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-gold me-2"></i> Tambah artikel di menu Artikel</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-gold me-2"></i> Upload gambar di menu Galeri</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-gold me-2"></i> Buat event di menu Event</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // KONFIGURASI
+        // ============================================
+        const API_BASE_URL = 'http://localhost:5000';
+        
+        // ============================================
+        // CEK AUTHENTIKASI
+        // ============================================
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'index.html';
+        }
+
+        // ============================================
+        // LOAD USER INFO
+        // ============================================
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        document.getElementById('userName').textContent = user.name || 'Admin';
+        document.getElementById('welcomeName').textContent = user.name || 'Admin';
+
+        // Display current date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const today = new Date().toLocaleDateString('id-ID', options);
+        document.getElementById('currentDate').textContent = today;
+
+        // ============================================
+        // LOGOUT FUNCTION
+        // ============================================
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // ============================================
+        // TOGGLE SIDEBAR
+        // ============================================
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('mainContent').classList.toggle('expanded');
+        });
+
+        // ============================================
+        // LOAD DASHBOARD DATA
+        // ============================================
+        async function loadDashboardData() {
+            try {
+                // Data dummy untuk tampilan
+                document.getElementById('totalArticles').textContent = '12';
+                document.getElementById('totalGallery').textContent = '48';
+                document.getElementById('totalEvents').textContent = '6';
+                document.getElementById('totalMessages').textContent = '3';
+                
+                // Jika ingin ambil data dari API (nanti)
+                /*
+                const articles = await fetch(`${API_BASE_URL}/api/articles`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                }).then(res => res.json());
+                
+                document.getElementById('totalArticles').textContent = articles.total || 12;
+                */
+                
+            } catch (error) {
+                console.log('Menggunakan data dummy');
+            }
+        }
+
+        // Panggil fungsi
+        loadDashboardData();
+    </script>
+</body>
+</html>
